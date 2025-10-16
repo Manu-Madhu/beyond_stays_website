@@ -14,7 +14,16 @@ body {
   font-family: var(--font-secondary); /* Roboto */
 }
 
+.container {
+  max-width: 1300px;
+  height: 100vh;
+  margin: auto;
+  padding: 5px;
+}
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-primary); /* Inter */
+.title {
+  font-family: var(--font-primary);
+  font-size: 64px;
+  font-weight: 800;
+  line-height: 64px;
 }
