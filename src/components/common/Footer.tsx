@@ -18,6 +18,15 @@ const Footer = () => {
         </Marquee>
       </div>
 
+      {/* bottom Marque section */}
+      <div className="top overflow-hidden border-t-2 border-t-black hidden md:flex">
+        <Marquee gradient={false} speed={100} pauseOnHover={true}>
+          <h1 className="titleHeader text-[50px] md:text-[120px] text-gray-900 text-center leading-[1] whitespace-nowrap mb-0 mt-0 overflow-hidden">
+            # BEYOND STAYS &nbsp; # BEYOND STAYS &nbsp; # BEYOND STAYS &nbsp;
+          </h1>
+        </Marquee>
+      </div>
+
       {/* Bottom footer section */}
       <div className="bg-[#000] w-full mt-1">
         <div className="max-w-[1350px] px-5 md:px-8 mx-auto w-full flex flex-col md:flex-row pt-8 md:pt-16">
@@ -131,15 +140,6 @@ const Footer = () => {
             </p>
           </div>
         </div>
-      </div>
-
-      {/* bottom Marque section */}
-      <div className="top overflow-hidden border-t-2 border-t-black hidden md:flex">
-        <Marquee gradient={false} speed={100} pauseOnHover={true}>
-          <h1 className="titleHeader text-[50px] md:text-[170px] text-gray-900 text-center leading-[1] whitespace-nowrap mb-0 mt-0 overflow-hidden">
-            # BEYOND STAYS &nbsp; # BEYOND STAYS &nbsp; # BEYOND STAYS &nbsp;
-          </h1>
-        </Marquee>
       </div>
     </>
   );
