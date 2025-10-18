@@ -9,10 +9,10 @@ const Header: React.FC<HeaderProps> = ({
   className
 }) => {
   return (
-    <div className={cn("flex items-center justify-between", className)}>
+    <div className={cn("flex ", className)}>
       <div>
-        <h2 className="text-4xl font-bold">{title}</h2>
-        <p className="text-gray-500">{description}</p>
+        <h2 className="titleHeader text-[40px] md:text-[45px] leading-11 md:leading-12 font-bold uppercase">{title}</h2>
+        <p className="text-gray-500 mt-2">{description}</p>
       </div>
 
       <div>{children}</div>
