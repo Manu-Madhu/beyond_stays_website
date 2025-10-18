@@ -14,6 +14,16 @@ body {
   font-family: var(--font-secondary); /* Roboto */
 }
 
+/*----- Font----- */
+.primaryFont {
+  font-family: var(--font-primary);
+}
+.secondaryFont {
+  font-family: var(--font-secondary);
+}
+/* ----- End ----- */
+
+/* ---- Main Container ----- */
 .container {
   max-width: 1300px;
   height: 100vh;
@@ -27,3 +37,4 @@ body {
   font-weight: 800;
   line-height: 64px;
 }
+/* ----- End ----- */
