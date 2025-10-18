@@ -36,9 +36,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Beyond Stays Team" }],
   openGraph: {
-    title: "Beyond Stays",
+    title: "Beyond Stays | Let’s make your next trip unforgettable",
     description:
-      "Explore curated stays and travel experiences with Beyond Stays.",
+      "Beyond Stays offers handpicked stays and custom travel plans made just for you. From start to finish, we take care of the details so you can enjoy the journey.",
     url: "https://www.travelwithbeyondstays.com",
     siteName: "Beyond Stays",
     images: [
@@ -54,9 +54,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Beyond Stays",
+    title: "Beyond Stays | Let’s make your next trip unforgettable",
     description:
-      "Travel smarter with Beyond Stays — curated destinations and unique experiences.",
+      "Beyond Stays offers handpicked stays and custom travel plans made just for you. From start to finish, we take care of the details so you can enjoy the journey.",
     images: ["https://www.travelwithbeyondstays.com/logo/logo.png"]
   },
   metadataBase: new URL("https://www.travelwithbeyondstays.com")
