@@ -12,7 +12,8 @@ const HeroSection = () => {
           playsInline
           className="w-full h-full object-cover"
         >
-          <source src={process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL || "/assets/video/coverVideo.mp4"} type="video/mp4" />
+          <source src={"/assets/video/coverVideo.mp4"} type="video/mp4" />
+          {/* <source src={process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL || "/assets/video/coverVideo.mp4"} type="video/mp4" /> */}
         </video>
         <div className="bg-black/20 absolute top-0 left-0 w-full h-full"></div>
         <div className="container flex flex-col gap-6 md:gap-10 items-center justify-end h-full absolute bottom-[30%] md:bottom-[12%]">

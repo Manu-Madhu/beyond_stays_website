@@ -54,9 +54,13 @@ const Navbar = () => {
             <li className="cursor-pointer hover:opacity-70 transition">
               Package
             </li>
-            <li className="cursor-pointer hover:opacity-70 transition">
+            <Link
+              href={"/gallery"}
+              title="gallery"
+              className="cursor-pointer hover:opacity-70 transition"
+            >
               Gallery
-            </li>
+            </Link>
           </ul>
           <Button
             title="Contact Now"
@@ -92,7 +96,8 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Slide Menu */}
-      <div className={`fixed top-0 right-0 h-screen w-[70%] z-50 sm:w-[50%] bg-white backdrop-blur-md shadow-lg transform transition-transform duration-300 z-50 ${
+      <div
+        className={`fixed top-0 right-0 h-screen w-[70%] z-50 sm:w-[50%] bg-white backdrop-blur-md shadow-lg transform transition-transform duration-300 ${
           menuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -131,12 +136,14 @@ const Navbar = () => {
             >
               Package
             </li>
-            <li
+            <Link
+              href={"/gallery"}
+              title="gallery"
               onClick={toggleMenu}
               className="cursor-pointer hover:text-black transition"
             >
               Gallery
-            </li>
+            </Link>
           </ul>
 
           <div className="mt-auto pt-10">

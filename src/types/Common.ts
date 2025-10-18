@@ -11,3 +11,8 @@ export interface HeaderProps {
     children?: React.ReactNode,
     className?: string
 }
+export interface BannerProps {
+    title?: string,
+    banner: string,
+    subtitle?: string[],
+}

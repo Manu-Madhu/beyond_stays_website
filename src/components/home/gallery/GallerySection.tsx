@@ -120,7 +120,7 @@ const GallerySection = () => {
           </div>
         </div>
         <div className="px-5 mt-4 text-center">
-          <Button title="View Gallery" link="/" className="border-2 " />
+          <Button title="View Gallery" link="/gallery" className="border-2 " />
         </div>
       </div>
 
@@ -270,7 +270,7 @@ const GallerySection = () => {
             </h2>
             <Button
               title="View Gallery"
-              link="/"
+              link="/gallery"
               className="bg-white text-xs text-black px-5"
             />
           </div>
