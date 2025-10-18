@@ -14,6 +14,14 @@ body {
   font-family: var(--font-secondary); /* Roboto */
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /*----- Font----- */
 .primaryFont {
   font-family: var(--font-primary);
@@ -37,4 +45,9 @@ body {
   font-weight: 800;
   line-height: 64px;
 }
+.titleHeader {
+  font-family: var(--font-primary);
+  font-weight: 800;
+}
+
 /* ----- End ----- */

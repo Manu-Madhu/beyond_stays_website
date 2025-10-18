@@ -22,7 +22,7 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full h-[80px] z-40 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full h-[75px] z-40 transition-all duration-300 ${
         scrolled
           ? "bg-white/60 backdrop-blur-md  shadow-lg z-40"
           : "bg-transparent"
@@ -43,7 +43,7 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <nav className="hidden md:flex items-center gap-8 font-semibold">
           <ul
-            className={`flex items-center gap-8 ${
+            className={`flex items-center gap-8 text-sm ${
               scrolled ? "text-black" : "text-white"
             }`}
           >
@@ -60,9 +60,9 @@ const Navbar = () => {
           </ul>
           <Button
             title="Contact Now"
-            className={`${
+            className={`text-sm ${
               scrolled
-                ? "bg-black text-white hover:bg-gray-800"
+                ? "bg-black text-white hover:bg-gray-800 border-2 border-black"
                 : "border-2 text-white hover:bg-white/10"
             }`}
             link="/contact"
