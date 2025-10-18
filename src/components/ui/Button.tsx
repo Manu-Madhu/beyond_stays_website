@@ -6,7 +6,7 @@ import React from "react";
 const Button: React.FC<ButtonProps> = ({ title, link, className, children }) => {
     return (
         <Link title={title} href={link || ""}>
-            <div className={cn("relative overflow-hidden rounded-full p-3 px-8 text-[16px] leading-[19px] text-black transition-all duration-500 ease-out group", className)} >
+            <div className={cn("relative overflow-hidden rounded-full p-2.5 px-8 text-[16px] leading-[19px] text-black transition-all duration-500 ease-out group", className)} >
                 <span className="relative z-10 transition-colors duration-500 group-hover:text-white text-nowrap text-[16px] font-[600]">
                     {title}
                 </span>

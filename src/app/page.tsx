@@ -5,6 +5,8 @@ export default function Home() {
     <>
       {/* Banner Section */}
       <HeroSection />
+
+      {/*  */}
     </>
   );
 }
