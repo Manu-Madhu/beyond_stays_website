@@ -40,7 +40,7 @@ const CardCarousel: React.FC<CardCarouselProps> = ({ cards }) => {
 
             {/* Overlay Blur */}
             <div
-              className="absolute inset-0 bg-black/30 backdrop-blur-0 transition-all duration-500 
+              className="absolute inset-0 bg-black/20 backdrop-blur-0 transition-all duration-500 
                          group-hover:bg-black/40 group-hover:backdrop-blur-sm"
             ></div>
 
