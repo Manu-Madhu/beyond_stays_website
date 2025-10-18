@@ -70,7 +70,7 @@ const Navbar = () => {
         </nav>
 
         {/* Hamburger Menu (Mobile) */}
-        <div className="md:hidden flex items-center">
+        <div className="md:hidden flex items-center z-50">
           {menuOpen ? (
             <IoClose
               size={28}
@@ -92,7 +92,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Slide Menu */}
-      <div className={`fixed top-0 right-0 h-screen w-[70%] sm:w-[50%] bg-white backdrop-blur-md shadow-lg transform transition-transform duration-300 z-50 ${
+      <div className={`fixed top-0 right-0 h-screen w-[70%] z-50 sm:w-[50%] bg-white backdrop-blur-md shadow-lg transform transition-transform duration-300 z-50 ${
           menuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >

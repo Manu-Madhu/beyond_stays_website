@@ -1,3 +1,4 @@
+import AboutUsSection from "@/components/home/aboutUs/AboutUsSection";
 import HeroSection from "@/components/home/HeroSection";
 import PackagesSection from "@/components/home/PackagesSection";
 
@@ -9,6 +10,9 @@ export default function Home() {
 
       {/* Packages */}
       <PackagesSection />
+
+      {/* About Us */}
+      <AboutUsSection/>
     </>
   );
 }
