@@ -21,7 +21,13 @@ const Navbar = () => {
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
-    <header className={`fixed top-0 left-0 w-full h-[90px] z-50 transition-all duration-300 ${scrolled ? "bg-white shadow-md" : "bg-transparent"}`}>
+    <header
+      className={`fixed top-0 left-0 w-full h-[80px] z-40 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/60 backdrop-blur-md  shadow-lg z-40"
+          : "bg-transparent"
+      }`}
+    >
       <div className="max-w-[1350px] mx-auto h-full flex items-center justify-between px-5 md:px-8">
         {/* Logo */}
         <Link title="logo" href={"/"}>
@@ -54,7 +60,11 @@ const Navbar = () => {
           </ul>
           <Button
             title="Contact Now"
-            className={`${ scrolled ? "bg-black text-white" : "border-2 text-white" }`}
+            className={`${
+              scrolled
+                ? "bg-black text-white hover:bg-gray-800"
+                : "border-2 text-white hover:bg-white/10"
+            }`}
             link="/contact"
           />
         </nav>
@@ -62,7 +72,7 @@ const Navbar = () => {
         {/* Hamburger Menu (Mobile) */}
         <div className="md:hidden flex items-center">
           {menuOpen ? (
-            <IoClose 
+            <IoClose
               size={28}
               onClick={toggleMenu}
               className={`cursor-pointer ${
@@ -70,7 +80,7 @@ const Navbar = () => {
               }`}
             />
           ) : (
-            <FiMenu 
+            <FiMenu
               size={28}
               onClick={toggleMenu}
               className={`cursor-pointer ${
@@ -82,7 +92,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Slide Menu */}
-      <div className={`fixed top-0 right-0 h-full w-[70%] sm:w-[50%] bg-white shadow-lg transform transition-transform duration-300 z-40 ${
+      <div className={`fixed top-0 right-0 h-screen w-[70%] sm:w-[50%] bg-white backdrop-blur-md shadow-lg transform transition-transform duration-300 z-50 ${
           menuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -95,7 +105,7 @@ const Navbar = () => {
               height={700}
               className="w-[100px]"
             />
-            <IoClose 
+            <IoClose
               size={26}
               className="cursor-pointer text-black"
               onClick={toggleMenu}
@@ -132,7 +142,7 @@ const Navbar = () => {
           <div className="mt-auto pt-10">
             <Button
               title="Contact Now"
-              className="bg-black text-white w-full py-3"
+              className="bg-black text-white w-full py-3 hover:bg-gray-800"
               link=""
             />
           </div>

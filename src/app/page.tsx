@@ -1,4 +1,5 @@
 import HeroSection from "@/components/home/HeroSection";
+import PackagesSection from "@/components/home/PackagesSection";
 
 export default function Home() {
   return (
@@ -6,7 +7,8 @@ export default function Home() {
       {/* Banner Section */}
       <HeroSection />
 
-      {/*  */}
+      {/* Packages */}
+      <PackagesSection />
     </>
   );
 }
