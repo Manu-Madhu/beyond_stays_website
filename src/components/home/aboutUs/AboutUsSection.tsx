@@ -6,8 +6,8 @@ import Slider from "react-slick";
 
 const AboutUsSection = () => {
   const images = [
-    "/assets/images/packages/2.jpeg",
     "/assets/images/packages/2.1.jpg",
+    "/assets/images/packages/2.jpeg",
     "/assets/images/packages/10.jpeg",
     "/assets/images/event/2.jpg",
     "/assets/images/packages/11.jpeg"
@@ -31,23 +31,21 @@ const AboutUsSection = () => {
       <div className="max-w-[1350px] mx-auto h-full px-5 md:px-8 flex justify-start">
         <div className="gap-0">
           <h2 className="titleHeader text-[40px] md:text-[45px] leading-11 md:leading-12 uppercase">
-            We’re not bound <br /> by city limits
+            Where Every 
+            <br />Stay Becomes a Story
           </h2>
           <div className="md:w-[50%] md:pr-5 mt-5">
             <p className="mt-3 text-justify">
-              <strong>A</strong>t Beyond Stays, we believe travel is more than
-              just visiting new places — it’s about creating stories that stay
-              with you forever. Our mission is to take you beyond ordinary stays
-              and into extraordinary experiences that blend comfort, culture,
-              and adventure. Whether you’re seeking a peaceful escape in the
-              mountains, a beachside retreat, or an international getaway, our
-              curated travel packages are designed to fit every traveler’s
-              dream. With a passionate team of travel experts, we ensure every
-              journey is seamless — from personalized itineraries to handpicked
-              accommodations and local experiences that truly capture the spirit
-              of each destination. At Beyond Stays, we don’t just plan trips —
-              we craft journeys that inspire, connect, and leave you with
-              memories that last a lifetime.
+              <strong>B</strong>eyond Stays is all about making travel and stay
+              experiences better. We plan special trips for people who want
+              something unique and personal. Whether it’s a relaxing getaway, an
+              adventure trip, or a quiet escape, we take care of everything —
+              from choosing the perfect stay to planning your full journey. Our
+              goal is to create unforgettable moments that match your mood,
+              style, and interests. With a blend of comfort, culture, and
+              creativity, we ensure every journey feels effortless and
+              meaningful. At Beyond Stays, travel isn’t just about visiting new
+              places — it’s about discovering yourself along the way.
             </p>
           </div>
           <Button
