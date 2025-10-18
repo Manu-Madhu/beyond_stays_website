@@ -37,7 +37,7 @@ const GallerySection = () => {
         {/* View Gallery Button for Mobile */}
         <div className="text-start px-4">
           <Header
-            title="Experience Packages"
+            title="BEYOND GALLERY"
             className="w-full md:w-[20%] gap-2 md:gap-10 flex flex-col md:flex-row md:items-end"
           />
         </div>
