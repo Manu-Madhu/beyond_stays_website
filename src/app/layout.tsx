@@ -21,11 +21,11 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: {
-    default: "Beyond Stays",
+    default: "Beyond Stays | Let’s make your next trip unforgettable.",
     template: "%s | Beyond Stays"
   },
   description:
-    "Discover your next unforgettable travel experience with Beyond Stays — curated stays, unique destinations, and seamless travel planning.",
+    "Beyond Stays offers handpicked stays and custom travel plans made just for you. From start to finish, we take care of the details so you can enjoy the journey.",
   keywords: [
     "Beyond Stays",
     "Travel",
