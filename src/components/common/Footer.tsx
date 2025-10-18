@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <>
       {/* Top Marque section */}
-      <div className="top overflow-hidden border-t-2 border-t-black  md:hidden pt-2 mb-2 mt-8">
+      <div className="top overflow-hidden border-t-2 border-t-black  md:hidden mb-2 mt-1">
         <Marquee gradient={false} speed={100} pauseOnHover={true}>
           <h1 className="titleHeader text-[50px] md:text-[170px] text-gray-900 text-center whitespace-nowrap ">
             # BEYOND STAYS &nbsp; # BEYOND STAYS &nbsp; # BEYOND STAYS &nbsp;
@@ -19,7 +19,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom footer section */}
-      <div className="bg-[#000] w-full md:mt-25 ">
+      <div className="bg-[#000] w-full mt-1">
         <div className="max-w-[1350px] px-5 md:px-8 mx-auto w-full flex flex-col md:flex-row pt-8 md:pt-16">
           <div className="logo md:w-[75%] pb-7 md:pb-16">
             <Image

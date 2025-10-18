@@ -27,12 +27,13 @@ const AboutUsSection = () => {
   };
 
   return (
-    <div className="mt-8 md:mt-25 relative min-h-[65vh] overflow-hidden w-full flex flex-col md:flex-row">
+    <div className="mt-8 md:mt-25 relative md:h-[450px]  overflow-hidden w-full flex flex-col md:flex-row">
       <div className="max-w-[1350px] mx-auto h-full px-5 md:px-8 flex justify-start">
         <div className="gap-0">
           <h2 className="titleHeader text-[40px] md:text-[45px] leading-11 md:leading-12 uppercase">
-            Where Every 
-            <br />Stay Becomes a Story
+            Where Every
+            <br />
+            Stay Becomes a Story
           </h2>
           <div className="md:w-[50%] md:pr-5 mt-5">
             <p className="mt-3 text-justify">
@@ -40,12 +41,13 @@ const AboutUsSection = () => {
               experiences better. We plan special trips for people who want
               something unique and personal. Whether it’s a relaxing getaway, an
               adventure trip, or a quiet escape, we take care of everything —
-              from choosing the perfect stay to planning your full journey. Our
-              goal is to create unforgettable moments that match your mood,
-              style, and interests. With a blend of comfort, culture, and
-              creativity, we ensure every journey feels effortless and
-              meaningful. At Beyond Stays, travel isn’t just about visiting new
-              places — it’s about discovering yourself along the way.
+              from choosing the perfect stay to planning your full journey.{" "}
+              <br />
+              Whether it’s helping a resort improve or planning a custom holiday
+              for a client, we do it with care and attention to detail. We
+              believe every stay should feel special, and every trip should be
+              easy and fun. With Beyond Stays, {" "}
+              <strong className="capitalize mt-1 text-sm">every stay becomes a story worth sharing.</strong>
             </p>
           </div>
           <Button
@@ -57,7 +59,7 @@ const AboutUsSection = () => {
       </div>
 
       {/* --- Carousel Section --- */}
-      <div className="md:absolute w-full md:w-[50%] md:right-0 p-5 md:p-0 md:rounded-l-lg overflow-hidden">
+      <div className="md:absolute w-full md:w-[50%] h-[320px] md:h-[450px] md:right-0 p-5 md:p-0 md:rounded-l-lg overflow-hidden">
         <Slider {...settings}>
           {images.map((src, i) => (
             <div key={i}>
@@ -76,7 +78,7 @@ const AboutUsSection = () => {
       <Button
         title="Know More"
         link="/"
-        className="border border-2 w-fit mb-5 md:hidden mx-5"
+        className="border-2 w-fit my-5 md:hidden mx-5"
       ></Button>
     </div>
   );

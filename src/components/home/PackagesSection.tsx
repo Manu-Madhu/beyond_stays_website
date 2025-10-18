@@ -7,7 +7,7 @@ import Image from "next/image";
 const PackagesSection = () => {
   return (
     <div className="mt-5 md:mt-20 relative">
-      <div className="max-w-[1350px] mx-auto md:min-h-screen p-5 md:px-8">
+      <div className="max-w-[1350px] mx-auto md:min-h-full p-5 md:px-8">
         {/* Header */}
         <Header
           title="Experience Packages"
