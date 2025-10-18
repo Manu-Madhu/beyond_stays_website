@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     siteName: "Beyond Stays",
     images: [
       {
-        url: "/images/og-image.jpg",
+        url: "https://www.travelwithbeyondstays.com/logo/logo.png",
         width: 1200,
         height: 630,
         alt: "Beyond Stays Travel"
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     title: "Beyond Stays",
     description:
       "Travel smarter with Beyond Stays — curated destinations and unique experiences.",
-    images: ["/images/og-image.jpg"]
+    images: ["https://www.travelwithbeyondstays.com/logo/logo.png"]
   },
   metadataBase: new URL("https://www.travelwithbeyondstays.com")
 };
