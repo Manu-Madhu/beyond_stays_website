@@ -61,7 +61,7 @@ body {
   display: flex !important; 
   justify-content: center;
   align-items: center;
-  gap: 3px; 
+  gap: 2px; 
 }
 
 .custom-dots li {

@@ -27,7 +27,7 @@ const AboutUsSection = () => {
   };
 
   return (
-    <div className="mt-8 md:mt-20 relative min-h-[65vh] overflow-hidden w-full flex flex-col md:flex-row">
+    <div className="mt-8 md:mt-25 relative min-h-[65vh] overflow-hidden w-full flex flex-col md:flex-row">
       <div className="max-w-[1350px] mx-auto h-full px-5 md:px-8 flex justify-start">
         <div className="gap-0">
           <h2 className="titleHeader text-[40px] md:text-[45px] leading-11 md:leading-12 uppercase">
@@ -51,9 +51,9 @@ const AboutUsSection = () => {
             </p>
           </div>
           <Button
-            title="Know More"
+            title="Read More"
             link="/"
-            className="border border-2 w-fit mt-5 hidden md:block"
+            className="border-2 w-fit mt-5 hidden md:block"
           ></Button>
         </div>
       </div>

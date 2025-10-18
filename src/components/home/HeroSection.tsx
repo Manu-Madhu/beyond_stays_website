@@ -16,9 +16,9 @@ const HeroSection = () => {
         </video>
         <div className="bg-black/20 absolute top-0 left-0 w-full h-full"></div>
         <div className="container flex flex-col gap-6 md:gap-10 items-center justify-end h-full absolute bottom-[30%] md:bottom-[12%]">
-          <h1 className="uppercase text-center font-[800] leading-[50px] md:leading-[92px] text-[45px] md:text-[100px] text-white">
+          <h2 className="uppercase text-center font-[800] leading-[50px] md:leading-[92px] text-[45px] md:text-[100px] text-white">
             Discover Your Adventure
-          </h1>
+          </h2>
           <Button
             title="Adventure With Us"
             link="/"
