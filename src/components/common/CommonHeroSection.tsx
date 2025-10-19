@@ -18,7 +18,7 @@ const CommonHeroSection: React.FC<BannerProps> = ({
         className="w-full h-full absolute left-0 top-0 object-cover object-center z-0"
       />
       {/* Overlay to ensure text readability */}
-      <div className="absolute inset-0 bg-black/30 z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
 
       <div className="max-w-[1350px] mx-auto h-full px-5 md:px-8 flex flex-col items-start justify-center relative z-20">
         <h2 className="titleHeader text-white text-[40px] md:text-[50px] leading-11 md:leading-13 uppercase md:w-[70%]">

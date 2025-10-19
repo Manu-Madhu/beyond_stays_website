@@ -45,10 +45,10 @@ const Footer = () => {
               you can enjoy the journey.
             </p>
             <div className="text-gray-300  flex gap-3 mt-5">
-              <Link href={"/"} title="instagram">
+              <Link href={"https://www.instagram.com/beyondstays?igsh=MXZ3Nzk4Nm5wZjI2YQ=="} title="instagram">
                 <BsInstagram className="cursor-pointer hover:text-white" />
               </Link>
-              <Link href={"/"} title="Facebook">
+              <Link href={"https://www.facebook.com/share/1BWJcZ23dF/?mibextid=wwXIfr"} title="Facebook">
                 <BsFacebook className="cursor-pointer hover:text-white" />
               </Link>
               <Link href={"/"} title="Twitter">
@@ -59,14 +59,15 @@ const Footer = () => {
           <div className="w-full text-[#b3b3b3] text-sm font-[400] flex flex-col md:flex-row gap-5 md:gap-14 pb-10">
             <ul className="md:hidden flex-col gap-1 w-full">
               <p className="text-sm">
-                Taluk Office Kasaragod,Near Mallikarjuna Temple,Kasaragod
-                P.O,Kasaragod Dist. 671121
+                TC 81/4131, NEAR POORNA HOTEL, STATUE, Thiruvananthapuram
+                G.P.O., Thiruvananthapuram, Thiruvananthapuram, Kerala, India,
+                695001
               </p>
               <p className="text-sm flex items-center gap-2  text-justify mt-2">
                 <MdEmail /> beyondstayspvtltd@gmail.com
               </p>
               <p className="text-sm flex items-center gap-2 text-justify mt-2 text-nowrap">
-                <BiPhone /> +91 8304055778, +91 9778024803
+                <BiPhone /> +91 90207 62726
               </p>
             </ul>
             <ul className="flex flex-col gap-2 text-nowrap">
@@ -107,14 +108,15 @@ const Footer = () => {
             </ul>
             <ul className="hidden md:flex flex-col gap-1 w-full">
               <p className="text-sm">
-                Taluk Office Kasaragod,Near Mallikarjuna Temple,Kasaragod
-                P.O,Kasaragod Dist. 671121
+                TC 81/4131, NEAR POORNA HOTEL, STATUE, Thiruvananthapuram
+                G.P.O., Thiruvananthapuram, Thiruvananthapuram, Kerala, India,
+                695001
               </p>
               <p className="text-sm flex items-center gap-2  text-justify mt-2">
                 <MdEmail /> beyondstayspvtltd@gmail.com
               </p>
               <p className="text-sm flex items-center gap-2 text-justify mt-2 text-nowrap">
-                <BiPhone /> +91 8304055778, +91 9778024803
+                <BiPhone /> +91 90207 62726
               </p>
             </ul>
           </div>

@@ -150,7 +150,7 @@ const Navbar = () => {
             <Button
               title="Contact Now"
               className="bg-black text-white w-full py-3 hover:bg-gray-800"
-              link=""
+              link="/contact"
             />
           </div>
         </div>
