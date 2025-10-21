@@ -8,7 +8,7 @@ const ContactPage = () => {
       {/* Hero Section */}
       <CommonHeroSection
         banner="/assets/images/packages/14.jpg"
-        title="Connect With Us."
+        title="Contact Us."
       />
 
       {/* Session */}
