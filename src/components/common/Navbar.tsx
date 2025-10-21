@@ -54,12 +54,19 @@ const Navbar = () => {
             >
               Home
             </Link>
-            <li className="cursor-pointer hover:opacity-70 transition">
+            <Link
+              href={"/about-us"}
+              title="About us"
+              className="cursor-pointer hover:opacity-70 transition">
               About Us
-            </li>
-            <li className="cursor-pointer hover:opacity-70 transition">
+            </Link>
+            <Link
+              href={"/packages"}
+              title="Packages"
+              className="cursor-pointer hover:opacity-70 transition"
+            >
               Package
-            </li>
+            </Link>
             <Link
               href={"/gallery"}
               title="gallery"
@@ -132,18 +139,22 @@ const Navbar = () => {
             >
               Home
             </Link>
-            <li
+            <Link
+              href={"/about-us"}
+              title="About us"
               onClick={toggleMenu}
               className="cursor-pointer hover:text-black transition"
             >
               About Us
-            </li>
-            <li
+            </Link>
+            <Link
+              href={"/packages"}
+              title="Packages"
               onClick={toggleMenu}
               className="cursor-pointer hover:text-black transition"
             >
               Package
-            </li>
+            </Link>
             <Link
               href={"/gallery"}
               title="gallery"

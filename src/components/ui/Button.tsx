@@ -1,3 +1,4 @@
+'use client'
 import { ButtonProps } from "@/types/Common";
 import { cn } from "@/utils/Cn.utils";
 import Link from "next/link";

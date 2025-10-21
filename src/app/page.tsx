@@ -1,3 +1,4 @@
+import ContactUsSection from "@/components/contactPage/ContactUsSection";
 import AboutUsSection from "@/components/home/aboutUs/AboutUsSection";
 import GallerySection from "@/components/home/gallery/GallerySection";
 import HeroSection from "@/components/home/HeroSection";
@@ -18,6 +19,9 @@ export default function Home() {
 
       {/* Story Connect */}
       <StorySection />
+
+      {/* Session */}
+      <ContactUsSection />
 
       {/* Gallery Part */}
       <GallerySection />
