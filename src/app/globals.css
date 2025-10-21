@@ -57,26 +57,41 @@ body {
 /* ----- End ----- */
 
 .custom-dots {
-  bottom: 25px !important; 
-  display: flex !important; 
+  bottom: 25px !important;
+  display: flex !important;
   justify-content: center;
   align-items: center;
-  gap: 2px; 
+  gap: 2px;
 }
 
 .custom-dots li {
-  margin: 0 !important; 
+  margin: 0 !important;
   padding: 0 !important;
 }
 
 .custom-dots li button:before {
   color: white;
   opacity: 0.5;
-  font-size: 10px; 
+  font-size: 10px;
   transition: all 0.3s ease;
 }
 
 .custom-dots li.slick-active button:before {
-  color: #0a0a0a; 
+  color: #0a0a0a;
   opacity: 1;
 }
+
+/* ----- lenis ------ */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ----- end ------ */

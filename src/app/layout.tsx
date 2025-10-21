@@ -5,6 +5,7 @@ import Navbar from "@/components/common/Navbar";
 
 import "./globals.css";
 import Footer from "@/components/common/Footer";
+import SmoothScrollWrapper from "@/context/InitialLenis";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -70,14 +71,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${roboto.variable} antialiased`}>
-        {/* Navbar */}
-        <Navbar />
+        <SmoothScrollWrapper>
+          {/* Navbar */}
+          <Navbar />
 
-        {/* Children */}
-        {children}
+          {/* Children */}
+          {children}
 
-        {/* Footer */}
-        <Footer />
+          {/* Footer */}
+          <Footer />
+        </SmoothScrollWrapper>
       </body>
     </html>
   );
