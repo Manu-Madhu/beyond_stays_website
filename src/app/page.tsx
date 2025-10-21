@@ -20,9 +20,6 @@ export default function Home() {
       {/* Story Connect */}
       <StorySection />
 
-      {/* Session */}
-      <ContactUsSection />
-
       {/* Gallery Part */}
       <GallerySection />
     </>

@@ -22,7 +22,7 @@ const CommonHeroSection: React.FC<BannerProps> = ({
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
 
       <div className="max-w-[1350px] mx-auto h-full px-5 md:px-8 flex flex-col items-start justify-center relative z-20">
-        <h2 className="titleHeader text-white text-[40px] md:text-[50px] leading-11 md:leading-13 uppercase md:w-[70%]">
+        <h2 className="titleHeader text-white text-[40px] md:text-[100px] leading-11 md:leading-13 uppercase md:w-[70%] absolute bottom-3.5 left-5 md:left-8">
           {title}
         </h2>
 

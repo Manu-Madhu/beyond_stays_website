@@ -3,12 +3,9 @@ import React from "react";
 
 const AboutSection = () => {
   return (
-    <div className="max-w-[1350px] mx-auto px-5 md:px-8 mt-8 md:mt-20 overflow-hidden">
+    <div className="max-w-[1350px] mx-auto px-5 md:px-8 mt-8 md:mt-25 overflow-hidden">
       <div className="w-full flex flex-col md:flex-row gap-5 md:gap-10">
         <div className="w-full h-full flex flex-col items-center justify-start">
-          <h2 className="titleHeader text-[30px] md:text-[65px] leading-8 md:leading-16 font-bold uppercase md:w-[80%] z-10">
-            Where Every Stay Becomes a Story
-          </h2>
           <Image
             src={"/assets/images/packages/1.png"}
             alt="Gallery image 1"
@@ -16,8 +13,11 @@ const AboutSection = () => {
             width={1920}
             height={1080}
             priority
-            className="w-full h-[350px] md:h-[520px] object-cover object-center z-0 rounded-lg mt-5 md:-mt-6"
+            className="w-full h-[350px] md:h-[520px] object-cover object-center z-0 rounded-lg order-2 md:order-1"
           />
+          <h2 className="titleHeader order-1 md:order-2 text-[30px] md:text-[65px] mb-5 md:-mt-10 leading-8 md:leading-16 font-bold uppercase md:w-[80%] z-10 ">
+            Where Every Stay Becomes a Story
+          </h2>
         </div>
         <div className="w-full h-full ">
           <div className="md:w-[80%] text-justify md:text-start space-y-2 md:space-y-3">

@@ -31,7 +31,7 @@ const GallerySection = () => {
   };
 
   return (
-    <div className="mt-8 md:mt-30">
+    <div className="mt-8 md:mt-20">
       {/* Mobile Layout - Carousel */}
       <div className="block md:hidden mb-10">
         {/* View Gallery Button for Mobile */}

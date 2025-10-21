@@ -8,7 +8,7 @@ const GalleryPage = () => {
       {/* Common Hero Setion */}
       <CommonHeroSection
         banner={"/assets/images/packages/10.jpeg"}
-        title="Our Adventures Snapped"
+        title="Our Adventures"
       />
 
       {/* Gallery Setion */}

@@ -52,7 +52,7 @@ const AboutUsSection = () => {
           </div>
           <Button
             title="Read More"
-            link="/"
+            link="/about-us"
             className="border-2 w-fit mt-5 hidden md:block"
           ></Button>
         </div>
