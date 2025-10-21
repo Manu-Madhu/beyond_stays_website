@@ -1,4 +1,5 @@
 import CommonHeroSection from "@/components/common/CommonHeroSection";
+import ContactUsSection from "@/components/contactPage/ContactUsSection";
 import React from "react";
 
 const ContactPage = () => {
@@ -7,10 +8,11 @@ const ContactPage = () => {
       {/* Hero Section */}
       <CommonHeroSection
         banner="/assets/images/packages/14.jpg"
-        title="Connect With Us..."
+        title="Connect With Us."
       />
 
       {/* Session */}
+      <ContactUsSection />
     </div>
   );
 };

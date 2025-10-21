@@ -47,7 +47,13 @@ const Navbar = () => {
               scrolled ? "text-black" : "text-white"
             }`}
           >
-            <li className="cursor-pointer hover:opacity-70 transition">Home</li>
+            <Link
+              href={"/"}
+              title="Home"
+              className="cursor-pointer hover:opacity-70 transition"
+            >
+              Home
+            </Link>
             <li className="cursor-pointer hover:opacity-70 transition">
               About Us
             </li>
@@ -118,12 +124,14 @@ const Navbar = () => {
           </div>
 
           <ul className="flex flex-col gap-6 text-lg font-semibold text-gray-800">
-            <li
+            <Link
+              href={"/"}
+              title="Home"
               onClick={toggleMenu}
               className="cursor-pointer hover:text-black transition"
             >
               Home
-            </li>
+            </Link>
             <li
               onClick={toggleMenu}
               className="cursor-pointer hover:text-black transition"

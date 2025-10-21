@@ -13,8 +13,9 @@ const CommonHeroSection: React.FC<BannerProps> = ({
         src={banner}
         alt="Gallery image 1"
         title="Gallery image 1"
-        width={700}
-        height={700}
+        width={1920} 
+        height={1080}
+        priority 
         className="w-full h-full absolute left-0 top-0 object-cover object-center z-0"
       />
       {/* Overlay to ensure text readability */}
@@ -28,7 +29,10 @@ const CommonHeroSection: React.FC<BannerProps> = ({
         <div className="flex gap-3 mt-5">
           {subtitle?.length !== 0 &&
             subtitle?.map((item, index) => (
-              <div key={index} className="bg-white py-1.5 px-5 text-sm font-semibold rounded-full">
+              <div
+                key={index}
+                className="bg-white py-1.5 px-5 text-sm font-semibold rounded-full"
+              >
                 {item}
               </div>
             ))}

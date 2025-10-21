@@ -19,7 +19,7 @@ const Footer = () => {
       </div>
 
       {/* bottom Marque section */}
-      <div className=" overflow-hidden  border-t-black hidden md:flex">
+      <div className=" overflow-hidden border-t-2 border-t-gray-400 hidden md:flex">
         <Marquee gradient={false} speed={100} pauseOnHover={true}>
           <h1 className="titleHeader text-[50px] md:text-[120px] text-gray-900 text-center leading-[1] whitespace-nowrap mb-0 mt-0 overflow-hidden">
             # BEYOND STAYS &nbsp; # BEYOND STAYS &nbsp; # BEYOND STAYS &nbsp;
