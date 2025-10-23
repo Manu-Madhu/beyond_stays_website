@@ -22,7 +22,7 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full h-[75px] z-40 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full h-[80px] z-40 transition-all duration-300 ${
         scrolled
           ? "bg-white/60 backdrop-blur-md  shadow-lg z-40"
           : "bg-transparent"
@@ -32,7 +32,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link title="logo" href={"/"}>
           <Image
-            src={scrolled ? "/logo/logo2.png" : "/logo/logo2white.png"}
+            src={scrolled ? "/logo/navLogo.png" : "/logo/navLogoWhite.png"}
             alt="logo"
             width={700}
             height={700}

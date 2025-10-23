@@ -32,8 +32,8 @@ const Footer = () => {
         <div className="max-w-[1350px] px-5 md:px-8 mx-auto w-full flex flex-col md:flex-row pt-8 md:pt-16">
           <div className="logo md:w-[75%] pb-7 md:pb-16">
             <Image
-              src={"/logo/logo2white.png"}
-              className="w-30"
+              src={"/logo/navLogoWhite.png"}
+              className="w-45"
               width={500}
               height={500}
               alt="logo"
@@ -45,10 +45,20 @@ const Footer = () => {
               you can enjoy the journey.
             </p>
             <div className="text-gray-300  flex gap-3 mt-5">
-              <Link href={"https://www.instagram.com/beyondstays?igsh=MXZ3Nzk4Nm5wZjI2YQ=="} title="instagram">
+              <Link
+                href={
+                  "https://www.instagram.com/beyondstays?igsh=MXZ3Nzk4Nm5wZjI2YQ=="
+                }
+                title="instagram"
+              >
                 <BsInstagram className="cursor-pointer hover:text-white" />
               </Link>
-              <Link href={"https://www.facebook.com/share/1BWJcZ23dF/?mibextid=wwXIfr"} title="Facebook">
+              <Link
+                href={
+                  "https://www.facebook.com/share/1BWJcZ23dF/?mibextid=wwXIfr"
+                }
+                title="Facebook"
+              >
                 <BsFacebook className="cursor-pointer hover:text-white" />
               </Link>
               <Link href={"/"} title="Twitter">
@@ -125,9 +135,30 @@ const Footer = () => {
         {/* bottom footer */}
         <div className="max-w-[1350px] px-5 md:px-8 mx-auto w-full ">
           <div className="border-t border-gray-300 w-full space-x-3 py-4 md:py-6 text-xs text-gray-300  flex flex-col md:flex-row md:justify-between md:items-center gap-2 ">
-            <p className="">
+            <p className="flex gap-2">
               ©{new Date().getFullYear()} Beyond Stays INDIA. All Rights
               Reserved.
+              <div className="text-gray-300  flex gap-3 ">
+                <Link
+                  href={
+                    "https://www.instagram.com/beyondstays?igsh=MXZ3Nzk4Nm5wZjI2YQ=="
+                  }
+                  title="instagram"
+                >
+                  <BsInstagram className="cursor-pointer hover:text-white" />
+                </Link>
+                <Link
+                  href={
+                    "https://www.facebook.com/share/1BWJcZ23dF/?mibextid=wwXIfr"
+                  }
+                  title="Facebook"
+                >
+                  <BsFacebook className="cursor-pointer hover:text-white" />
+                </Link>
+                <Link href={"/"} title="Twitter">
+                  <BsTwitter className="cursor-pointer hover:text-white" />
+                </Link>
+              </div>
             </p>
             <p>
               Developed By{" "}
