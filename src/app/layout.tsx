@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     siteName: "Beyond Stays",
     images: [
       {
-        url: "https://www.travelwithbeyondstays.com/logo/logo2.png",
+        url: "https://www.travelwithbeyondstays.com/logo/logov2.png",
         width: 1200,
         height: 630,
         alt: "Beyond Stays Travel"
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     title: "Beyond Stays | Let’s make your next trip unforgettable",
     description:
       "Beyond Stays offers handpicked stays and custom travel plans made just for you. From start to finish, we take care of the details so you can enjoy the journey.",
-    images: ["https://www.travelwithbeyondstays.com/logo/logo2.png"]
+    images: ["https://www.travelwithbeyondstays.com/logo/logov2.png"]
   },
   metadataBase: new URL("https://www.travelwithbeyondstays.com")
 };
