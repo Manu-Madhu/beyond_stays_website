@@ -2,7 +2,6 @@ import React from "react";
 import Header from "../common/Header";
 import Button from "../ui/Button";
 import TabSection from "../common/TabSection";
-import Image from "next/image";
 
 const PackagesSection = () => {
   return (
