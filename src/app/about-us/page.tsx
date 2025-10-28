@@ -1,4 +1,3 @@
-import AboutContentOne from "@/components/about/AboutContentOne";
 import AboutSection from "@/components/about/AboutSection";
 import AboutUsContact from "@/components/about/AboutUsContact";
 import CommonHeroSection from "@/components/common/CommonHeroSection";

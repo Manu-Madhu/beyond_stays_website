@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef } from "react";
 import { CardData } from "@/types/CardData";
+import Link from "next/link";
 
 interface CardCarouselProps {
   cards: CardData[];
@@ -53,16 +54,18 @@ const CardCarousel: React.FC<CardCarouselProps> = ({ cards }) => {
             </div>
 
             {/* Read More Bubble */}
-            <div
-              className="absolute top-[12%] right-20 translate-x-1/2 -translate-y-1/2 bg-black/80 rounded-full 
+            <Link title="package detailed page" href={'/property/property-one-beyond-stays'}>
+              <div
+                className="absolute top-[12%] right-20 translate-x-1/2 -translate-y-1/2 bg-black/80 rounded-full 
                          w-[130px] h-[130px] flex items-center justify-center 
                          scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 
                          transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]"
-            >
-              <h3 className="uppercase text-white text-[15px] tracking-wide font-semibold">
-                Read More
-              </h3>
-            </div>
+              >
+                <h3 className="uppercase text-white text-[15px] tracking-wide font-semibold">
+                  Read More
+                </h3>
+              </div>
+            </Link>
           </div>
         ))}
       </div>

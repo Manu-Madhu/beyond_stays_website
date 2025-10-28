@@ -44,7 +44,7 @@ const Footer = () => {
               just for you. From start to finish, we take care of the details so
               you can enjoy the journey.
             </p>
-            <div className="text-gray-300  flex gap-3 mt-5">
+            <div className="text-gray-300 flex gap-3 mt-5">
               <Link
                 href={
                   "https://www.instagram.com/beyondstays?igsh=MXZ3Nzk4Nm5wZjI2YQ=="
