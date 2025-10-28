@@ -14,7 +14,7 @@ const PackagesSection = () => {
         >
           <Button
             title="View All Packages"
-            link="/package"
+            link="/packages"
             className="border-2 text-black md:mb-2 w-fit hidden md:block"
           />
         </Header>
@@ -26,7 +26,7 @@ const PackagesSection = () => {
 
         <Button
           title="View All Packages"
-          link="/package"
+          link="/packages"
           className="border-2 text-black md:mb-2 w-fit  md:hidden mt-4"
         />
       </div>

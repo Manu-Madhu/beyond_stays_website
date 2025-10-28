@@ -22,7 +22,7 @@ const HeroSection = () => {
           </h2>
           <Button
             title="Adventure With Us"
-            link="/"
+            link="/about-us"
             className="border-2 text-white"
           />
         </div>

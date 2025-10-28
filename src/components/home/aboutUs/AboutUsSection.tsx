@@ -47,7 +47,7 @@ const AboutUsSection = () => {
               for a client, we do it with care and attention to detail. We
               believe every stay should feel special, and every trip should be
               easy and fun. With Beyond Stays, {" "}
-              <strong className="capitalize mt-1 text-sm">every stay becomes a story worth sharing.</strong>
+              <strong className="capitalize mt-1 text-sm text-gray-500">every stay becomes a story worth sharing.</strong>
             </p>
           </div>
           <Button

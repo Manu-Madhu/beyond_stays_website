@@ -18,7 +18,7 @@ export default function PropertyAmenities({ amenities }: PropertyAmenitiesProps)
           <h2 className="titleHeader text-[40px] md:text-[45px] leading-11 md:leading-12 uppercase">
             What We Provide
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl leading-relaxed mt-2">
+          <p className=" text-gray-600 max-w-2xl leading-relaxed mt-2">
             Every detail is carefully curated to ensure your stay is nothing short of extraordinary
           </p>
         </div>

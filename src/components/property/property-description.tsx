@@ -18,7 +18,7 @@ export default function PropertyDescription({ description, price }: PropertyDesc
             className="w-full md:w-[80%] gap-2 md:gap-10 flex flex-col md:flex-row md:items-end"
           >
           </Header>
-          <p className="text-lg text-gray-700 leading-relaxed mb-8">{description}</p>
+          <p className=" text-gray-700 leading-relaxed mb-8 text-justify mt-3">{description}</p>
 
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-black">What to Expect</h3>
