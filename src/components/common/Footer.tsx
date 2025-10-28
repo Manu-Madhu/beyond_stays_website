@@ -161,7 +161,7 @@ const Footer = () => {
               </div>
             </p>
             <p>
-              Developed By{" "}
+              Designed And Developed By{" "}
               <a
                 href="https://www.linkedin.com/in/manu-m-madhu/"
                 target="_blank"
