@@ -1,5 +1,5 @@
 'use client'
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../ui/Button";
 
 interface PackageCard {
@@ -10,6 +10,16 @@ interface PackageCard {
 }
 
 const AboutContentOne = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check window width only on client
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize(); // initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const packageData: PackageCard[] = [
     {
       id: 1,
@@ -126,8 +136,7 @@ const AboutContentOne = () => {
         <Button
           title="Customize Your Trip"
           link="/contact"
-          className={`border-2 text-black ${window.innerWidth < 768 ? 'w-full mt-6 mb-20' : 'w-fit mt-5 md:mt-8'
-            }`}
+          className={`border-2 text-black ${isMobile ? 'w-full mt-6 mb-20' : 'w-fit mt-5 md:mt-8'}`}
         />
       </div>
     </div>
