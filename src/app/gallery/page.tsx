@@ -7,6 +7,12 @@ export const metadata: Metadata = {
   title: `Gallery | Beyond Stays - Luxury Travel Experience`,
   description: 'Explore the Beyond Stays image gallery and discover breathtaking destinations, cozy stays, and unforgettable experiences captured in every moment.',
   keywords: ["luxury camping", "travel", "adventure", "nature", 'beyond stays', 'gallery'],
+  openGraph: {
+    title: `Gallery | Beyond Stays - Luxury Travel Experience`,
+    description: 'Explore the Beyond Stays image gallery and discover breathtaking destinations, cozy stays, and unforgettable experiences captured in every moment.',
+    images: ["/assets/images/packages/10.jpeg"],
+    type: "website",
+  },
 }
 
 
