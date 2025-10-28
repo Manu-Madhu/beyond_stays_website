@@ -11,7 +11,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: `About Us | Beyond Stays - Luxury Travel Experience`,
     description: 'Discover Beyond Stays – your perfect escape for unique boutique stays, curated experiences, and personalized hospitality across stunning destinations.',
-    images: ["/assets/images/packages/4.jpg"],
     type: "website",
   },
 }

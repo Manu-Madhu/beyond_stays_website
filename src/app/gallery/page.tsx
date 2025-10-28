@@ -10,7 +10,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: `Gallery | Beyond Stays - Luxury Travel Experience`,
     description: 'Explore the Beyond Stays image gallery and discover breathtaking destinations, cozy stays, and unforgettable experiences captured in every moment.',
-    images: ["/assets/images/packages/10.jpeg"],
     type: "website",
   },
 }

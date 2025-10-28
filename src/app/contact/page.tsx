@@ -10,7 +10,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: `Contact Us | Beyond Stays - Luxury Travel Experience`,
     description: 'Get in touch with Beyond Stays for bookings, inquiries, or assistance. Our team is here to help you plan your perfect stay and unforgettable getaway.',
-    images: ["/assets/images/packages/4.jpg"],
     type: "website",
   },
 }
