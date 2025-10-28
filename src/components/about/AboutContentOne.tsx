@@ -126,7 +126,7 @@ const AboutContentOne = () => {
         <Button
           title="Customize Your Trip"
           link="/contact"
-          className={`border-2 text-black ${window.innerWidth < 768 ? 'w-full mt-6' : 'w-fit mt-5 md:mt-8'
+          className={`border-2 text-black ${window.innerWidth < 768 ? 'w-full mt-6 mb-20' : 'w-fit mt-5 md:mt-8'
             }`}
         />
       </div>
