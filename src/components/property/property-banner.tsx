@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import { useEffect } from "react"
 
 interface PropertyBannerProps {
   image: string
@@ -12,6 +13,9 @@ interface PropertyBannerProps {
 }
 
 export default function PropertyBanner({ image, name, category, location, rating, reviews }: PropertyBannerProps) {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }, [])
   return (
     <div className="relative w-full h-96 md:h-[500px] overflow-hidden bg-black">
       <Image src={image || "/placeholder.svg"} alt={name} fill className="object-cover" priority />
