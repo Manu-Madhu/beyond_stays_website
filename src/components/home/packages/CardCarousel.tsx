@@ -40,10 +40,7 @@ const CardCarousel: React.FC<CardCarouselProps> = ({ cards }) => {
             />
 
             {/* Overlay Blur */}
-            <div
-              className="absolute inset-0 bg-black/20 backdrop-blur-0 transition-all duration-500 
-                         group-hover:bg-black/40 group-hover:backdrop-blur-sm"
-            ></div>
+            <div className="absolute inset-0 bg-black/20 backdrop-blur-0 transition-all duration-500 group-hover:bg-black/40 group-hover:backdrop-blur-sm"></div>
 
             {/* Text Content */}
             <div className="absolute bottom-0 left-0 w-full p-5 text-white z-10">
@@ -55,11 +52,8 @@ const CardCarousel: React.FC<CardCarouselProps> = ({ cards }) => {
 
             {/* Read More Bubble */}
             <Link title="package detailed page" href={'/property/property-one-beyond-stays'}>
-              <div
-                className="absolute top-[12%] right-20 translate-x-1/2 -translate-y-1/2 bg-black/80 rounded-full 
-                         w-[130px] h-[130px] flex items-center justify-center 
-                         scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 
-                         transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]"
+              <div className="absolute top-[12%] right-20 translate-x-1/2 -translate-y-1/2 bg-black/80 rounded-full w-[130px] h-[130px] flex items-center justify-center 
+                scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]"
               >
                 <h3 className="uppercase text-white text-[15px] tracking-wide font-semibold">
                   Read More

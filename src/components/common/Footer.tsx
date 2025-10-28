@@ -122,7 +122,7 @@ const Footer = () => {
                 G.P.O., Thiruvananthapuram, Thiruvananthapuram, Kerala, India,
                 695001
               </p>
-              <p className="text-sm flex items-center gap-2  text-justify mt-2">
+              <p className="text-sm flex items-center gap-2 text-justify mt-2">
                 <MdEmail /> beyondstayspvtltd@gmail.com
               </p>
               <p className="text-sm flex items-center gap-2 text-justify mt-2 text-nowrap">
@@ -138,7 +138,7 @@ const Footer = () => {
             <p className="flex gap-2">
               ©{new Date().getFullYear()} Beyond Stays INDIA. All Rights
               Reserved.
-              <div className="text-gray-300  flex gap-3 ">
+              <div className="text-gray-300 flex gap-3 ">
                 <Link
                   href={
                     "https://www.instagram.com/beyondstays?igsh=MXZ3Nzk4Nm5wZjI2YQ=="

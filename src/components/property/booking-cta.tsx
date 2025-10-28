@@ -8,7 +8,7 @@ export default function BookingCTA({ propertyName }: BookingCTAProps) {
   const handleWhatsAppClick = () => {
     const message = `Hi! I'm interested in booking ${propertyName} at Beyond Stays. Could you please provide more details and availability?`
     const encodedMessage = encodeURIComponent(message)
-    const whatsappUrl = `https://wa.me/917356924029?text=${encodedMessage}`
+    const whatsappUrl = `https://wa.me/918304055778?text=${encodedMessage}`
     window.open(whatsappUrl, "_blank")
   }
 
