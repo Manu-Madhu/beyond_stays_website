@@ -22,11 +22,10 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full h-[80px] z-40 transition-all duration-300 ${
-        scrolled
+      className={`fixed top-0 left-0 w-full h-[80px] z-40 transition-all duration-300 ${scrolled
           ? "bg-white/60 backdrop-blur-md  shadow-lg z-40"
           : "bg-transparent"
-      }`}
+        }`}
     >
       <div className="max-w-[1350px] mx-auto h-full flex items-center justify-between px-5 md:px-8">
         {/* Logo */}
@@ -43,9 +42,8 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <nav className="hidden md:flex items-center gap-8 font-semibold">
           <ul
-            className={`flex items-center gap-8 text-sm ${
-              scrolled ? "text-black" : "text-white"
-            }`}
+            className={`flex items-center gap-8 text-sm ${scrolled ? "text-black" : "text-white"
+              }`}
           >
             <Link
               href={"/"}
@@ -77,11 +75,10 @@ const Navbar = () => {
           </ul>
           <Button
             title="Contact Now"
-            className={`text-sm ${
-              scrolled
+            className={`text-sm ${scrolled
                 ? "bg-black text-white hover:bg-gray-800 border-2 border-black"
                 : "border-2 text-white hover:bg-white/10"
-            }`}
+              }`}
             link="/contact"
           />
         </nav>
@@ -92,17 +89,15 @@ const Navbar = () => {
             <IoClose
               size={28}
               onClick={toggleMenu}
-              className={`cursor-pointer ${
-                scrolled ? "text-black" : "text-white"
-              }`}
+              className={`cursor-pointer ${scrolled ? "text-black" : "text-white"
+                }`}
             />
           ) : (
             <FiMenu
               size={28}
               onClick={toggleMenu}
-              className={`cursor-pointer ${
-                scrolled ? "text-black" : "text-white"
-              }`}
+              className={`cursor-pointer ${scrolled ? "text-black" : "text-white"
+                }`}
             />
           )}
         </div>
@@ -110,14 +105,13 @@ const Navbar = () => {
 
       {/* Mobile Slide Menu */}
       <div
-        className={`fixed top-0 right-0 h-screen w-[70%] z-50 sm:w-[50%] bg-white backdrop-blur-md shadow-lg transform transition-transform duration-300 ${
-          menuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`fixed top-0 right-0 h-screen w-[70%] z-50 sm:w-[50%] bg-white backdrop-blur-md shadow-lg transform transition-transform duration-300 ${menuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         <div className="flex flex-col h-full p-6">
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex justify-between items-center mb-5">
             <Image
-              src="/logo/logo2.png"
+              src="/logo/navLogo.png"
               alt="logo"
               width={700}
               height={700}
@@ -163,15 +157,22 @@ const Navbar = () => {
             >
               Gallery
             </Link>
+            <Link
+              href={"/contact"}
+              title="gallery"
+              onClick={toggleMenu}
+              className="cursor-pointer hover:text-black transition"
+            >
+              Contact Us
+            </Link>
+            {/* <Button
+              title="Contact Now"
+              className="border-2 w-full py-2.5 mt-3"
+              link="/contact"
+            /> */}
           </ul>
 
-          <div className="mt-auto">
-            <Button
-              title="Contact Now"
-              className="bg-black text-white w-full py-3 hover:bg-gray-800"
-              link="/contact"
-            />
-          </div>
+
         </div>
       </div>
 
