@@ -1,5 +1,4 @@
 export const gallery = [
-    { src: "/assets/images/packages/20.JPG", alt: "Gallery 1fhvgf" },
     { src: "/assets/images/gallery/1.JPG", alt: "Gallery 1" },
     { src: "/assets/images/gallery/2.JPG", alt: "Gallery 2" },
     { src: "/assets/images/gallery/3.JPG", alt: "Gallery 3" },
@@ -88,7 +87,7 @@ export const gallery = [
     { src: "/assets/images/gallery/86.JPG", alt: "Gallery 86" },
     { src: "/assets/images/gallery/87.JPG", alt: "Gallery 87" },
     { src: "/assets/images/gallery/88.JPG", alt: "Gallery 88" },
-    { src: "/assets/images/gallery/89.JPG", alt: "Gallery 89" },    
+    { src: "/assets/images/gallery/89.JPG", alt: "Gallery 89" },
     { src: "/assets/images/gallery/100.JPG", alt: "Gallery 100" },
     { src: "/assets/images/gallery/101.JPG", alt: "Gallery 101" },
     { src: "/assets/images/gallery/102.JPG", alt: "Gallery 102" },

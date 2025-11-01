@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import { BiRightArrow } from "react-icons/bi";
 import Header from "@/components/common/Header";
@@ -82,30 +82,27 @@ const GalleryListing: React.FC<GalleryListingProps> = ({
     return 4;
   };
 
-  // Load more images function
+  const loadedCountRef = useRef(0);
+
   const loadMoreImages = useCallback((): void => {
     if (loading || !hasMore) return;
-
     setLoading(true);
-
-    // Simulate API call delay
+  
     setTimeout(() => {
-      const currentCount: number = displayedImages.length;
-      const nextImages: GalleryImage[] = images.slice(
-        currentCount,
-        currentCount + imagesPerPage
-      );
-
+      const currentCount = loadedCountRef.current;
+      const nextImages = images.slice(currentCount, currentCount + imagesPerPage);
+  
       if (nextImages.length === 0) {
         setHasMore(false);
         setLoading(false);
         return;
       }
-
-      setDisplayedImages((prev) => [...prev, ...nextImages]);
+  
+      setDisplayedImages(prev => [...prev, ...nextImages]);
+      loadedCountRef.current += nextImages.length; // ✅ Update reference
       setLoading(false);
     }, 500);
-  }, [displayedImages.length, images, loading, hasMore, imagesPerPage]);
+  }, [images, loading, hasMore, imagesPerPage]);
 
   // Initialize images
   useEffect(() => {
@@ -228,7 +225,7 @@ const GalleryListing: React.FC<GalleryListingProps> = ({
       <div className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-2 space-y-2 md:mt-5">
         {displayedImages.map((image, index) => (
           <div
-            key={image.id || `${image.src}-${index}`}
+            key={image.alt || `${image.src}-${index}`}
             className="break-inside-avoid mb-2 cursor-pointer transform transition-transform ease-in-out duration-300 hover:scale-[1.02]"
             onClick={() => handleImageClick(image, index)}
           >
