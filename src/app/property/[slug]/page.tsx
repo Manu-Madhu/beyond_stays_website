@@ -18,7 +18,7 @@ interface PageProps {
 export async function generateMetadata({
   params
 }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug } = params;
   const property = packagesData.find((pkg) => pkg.slug === slug);
 
   if (!property) {
@@ -42,7 +42,7 @@ export async function generateMetadata({
 }
 
 export default async function PropertyPage({ params }: PageProps) {
-  const { slug } = await params;
+  const { slug } = params;
   const property = packagesData.find((pkg) => pkg.slug === slug);
 
   if (!property) {
