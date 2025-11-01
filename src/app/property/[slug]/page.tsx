@@ -18,7 +18,8 @@ interface PageProps {
 export async function generateMetadata({
   params
 }: PageProps): Promise<Metadata> {
-  const property = packagesData.find((pkg) => pkg.slug === params.slug);
+  const { slug } = await params;
+  const property = packagesData.find((pkg) => pkg.slug === slug);
 
   if (!property) {
     return {
@@ -40,8 +41,9 @@ export async function generateMetadata({
   };
 }
 
-export default function PropertyPage({ params }: PageProps) {
-  const property = packagesData.find((pkg) => pkg.slug === params.slug);
+export default async function PropertyPage({ params }: PageProps) {
+  const { slug } = await params;
+  const property = packagesData.find((pkg) => pkg.slug === slug);
 
   if (!property) {
     return (
@@ -128,7 +130,9 @@ export default function PropertyPage({ params }: PageProps) {
         price={propertyData.price}
       />
       <PropertyAmenities amenities={propertyData.amenities} />
-      <PropertyGallery images={[...property.images, ...(property.roomImages || [])]} />
+      <PropertyGallery
+        images={[...property.images, ...(property.roomImages || [])]}
+      />
       <NearbyAttractions attractions={propertyData.attractions} />
       <WhyChooseUs reasons={propertyData.whyChoose} />
       <BookingCTA propertyName={propertyData.name} />
