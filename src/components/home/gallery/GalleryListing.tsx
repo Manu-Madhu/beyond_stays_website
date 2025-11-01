@@ -1,8 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
-import { BiRightArrow } from "react-icons/bi";
-import Header from "@/components/common/Header";
 import { gallery } from "@/data/gallery";
 
 interface GalleryImage {
@@ -25,7 +23,6 @@ interface GalleryListingProps {
 }
 
 const GalleryListing: React.FC<GalleryListingProps> = ({
-
   imagesPerPage = 10,
   enableInfiniteScroll = true
 }) => {
@@ -38,41 +35,11 @@ const GalleryListing: React.FC<GalleryListingProps> = ({
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [columnHeights, setColumnHeights] = useState<number[]>([]);
-
-  
-  // Calculate masonry layout
-  const organizeImagesIntoColumns = useCallback(
-    (images: GalleryImage[], columnCount: number) => {
-      const columns: GalleryImage[][] = Array.from(
-        { length: columnCount },
-        () => []
-      );
-      const heights = new Array(columnCount).fill(0);
-
-      images.forEach((image) => {
-        // Find the column with the minimum current height
-        const minHeightIndex = heights.indexOf(Math.min(...heights));
-
-        // Add image to that column
-        columns[minHeightIndex].push(image);
-
-        // Estimate height based on aspect ratio (assuming fixed width of 300px)
-        const aspectRatio =
-          image.height && image.width ? image.height / image.width : 1.5;
-        const estimatedHeight = 300 * aspectRatio;
-
-        // Update column height
-        heights[minHeightIndex] += estimatedHeight + 16; // 16px for margin
-      });
-
-      return { columns, heights };
-    },
-    []
-  );
+  const [columnCount, setColumnCount] = useState<number>(4);
+  const [columns, setColumns] = useState<GalleryImage[][]>([]);
 
   // Get column count based on screen size
-  const getColumnCount = () => {
+  const getColumnCount = (): number => {
     if (typeof window === "undefined") return 4;
 
     const width = window.innerWidth;
@@ -82,24 +49,46 @@ const GalleryListing: React.FC<GalleryListingProps> = ({
     return 4;
   };
 
+  // Organize images into columns for masonry layout
+  const organizeImagesIntoColumns = useCallback(
+    (images: GalleryImage[], colCount: number): GalleryImage[][] => {
+      const newColumns: GalleryImage[][] = Array.from(
+        { length: colCount },
+        () => []
+      );
+
+      images.forEach((image, index) => {
+        // Simple round-robin distribution for equal column distribution
+        const columnIndex = index % colCount;
+        newColumns[columnIndex].push(image);
+      });
+
+      return newColumns;
+    },
+    []
+  );
+
   const loadedCountRef = useRef(0);
 
   const loadMoreImages = useCallback((): void => {
     if (loading || !hasMore) return;
     setLoading(true);
-  
+
     setTimeout(() => {
       const currentCount = loadedCountRef.current;
-      const nextImages = images.slice(currentCount, currentCount + imagesPerPage);
-  
+      const nextImages = images.slice(
+        currentCount,
+        currentCount + imagesPerPage
+      );
+
       if (nextImages.length === 0) {
         setHasMore(false);
         setLoading(false);
         return;
       }
-  
-      setDisplayedImages(prev => [...prev, ...nextImages]);
-      loadedCountRef.current += nextImages.length; // ✅ Update reference
+
+      setDisplayedImages((prev) => [...prev, ...nextImages]);
+      loadedCountRef.current += nextImages.length;
       setLoading(false);
     }, 500);
   }, [images, loading, hasMore, imagesPerPage]);
@@ -109,25 +98,27 @@ const GalleryListing: React.FC<GalleryListingProps> = ({
     loadMoreImages();
   }, []);
 
-  // Recalculate layout when displayed images change or window resizes
+  // Update columns when displayed images or column count changes
   useEffect(() => {
-    const columnCount = getColumnCount();
-    const { columns, heights } = organizeImagesIntoColumns(
+    const newColumnCount = getColumnCount();
+    setColumnCount(newColumnCount);
+    const newColumns = organizeImagesIntoColumns(
       displayedImages,
-      columnCount
+      newColumnCount
     );
-    setColumnHeights(heights);
+    setColumns(newColumns);
   }, [displayedImages, organizeImagesIntoColumns]);
 
   // Handle window resize
   useEffect(() => {
     const handleResize = () => {
-      const columnCount = getColumnCount();
-      const { columns, heights } = organizeImagesIntoColumns(
+      const newColumnCount = getColumnCount();
+      setColumnCount(newColumnCount);
+      const newColumns = organizeImagesIntoColumns(
         displayedImages,
-        columnCount
+        newColumnCount
       );
-      setColumnHeights(heights);
+      setColumns(newColumns);
     };
 
     window.addEventListener("resize", handleResize);
@@ -140,13 +131,12 @@ const GalleryListing: React.FC<GalleryListingProps> = ({
 
     const handleScroll = (): void => {
       if (
-        window.innerHeight + document.documentElement.scrollTop !==
-          document.documentElement.offsetHeight ||
-        loading
+        window.innerHeight + document.documentElement.scrollTop >=
+          document.documentElement.offsetHeight - 500 &&
+        !loading
       ) {
-        return;
+        loadMoreImages();
       }
-      loadMoreImages();
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -219,29 +209,48 @@ const GalleryListing: React.FC<GalleryListingProps> = ({
     return image.alt || `Gallery image ${index + 1}`;
   };
 
-  // Render masonry grid columns
+  // Calculate global index for modal navigation
+  const getGlobalIndex = (columnIndex: number, itemIndex: number): number => {
+    let globalIndex = 0;
+    for (let i = 0; i < columnIndex; i++) {
+      globalIndex += columns[i]?.length || 0;
+    }
+    return globalIndex + itemIndex;
+  };
+
+  // Render flexbox masonry grid
   const renderMasonryGrid = () => {
     return (
-      <div className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-2 space-y-2 md:mt-5">
-        {displayedImages.map((image, index) => (
+      <div className="flex gap-2 md:gap-2 w-full">
+        {columns.map((column, columnIndex) => (
           <div
-            key={image.alt || `${image.src}-${index}`}
-            className="break-inside-avoid mb-2 cursor-pointer transform transition-transform ease-in-out duration-300 hover:scale-[1.02]"
-            onClick={() => handleImageClick(image, index)}
+            key={columnIndex}
+            className="flex-1 flex flex-col gap-2 md:gap-2"
           >
-            <div className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
-              <div className="relative w-full" style={{ height: "auto" }}>
-                <Image
-                  src={image.src}
-                  alt={getImageAlt(image, index)}
-                  width={300}
-                  height={400}
-                  className="object-cover w-full"
-                  placeholder="blur"
-                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                />
-              </div>
-            </div>
+            {column.map((image, imageIndex) => {
+              const globalIndex = getGlobalIndex(columnIndex, imageIndex);
+              return (
+                <div
+                  key={image.alt || `${image.src}-${globalIndex}`}
+                  className="break-inside-avoid cursor-pointer transform transition-transform ease-in-out duration-300 hover:scale-[1.02]"
+                  onClick={() => handleImageClick(image, globalIndex)}
+                >
+                  <div className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
+                    <div className="relative w-full" style={{ height: "auto" }}>
+                      <Image
+                        src={image.src}
+                        alt={getImageAlt(image, globalIndex)}
+                        width={300}
+                        height={400}
+                        className="object-cover w-full"
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                      />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         ))}
       </div>
@@ -250,7 +259,7 @@ const GalleryListing: React.FC<GalleryListingProps> = ({
 
   return (
     <div className="max-w-[1350px] mx-auto h-full px-5 md:px-8 my-8 md:my-20">
-      {/* Custom Masonry Grid */}
+      {/* Flexbox Masonry Grid */}
       {renderMasonryGrid()}
 
       {/* Load More Button */}
