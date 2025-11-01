@@ -23,7 +23,7 @@ interface GalleryListingProps {
 }
 
 export const gallery = [
-  { src: "/assets/gallery/1.jpg", alt: "Gallery 1" },
+  { src: "/assets/images/packages/1.jpg", alt: "Gallery 1" },
   { src: "/assets/gallery/2.jpg", alt: "Gallery 2" },
   { src: "/assets/gallery/3.jpg", alt: "Gallery 3" },
   { src: "/assets/gallery/4.jpg", alt: "Gallery 4" },
