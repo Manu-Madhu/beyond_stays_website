@@ -10,7 +10,7 @@ import PropertyGallery from "@/components/property/property-gallery";
 
 interface PageProps {
   params: {
-    slug: string;
+    slug: any;
   };
 }
 
