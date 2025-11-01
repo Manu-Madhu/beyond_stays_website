@@ -83,14 +83,14 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
         <div className="relative">
           <div
             ref={scrollRef}
-            className="flex gap-6 overflow-x-scroll scroll-smooth no-scrollbar"
+            className="flex gap-3 md:gap-5 overflow-x-scroll scroll-smooth no-scrollbar"
           >
             {images.map((src, index) => (
               <div
                 key={index}
                 onClick={() => setSelectedImage(src)}
                 className="relative rounded-xl overflow-hidden cursor-pointer group flex-shrink-0 
-                min-w-[90%] sm:min-w-[50%] md:min-w-[35%] lg:min-w-[25%] aspect-[4/6.5] md:aspect-[4/6]" // increased width & height
+                min-w-[95%] sm:min-w-[50%] md:min-w-[35%] lg:min-w-[25%] aspect-[4/6.5] md:aspect-[4/6]" // increased width & height
               >
                 <Image
                   src={src}

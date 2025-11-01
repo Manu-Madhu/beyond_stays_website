@@ -23,7 +23,7 @@ export default function PropertyAmenities({ amenities }: PropertyAmenitiesProps)
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid md:grid-cols-3 gap-3 md:gap-5">
           {amenities.map((amenity, index) => (
             <div
               key={index}
