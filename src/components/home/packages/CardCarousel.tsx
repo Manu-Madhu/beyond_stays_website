@@ -32,7 +32,10 @@ const CardCarousel: React.FC<CardCarouselProps> = ({ cards }) => {
             key={card.id}
             className="relative rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-500 group min-w-[85%] sm:min-w-[45%] md:min-w-[23%] h-[450px] cursor-pointer"
           >
-            <Link title="package detailed page" href={'/property/property-one-beyond-stays'}>
+            <Link
+              title="package detailed page"
+              href={`/property/${card?.slug}`}
+            >
               {/* Image */}
               <img
                 src={card.images[0]}
@@ -52,13 +55,14 @@ const CardCarousel: React.FC<CardCarouselProps> = ({ cards }) => {
               </div>
 
               {/* Read More Bubble */}
-                <div className="absolute top-[12%] right-20 translate-x-1/2 -translate-y-1/2 bg-black/80 rounded-full w-[130px] h-[130px] flex items-center justify-center 
+              <div
+                className="absolute top-[12%] right-20 translate-x-1/2 -translate-y-1/2 bg-black/80 rounded-full w-[130px] h-[130px] flex items-center justify-center 
                 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]"
-                >
-                  <h3 className="uppercase text-white text-[15px] tracking-wide font-semibold">
-                    Read More
-                  </h3>
-                </div>
+              >
+                <h3 className="uppercase text-white text-[15px] tracking-wide font-semibold">
+                  Read More
+                </h3>
+              </div>
             </Link>
           </div>
         ))}

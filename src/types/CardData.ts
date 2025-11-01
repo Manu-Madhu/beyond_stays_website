@@ -14,6 +14,7 @@ export interface MetaData {
 export interface CardData {
     /** Unique ID for the card */
     id: number;
+    slug?: string;
 
     /** Title displayed on the card */
     title: string;
@@ -26,6 +27,7 @@ export interface CardData {
 
     /** Multiple image URLs for detailed gallery */
     images: string[];
+    roomImages?: string[];
 
     /** SEO meta details for this item */
     meta: MetaData;
