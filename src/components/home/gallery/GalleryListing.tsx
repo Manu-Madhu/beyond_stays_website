@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { BiRightArrow } from "react-icons/bi";
 import Header from "@/components/common/Header";
+import { gallery } from "@/data/gallery";
 
 interface GalleryImage {
   src: string;
@@ -24,21 +25,12 @@ interface GalleryListingProps {
 }
 
 const GalleryListing: React.FC<GalleryListingProps> = ({
-  initialImages = [
-    { src: "/assets/images/packages/10.jpeg", alt: "Package 10" },
-    { src: "/assets/images/packages/1.jpg", alt: "Package 1" },
-    { src: "/assets/images/packages/2.1.jpg", alt: "Package 2.1" },
-    { src: "/assets/images/packages/3.jpg", alt: "Package 3" },
-    { src: "/assets/images/packages/4.jpg", alt: "Package 4" },
-    { src: "/assets/images/packages/7.jpg", alt: "Package 7" },
-    { src: "/assets/images/event/1.jpg", alt: "Event 1" },
-    { src: "/assets/images/event/5.jpg", alt: "Event 5" }
-  ],
+
   imagesPerPage = 10,
   enableInfiniteScroll = true
 }) => {
   // State management with TypeScript types
-  const [images, setImages] = useState<GalleryImage[]>(initialImages);
+  const [images, setImages] = useState<GalleryImage[]>(gallery);
   const [displayedImages, setDisplayedImages] = useState<GalleryImage[]>([]);
   const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(
     null
