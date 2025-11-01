@@ -165,7 +165,7 @@ const Navbar = () => {
             </Link>
           </ul>
 
-          <div className="mt-auto pt-10">
+          <div className="mt-auto">
             <Button
               title="Contact Now"
               className="bg-black text-white w-full py-3 hover:bg-gray-800"

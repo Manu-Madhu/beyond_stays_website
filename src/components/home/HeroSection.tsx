@@ -3,8 +3,8 @@ import Button from "../ui/Button";
 
 const HeroSection = () => {
   return (
-    <div className=" md:min-h-screen w-full h-full overflow-x-hidden">
-      <div className="w-full h-[100vh] relative flex items-center justify-center overflow-hidden">
+    <div className="md:min-h-screen w-full h-full overflow-x-hidden">
+      <div className="w-full h-[80vh] md:h-[100vh] relative flex items-center justify-center overflow-hidden">
         <video
           muted
           autoPlay
