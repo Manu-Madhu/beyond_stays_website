@@ -17,7 +17,7 @@ interface PageProps {
 // ✅ Generate metadata dynamically
 export async function generateMetadata({
   params
-}: PageProps): Promise<Metadata> {
+}: PageProps): Promise<any> {
   const { slug } = params;
   const property = packagesData.find((pkg) => pkg.slug === slug);
 
