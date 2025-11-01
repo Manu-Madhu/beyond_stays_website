@@ -1,4 +1,5 @@
 export const gallery = [
+    { src: "/assets/images/packages/20.JPG", alt: "Gallery 1fhvgf" },
     { src: "/assets/gallery/1.JPG", alt: "Gallery 1" },
     { src: "/assets/gallery/2.JPG", alt: "Gallery 2" },
     { src: "/assets/gallery/3.JPG", alt: "Gallery 3" },
