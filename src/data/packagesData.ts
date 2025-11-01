@@ -47,7 +47,7 @@ export const packagesData: CardData[] = [
       "/assets/images/packages/chessrock/rooms/22.jpg",
     ],
     meta: {
-      title: "Elephant View Parking - Outdoor Activity Package",
+      title: "Chess Rock - Camping",
       description:
         "Enjoy nature and elephant views in this outdoor activity package perfect for wildlife lovers.",
       keywords: "elephant view, outdoor activity, wildlife, travel",
