@@ -8,23 +8,21 @@ import PropertyDescription from "@/components/property/property-description";
 import WhyChooseUs from "@/components/property/why-choose-us";
 import PropertyGallery from "@/components/property/property-gallery";
 
-interface PageProps {
-  params: {
-    slug: any;
-  };
-}
 
-// ✅ Generate metadata dynamically
-export async function generateMetadata({
-  params
-}: PageProps): Promise<any> {
-  const { slug } = params;
+type Props = {
+    params: Promise<{
+      slug: string;
+    }>;
+  };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
   const property = packagesData.find((pkg) => pkg.slug === slug);
 
   if (!property) {
     return {
       title: "Package Not Found | Beyond Stays",
-      description: "The package you are looking for does not exist."
+      description: "The package you are looking for does not exist.",
     };
   }
 
@@ -36,13 +34,13 @@ export async function generateMetadata({
       title: property.meta.title,
       description: property.meta.description,
       images: property.images?.length ? [property.images[0]] : [],
-      type: "website"
-    }
+      type: "website",
+    },
   };
 }
 
-export default async function PropertyPage({ params }: PageProps) {
-  const { slug } = params;
+export default async function PropertyPage({ params }: Props) {
+  const { slug } = await params;
   const property = packagesData.find((pkg) => pkg.slug === slug);
 
   if (!property) {
@@ -55,12 +53,11 @@ export default async function PropertyPage({ params }: PageProps) {
     );
   }
 
-  // Customize your propertyData based on your component needs
   const propertyData = {
     id: property.id,
     name: property.title,
     category: property.category,
-    location: "Himachal Pradesh", // or add a `location` field in your data
+    location: "Himachal Pradesh",
     price: 4999,
     rating: 4.8,
     reviews: 128,
@@ -70,48 +67,48 @@ export default async function PropertyPage({ params }: PageProps) {
       {
         name: "Luxury Tents",
         description: "Premium equipped tents with comfortable bedding",
-        image: "/luxury-tent-accommodation.jpg"
+        image: "/luxury-tent-accommodation.jpg",
       },
       {
         name: "Gourmet Meals",
         description: "Farm-to-table dining experience",
-        image: "/gourmet-dining-outdoor.jpg"
-      }
+        image: "/gourmet-dining-outdoor.jpg",
+      },
     ],
     attractions: [
       {
         name: "Triund Trek",
         distance: "2 km",
-        description: "Popular hiking trail with panoramic views"
+        description: "Popular hiking trail with panoramic views",
       },
       {
         name: "Bhagsu Waterfall",
         distance: "3 km",
-        description: "Scenic waterfall perfect for swimming"
-      }
+        description: "Scenic waterfall perfect for swimming",
+      },
     ],
     whyChoose: [
       {
         title: "Authentic Experience",
         description:
-          "Immerse yourself in nature without compromising on comfort. Every moment is designed to connect you with the essence of the destination."
+          "Immerse yourself in nature without compromising on comfort.",
       },
       {
         title: "Expert Guides",
         description:
-          "Knowledgeable local guides who share stories and insights. They transform your journey into a cultural and natural discovery."
+          "Knowledgeable local guides who share stories and insights.",
       },
       {
         title: "Sustainable Tourism",
         description:
-          "We prioritize environmental conservation and local community support. Travel responsibly while creating positive impact."
+          "We prioritize environmental conservation and local community support.",
       },
       {
         title: "All-Inclusive Packages",
         description:
-          "Everything included - meals, activities, and transportation. No hidden costs, just pure luxury and convenience."
-      }
-    ]
+          "Everything included - meals, activities, and transportation.",
+      },
+    ],
   };
 
   return (
@@ -124,15 +121,9 @@ export default async function PropertyPage({ params }: PageProps) {
         rating={propertyData.rating}
         reviews={propertyData.reviews}
       />
-
-      <PropertyDescription
-        description={propertyData.description}
-        price={propertyData.price}
-      />
+      <PropertyDescription description={propertyData.description} price={propertyData.price} />
       <PropertyAmenities amenities={propertyData.amenities} />
-      <PropertyGallery
-        images={[...property.images, ...(property.roomImages || [])]}
-      />
+      <PropertyGallery images={[...property.images, ...(property.roomImages || [])]} />
       <NearbyAttractions attractions={propertyData.attractions} />
       <WhyChooseUs reasons={propertyData.whyChoose} />
       <BookingCTA propertyName={propertyData.name} />
