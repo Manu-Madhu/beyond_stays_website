@@ -8,11 +8,9 @@ interface PropertyBannerProps {
   name: string
   category: string
   location: string
-  rating: number
-  reviews: number
 }
 
-export default function PropertyBanner({ image, name, category, location, rating, reviews }: PropertyBannerProps) {
+export default function PropertyBanner({ image, name, category, location }: PropertyBannerProps) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" })
   }, [])
@@ -30,11 +28,6 @@ export default function PropertyBanner({ image, name, category, location, rating
           <h1 className="text-4xl md:text-6xl font-bold mb-4 text-balance">{name}</h1>
 
           <div className="flex items-center gap-6 flex-wrap">
-            <div className="flex items-center gap-2">
-              <span className="text-yellow-400">★</span>
-              <span className="font-semibold">{rating}</span>
-              <span className="text-sm opacity-75">({reviews} reviews)</span>
-            </div>
             <div className="flex items-center gap-2">
               <span className="text-lg">📍</span>
               <span className="text-sm">{location}</span>

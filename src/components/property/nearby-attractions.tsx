@@ -1,8 +1,9 @@
 "use client"
 
 interface Attraction {
-  name: string
+  title: string
   distance: string
+  time: string
   description: string
 }
 
@@ -28,7 +29,7 @@ export default function NearbyAttractions({ attractions }: NearbyAttractionsProp
 
               <div className="flex-grow">
                 <div className="flex items-start justify-between mb-2">
-                  <h3 className="text-xl font-semibold text-black">{attraction.name}</h3>
+                  <h3 className="text-xl font-semibold text-black">{attraction.title}</h3>
                   <span className="text-sm font-medium text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
                     {attraction.distance}
                   </span>

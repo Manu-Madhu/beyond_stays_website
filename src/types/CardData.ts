@@ -1,34 +1,37 @@
 // types/CardData.ts
 
 export interface MetaData {
-    /** SEO title for the page or modal */
     title: string;
-
-    /** SEO description for meta tags */
     description: string;
-
-    /** SEO keywords for meta tags */
     keywords: string;
+}
+export interface PricingData {
+    startFrom: string;
+    description: string;
+    note: string
+}
+
+export interface NearToVisitProps {
+    title: string;
+    distance: string
+    time: string
+    description: string
 }
 
 export interface CardData {
-    /** Unique ID for the card */
     id: number;
     slug?: string;
-
-    /** Title displayed on the card */
+    about?: string;
+    nearToVisit?: NearToVisitProps[]
     title: string;
-
-    /** Small category label (e.g., “Outdoor Activity”) */
+    pricing?: PricingData;
+    location?: string;
+    inclusions?: string[];
+    whatExpect?: string[];
+    activities?: string[]
     category: string;
-
-    /** Short paragraph used in detailed view or modal */
     description: string;
-
-    /** Multiple image URLs for detailed gallery */
     images: string[];
     roomImages?: string[];
-
-    /** SEO meta details for this item */
     meta: MetaData;
 }
