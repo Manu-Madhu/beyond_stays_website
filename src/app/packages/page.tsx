@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     description:
       "Discover Beyond Stays’ handpicked properties across breathtaking destinations. From boutique retreats to luxury villas, find your perfect stay with us.",
     type: "website",
-    url: "https://beyondstays.com/properties",
+    url: "https://travelwithbeyondstays.com/properties",
     siteName: "Beyond Stays"
   }
 };

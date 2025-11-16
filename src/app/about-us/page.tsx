@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: `About Us | Beyond Stays - Luxury Travel Experience`,
     description: 'Discover Beyond Stays – your perfect escape for unique boutique stays, curated experiences, and personalized hospitality across stunning destinations.',
     type: "website",
-    url: "https://beyondstays.com/about-us",
+    url: "https://travelwithbeyondstays.com/about-us",
     siteName: "Beyond Stays",
   },
 }

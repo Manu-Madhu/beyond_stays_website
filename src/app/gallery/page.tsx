@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: `Gallery | Beyond Stays - Luxury Travel Experience`,
     description: 'Explore the Beyond Stays image gallery and discover breathtaking destinations, cozy stays, and unforgettable experiences captured in every moment.',
     type: "website",
-    url: "https://beyondstays.com/gallery",
+    url: "https://travelwithbeyondstays.com/gallery",
     siteName: "Beyond Stays",
   },
 }

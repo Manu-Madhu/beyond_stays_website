@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: `Contact Us | Beyond Stays - Luxury Travel Experience`,
     description: 'Get in touch with Beyond Stays for bookings, inquiries, or assistance. Our team is here to help you plan your perfect stay and unforgettable getaway.',
     type: "website",
-    url: "https://beyondstays.com/contact",
+    url: "https://travelwithbeyondstays.com/contact",
     siteName: "Beyond Stays",
   },
 }
