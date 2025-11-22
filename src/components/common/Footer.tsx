@@ -138,7 +138,7 @@ const Footer = () => {
             <p className="flex gap-2">
               ©{new Date().getFullYear()} Beyond Stays INDIA. All Rights
               Reserved.
-              <div className="text-gray-300 flex gap-3 ">
+              <span className="text-gray-300 flex gap-3 ">
                 <Link
                   href={
                     "https://www.instagram.com/beyondstays?igsh=MXZ3Nzk4Nm5wZjI2YQ=="
@@ -158,7 +158,7 @@ const Footer = () => {
                 <Link href={"/"} title="Twitter">
                   <BsTwitter className="cursor-pointer hover:text-white" />
                 </Link>
-              </div>
+              </span>
             </p>
             <p>
               Designed And Developed By{" "}
