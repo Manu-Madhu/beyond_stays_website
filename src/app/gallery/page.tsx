@@ -17,7 +17,12 @@ export const metadata: Metadata = {
 }
 
 
+export const generateMetadata =()=>{
+    
+}
+
 const GalleryPage = () => {
+  
   return (
     <>
       {/* Common Hero Setion */}

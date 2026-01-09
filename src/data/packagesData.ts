@@ -4,8 +4,8 @@ import { CardData } from "../types/CardData";
 export const packagesData: CardData[] = [
   {
     id: 1,
-    title: "Chess Rock Homes – A-Frame Pool Villa",
-    slug: "chess_rock_home_a_frame_pool_villa_near_chathurangapara_view_point",
+    title: "Chessrock - rockvale",
+    slug: "chess_rock_rockvale",
     category: "Luxury Nature Stay / Mountain Retreat",
     location: 'Near Chathurangapara View Point, Idukki District, Kerala',
     about: "This elegant A-frame pool villa features 3 cozy bedrooms (one with a common washroom), a spacious living hall ideal for group gatherings, and a private pool surrounded by tranquil hills. The villa includes a small kitchen, TV, and essential amenities for a comfortable stay.",
@@ -111,8 +111,8 @@ export const packagesData: CardData[] = [
   },
   {
     id: 2,
-    title: "Origin Soil – Mudhouse Stay",
-    slug: "origin_soil_mudhouse_stay",
+    title: "Soil - the clay house",
+    slug: "soil_the_clay_house",
     category: "Eco Stay / Nature Retreat",
     location: 'Kottakampoor, Vattavad',
     about: `7 beautiful mud rooms – 3 rooms on the first floor, 4 on the ground floor (attached washrooms). 
@@ -205,8 +205,8 @@ export const packagesData: CardData[] = [
   },
   {
     id: 3,
-    title: "Roots Munnar – Glass Room Resort",
-    slug: "roots_uunnar_glass_room_resort",
+    title: "Roots munnar -  rooted haven",
+    slug: "roots_munnar_rooted_haven",
     category: "Nature Resort / Hill-Station Retreat",
     location: 'Anachal, Idukki District, Kerala',
     about: `Stay immersed in nature at our serene resort in Anachal — the perfect base for a peaceful hill-station escape 
