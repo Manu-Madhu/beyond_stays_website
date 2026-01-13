@@ -300,8 +300,8 @@ export const packagesData: CardData[] = [
   },
   {
     id: 4,
-    title: "Max Crest Vagamon – 4 Bedroom Private Pool Villa",
-    slug: "max_crest_vagamon_4_bedroom_private_pool_villa",
+    title: "Skycrest retreat",
+    slug: "skycrest_retreat",
     category: "Premium Hill View Villa / Nature Stay",
     location: 'Vagamon, Idukki District, Kerala',
     about: `A spacious 4-bedroom private pool villa featuring fully furnished AC 
@@ -396,8 +396,8 @@ export const packagesData: CardData[] = [
   },
   {
     id: 5,
-    title: "Cherai Kings Holidays – 3 AC Room Private Pool Villa",
-    slug: "cherai_kings_holidays_3_ac_room_private_pool_villa",
+    title: "Cherai Royale Retreat",
+    slug: "cherai_royale_retreat",
     category: "Premium Coastal Stay / Pool Villa",
     location: 'Cherai Beach, Kochi, Kerala',
     about: `A stylish 3-bedroom AC villa featuring a private swimming pool, 
