@@ -4,8 +4,8 @@ import { Inter, Roboto } from "next/font/google";
 import Navbar from "@/components/common/Navbar";
 
 import "./globals.css";
-import Footer from "@/components/common/Footer";
 import SmoothScrollWrapper from "@/context/InitialLenis";
+import ConditionalLayout from "@/components/common/ConditionalLayout";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -72,14 +72,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} ${roboto.variable} antialiased`}>
         <SmoothScrollWrapper>
-          {/* Navbar */}
-          <Navbar />
-
-          {/* Children */}
-          {children}
-
-          {/* Footer */}
-          <Footer />
+          <ConditionalLayout>
+            {children}
+          </ConditionalLayout>
         </SmoothScrollWrapper>
       </body>
     </html>

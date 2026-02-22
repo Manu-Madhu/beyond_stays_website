@@ -80,41 +80,50 @@ const Footer = () => {
                 <BiPhone /> +91 90207 62726
               </p>
             </ul>
-            <ul className="flex flex-col gap-2 text-nowrap">
+
+            <ul className="flex flex-col gap-2 text-nowrap md:ml-4">
+              <h3 className="text-white font-semibold mb-2">Available Pages</h3>
               <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
-                About Beyond stays
+                <Link href="/">Home</Link>
               </li>
               <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
-                Packages
+                <Link href="/about-us">About Us</Link>
               </li>
               <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
-                Contact Us
+                <Link href="/packages">Packages</Link>
               </li>
               <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
-                Customize Your Plan
-              </li>
-            </ul>
-            <ul className="flex flex-col gap-2 text-nowrap">
-              <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
-                About Beyond stays
-              </li>
-              <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
-                Packages
-              </li>
-              <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
-                Contact Us
+                <Link href="/media">Media</Link>
               </li>
             </ul>
+
             <ul className="flex flex-col gap-2 text-nowrap">
+              <h3 className="text-white font-semibold mb-2">Support</h3>
               <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
-                Media
+                <Link href="/contact">Contact Us</Link>
               </li>
               <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
-                Plan Your Trip
+                <Link href="/packages">Customize Your Plan</Link>
+              </li>
+              {/* <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
+                <Link href="/faq">FAQ</Link>
               </li>
               <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
-                Contact Us
+                <Link href="/help-center">Help Center</Link>
+              </li> */}
+            </ul>
+
+            <ul className="flex flex-col gap-2 text-nowrap">
+              <h3 className="text-white font-semibold mb-2">Policies</h3>
+              <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
+                <Link href="/privacy-policy">Privacy Policy</Link>
               </li>
+              <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
+                <Link href="/support">Support</Link>
+              </li>
+              {/* <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
+                <Link href="/refund-policy">Refund Policy</Link>
+              </li> */}
             </ul>
             <ul className="hidden md:flex flex-col gap-1 w-full">
               <p className="text-sm">
