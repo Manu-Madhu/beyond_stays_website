@@ -4,7 +4,7 @@ import { CardData } from "../types/CardData";
 export const packagesData: CardData[] = [
   {
     id: 1,
-    title: "Chessrock - rockvale",
+    title: "Rockvale",
     slug: "chess_rock_rockvale",
     category: "Luxury Nature Stay / Mountain Retreat",
     location: 'Near Chathurangapara View Point, Idukki District, Kerala',
@@ -111,7 +111,7 @@ export const packagesData: CardData[] = [
   },
   {
     id: 2,
-    title: "Soil - the clay house",
+    title: "The Clay House",
     slug: "soil_the_clay_house",
     category: "Eco Stay / Nature Retreat",
     location: 'Kottakampoor, Vattavad',
@@ -205,7 +205,7 @@ export const packagesData: CardData[] = [
   },
   {
     id: 3,
-    title: "Roots munnar -  rooted haven",
+    title: "Rooted haven",
     slug: "roots_munnar_rooted_haven",
     category: "Nature Resort / Hill-Station Retreat",
     location: 'Anachal, Idukki District, Kerala',

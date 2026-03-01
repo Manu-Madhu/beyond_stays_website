@@ -4,7 +4,15 @@ import { AdminLayout } from "@/components/admin/layout/AdminLayout";
 import { FiUsers, FiSettings, FiImage, FiCalendar, FiChevronLeft, FiMapPin, FiClock } from "react-icons/fi";
 import Link from 'next/link';
 
+import { useParams, useRouter } from 'next/navigation';
+import { useEventDetails } from '@/hooks/useEvents';
+
 export default function EventDetailedPage() {
+    const params = useParams();
+    const id = params?.id as string;
+    const { event, isLoading } = useEventDetails(id);
+    const router = useRouter();
+
     const [activeTab, setActiveTab] = useState('basic');
 
     // Dummy registrations data
@@ -14,11 +22,33 @@ export default function EventDetailedPage() {
         { id: '3', user: 'Robert Fox', email: 'robert@example.com', status: 'Cancelled', date: 'Oct 21, 2026' },
     ];
 
+    if (isLoading) {
+        return (
+            <AdminLayout>
+                <div className="flex justify-center items-center py-20">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                </div>
+            </AdminLayout>
+        );
+    }
+
+    if (!event) {
+        return (
+            <AdminLayout>
+                <div className="flex flex-col justify-center items-center py-20 text-center">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Event Not Found</h2>
+                    <p className="text-gray-500 mb-4">The event you are looking for does not exist or has been deleted.</p>
+                    <Link href="/admin/events" className="text-primary font-semibold hover:underline">Return to Events</Link>
+                </div>
+            </AdminLayout>
+        );
+    }
+
     return (
         <AdminLayout>
-            <div className="space-y-6 max-w-6xl mx-auto">
+            <div className="space-y-6 w-full mx-auto">
                 {/* Header Profile */}
-                <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden relative">
+                <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden relative">
                     <div className="h-48 bg-primary/20 relative w-full overflow-hidden">
                         <img src="/assets/travel_admin_login.png" alt="Cover" className="w-full h-full object-cover opacity-80" />
                         <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
@@ -32,21 +62,21 @@ export default function EventDetailedPage() {
 
                     <div className="p-8 pt-6 relative flex flex-col sm:flex-row gap-6 justify-between items-start sm:items-end -mt-16">
                         <div className="flex-1">
-                            <h1 className="text-3xl font-extrabold text-white mb-4 tracking-tight drop-shadow-md">Winter Mountain Trek</h1>
+                            <h1 className="text-3xl font-extrabold text-white mb-4 tracking-tight drop-shadow-md">{event.title}</h1>
                             <div className="flex flex-wrap gap-4 text-sm font-medium text-gray-600 mt-2">
-                                <span className="flex items-center gap-1.5"><FiMapPin className="text-primary" /> Himalayas, India</span>
-                                <span className="flex items-center gap-1.5"><FiCalendar className="text-primary" /> Dec 15, 2026</span>
-                                <span className="px-3 py-1 bg-red-50 text-red-700 rounded-lg text-xs font-bold border border-red-200">18+ Adults Only</span>
-                                <span className="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-bold border border-emerald-200">Active</span>
+                                <span className="flex items-center gap-1.5"><FiMapPin className="text-primary" /> {event.location}</span>
+                                <span className="flex items-center gap-1.5"><FiCalendar className="text-primary" /> {new Date(event.startDate).toLocaleDateString()}</span>
+                                <span className="px-3 py-1 bg-red-50 text-red-700 rounded-lg text-xs font-bold border border-red-200">{event.ageRestriction}</span>
+                                <span className={`px-3 py-1 rounded-lg text-xs font-bold border ${event.status === 'Active (Published)' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-gray-50 text-gray-600 border-gray-200'}`}>{event.status}</span>
                             </div>
                         </div>
                         <div className="flex gap-3 shrink-0">
-                            <button className="px-5 py-2.5 rounded-xl border border-gray-200 text-gray-700 bg-white font-semibold shadow-sm hover:bg-gray-50 transition-colors">
+                            <Link href={`/admin/events/edit/${id}`} className="px-5 py-2.5 rounded-xl flex items-center border border-gray-200 text-gray-700 bg-white font-semibold shadow-sm hover:bg-gray-50 transition-colors">
                                 Edit Event
-                            </button>
-                            <button className="bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors shadow-sm">
+                            </Link>
+                            <Link href={`/events/${id}`} target="_blank" className="bg-primary flex items-center hover:bg-primary/90 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors shadow-sm">
                                 View Public Page
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -72,25 +102,17 @@ export default function EventDetailedPage() {
                         <div className="space-y-8 animate-in fade-in duration-300">
                             <div>
                                 <h3 className="text-lg font-bold text-gray-900 border-b pb-3 mb-4">Event Description</h3>
-                                <p className="text-gray-600 leading-relaxed text-sm">Join us for a breathtaking expedition across the stunning frozen trails of the Himalayas. Expert guides will lead the way, ensuring safety and an unforgettable travel experience for all participants.</p>
+                                <p className="text-gray-600 leading-relaxed text-sm whitespace-pre-line">{event.description}</p>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <h3 className="text-lg font-bold text-gray-900 border-b pb-3 mb-4">Guidelines & Restrictions</h3>
-                                    <ul className="list-disc pl-5 text-gray-600 leading-relaxed text-sm space-y-1">
-                                        <li>Participants must be physically fit for high-altitude trekking.</li>
-                                        <li>Alcohol and smoking are strictly prohibited during the trek.</li>
-                                        <li>Valid ID proof is mandatory during registration and check-in.</li>
-                                    </ul>
+                                    <p className="text-gray-600 leading-relaxed text-sm whitespace-pre-line">{event.guidelines || "No specific guidelines provided."}</p>
                                 </div>
                                 <div>
                                     <h3 className="text-lg font-bold text-gray-900 border-b pb-3 mb-4">Things to Carry</h3>
-                                    <ul className="list-disc pl-5 text-gray-600 leading-relaxed text-sm space-y-1">
-                                        <li>Warm winter clothing (thermal wear, heavy jackets).</li>
-                                        <li>Sturdy trekking shoes and extra wool socks.</li>
-                                        <li>Personal medical kit and required medications.</li>
-                                    </ul>
+                                    <p className="text-gray-600 leading-relaxed text-sm whitespace-pre-line">{event.thingsToCarry || "Standard travel essentials."}</p>
                                 </div>
                             </div>
 

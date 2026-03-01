@@ -1,18 +1,22 @@
-import React from 'react';
+"use client";
+import React, { useState, useEffect } from 'react';
 import { AdminLayout } from "@/components/admin/layout/AdminLayout";
 import { FiPlus, FiMoreVertical, FiFilter, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEventList } from '@/hooks/useEvents';
+import { EventSkeleton } from '@/components/admin/events/EventSkeleton';
 
 export default function EventsPage() {
-    // Dummy Data
-    const events = [
-        { id: 'ev_1', name: 'Winter Mountain Trek', location: 'Himalayas, India', date: 'Dec 15, 2026', status: 'Active', registrations: 124, image: '/assets/travel_admin_login.png' },
-        { id: 'ev_2', name: 'Island Surf Retreat', location: 'Bali, Indonesia', date: 'Jan 10, 2027', status: 'Active', registrations: 89, image: '/assets/travel_admin_login.png' },
-        { id: 'ev_3', name: 'Desert Safari', location: 'Dubai, UAE', date: 'Oct 21, 2026', status: 'Passed', registrations: 210, image: '/assets/travel_admin_login.png' },
-        { id: 'ev_4', name: 'Forest Camping', location: 'Yellowstone, USA', date: 'Sep 05, 2026', status: 'Passed', registrations: 45, image: '/assets/travel_admin_login.png' },
-        { id: 'ev_5', name: 'Cultural City Tour', location: 'Kyoto, Japan', date: 'Mar 12, 2027', status: 'Active', registrations: 34, image: '/assets/travel_admin_login.png' },
-    ];
+    const [statusFilter, setStatusFilter] = useState('All Status');
+    const [page, setPage] = useState(1);
+    const limit = 10;
+
+    const { events, meta, isLoading, fetchEvents } = useEventList();
+
+    useEffect(() => {
+        fetchEvents({ page, limit, status: statusFilter });
+    }, [page, statusFilter, fetchEvents]);
 
     return (
         <AdminLayout>
@@ -34,10 +38,18 @@ export default function EventsPage() {
                         <FiFilter className="w-4 h-4" />
                         Filters
                     </button>
-                    <select className="bg-white border border-gray-200 rounded-xl px-4 py-2 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/20 shadow-sm cursor-pointer hover:border-primary/50 transition-colors">
-                        <option>All Status</option>
-                        <option>Active</option>
-                        <option>Passed</option>
+                    <select
+                        value={statusFilter}
+                        onChange={(e) => {
+                            setStatusFilter(e.target.value);
+                            setPage(1); // Reset page on filter change
+                        }}
+                        className="bg-white border border-gray-200 rounded-xl px-4 py-2 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/20 shadow-sm cursor-pointer hover:border-primary/50 transition-colors"
+                    >
+                        <option value="All Status">All Status</option>
+                        <option value="Active (Published)">Active (Published)</option>
+                        <option value="Draft">Draft</option>
+                        <option value="Passed">Passed</option>
                     </select>
                 </div>
 
@@ -56,51 +68,91 @@ export default function EventsPage() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100 text-sm">
-                                {events.map(event => (
-                                    <tr key={event.id} className="hover:bg-gray-50/50 transition-colors group">
-                                        <td className="py-4 px-6">
-                                            <div className="flex items-center gap-3">
-                                                <div className="h-10 w-10 relative rounded-lg overflow-hidden bg-gray-100 shrink-0">
-                                                    <Image src={event.image || '/assets/travel_admin_login.png'} alt={event.name} fill className="object-cover" />
+                                {isLoading ? (
+                                    <>
+                                        <EventSkeleton />
+                                        <EventSkeleton />
+                                        <EventSkeleton />
+                                        <EventSkeleton />
+                                        <EventSkeleton />
+                                    </>
+                                ) : events.length > 0 ? (
+                                    events.map(event => (
+                                        <tr key={event._id} className="hover:bg-gray-50/50 transition-colors group">
+                                            <td className="py-4 px-6">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="h-10 w-10 relative rounded-lg overflow-hidden bg-gray-100 shrink-0">
+                                                        <Image src={'/assets/travel_admin_login.png'} alt={event.title || 'Event Image'} fill className="object-cover" />
+                                                    </div>
+                                                    <Link href={`/admin/events/${event._id}`} className="font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                                                        {event.title}
+                                                    </Link>
                                                 </div>
-                                                <Link href={`/admin/events/${event.id}`} className="font-semibold text-gray-900 group-hover:text-primary transition-colors">
-                                                    {event.name}
-                                                </Link>
-                                            </div>
-                                        </td>
-                                        <td className="py-4 px-6 text-gray-600">{event.location}</td>
-                                        <td className="py-4 px-6 text-gray-600 font-medium">{event.date}</td>
-                                        <td className="py-4 px-6 text-center font-semibold text-gray-900">{event.registrations}</td>
-                                        <td className="py-4 px-6">
-                                            <span className={`px-3 py-1 text-xs font-bold rounded-full border ${event.status === 'Active' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                                            </td>
+                                            <td className="py-4 px-6 text-gray-600">{event.location}</td>
+                                            <td className="py-4 px-6 text-gray-600 font-medium">{new Date(event.startDate).toLocaleDateString()}</td>
+                                            <td className="py-4 px-6 text-center font-semibold text-gray-900">{event.registrations || 0} / {event.capacity || '∞'}</td>
+                                            <td className="py-4 px-6">
+                                                <span className={`px-3 py-1 text-xs font-bold rounded-full border ${event.status === 'Active (Published)' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
                                                     'bg-gray-50 text-gray-600 border-gray-200'
-                                                }`}>
-                                                {event.status}
-                                            </span>
-                                        </td>
-                                        <td className="py-4 px-6 text-right">
-                                            <Link href={`/admin/events/${event.id}`} className="text-primary hover:text-primary/70 font-semibold text-sm mr-4 transition-colors">
-                                                View Details
-                                            </Link>
-                                            <button className="text-gray-400 hover:text-gray-900 transition-colors p-1 rounded-md hover:bg-gray-100">
-                                                <FiMoreVertical size={18} />
-                                            </button>
+                                                    }`}>
+                                                    {event.status}
+                                                </span>
+                                            </td>
+                                            <td className="py-4 px-6 text-right">
+                                                <Link href={`/admin/events/${event._id}`} className="text-primary hover:text-primary/70 font-semibold text-sm mr-4 transition-colors">
+                                                    View Details
+                                                </Link>
+                                                <button className="text-gray-400 hover:text-gray-900 transition-colors p-1 rounded-md hover:bg-gray-100">
+                                                    <FiMoreVertical size={18} />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan={6} className="py-12 text-center text-gray-500 font-medium">
+                                            No events found matching your criteria.
                                         </td>
                                     </tr>
-                                ))}
+                                )}
                             </tbody>
                         </table>
                     </div>
 
-                    {/* Pagination Dummy */}
+                    {/* Pagination */}
                     <div className="p-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-500 bg-gray-50/30">
-                        <span>Showing 1 to 5 of 12 results</span>
+                        {isLoading ? (
+                            <div className="h-4 bg-gray-200 rounded animate-pulse w-48"></div>
+                        ) : (
+                            <span>Showing {events.length === 0 ? 0 : (meta.currentPage - 1) * meta.itemsPerPage + 1} to {Math.min(meta.currentPage * meta.itemsPerPage, meta.totalItems)} of {meta.totalItems} results</span>
+                        )}
                         <div className="flex gap-1">
-                            <button className="p-2 rounded-lg border bg-white hover:bg-gray-50 text-gray-400 disabled:opacity-50"><FiChevronLeft /></button>
-                            <button className="px-3 py-1 rounded-lg border bg-primary text-white font-medium">1</button>
-                            <button className="px-3 py-1 rounded-lg border bg-white hover:bg-gray-50 font-medium">2</button>
-                            <button className="px-3 py-1 rounded-lg border bg-white hover:bg-gray-50 font-medium">3</button>
-                            <button className="p-2 rounded-lg border bg-white hover:bg-gray-50 text-gray-600"><FiChevronRight /></button>
+                            <button
+                                onClick={() => setPage(prev => Math.max(1, prev - 1))}
+                                disabled={meta.currentPage === 1 || isLoading}
+                                className="p-2 rounded-lg border bg-white hover:bg-gray-50 text-gray-400 disabled:opacity-50 transition-colors"
+                            >
+                                <FiChevronLeft />
+                            </button>
+
+                            {!isLoading && Array.from({ length: meta.totalPages }, (_, i) => i + 1).map(pageNum => (
+                                <button
+                                    key={pageNum}
+                                    onClick={() => setPage(pageNum)}
+                                    className={`px-3 py-1 rounded-lg border font-medium transition-colors ${pageNum === meta.currentPage ? 'bg-primary text-white border-primary' : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-200'}`}
+                                >
+                                    {pageNum}
+                                </button>
+                            ))}
+
+                            <button
+                                onClick={() => setPage(prev => Math.min(meta.totalPages, prev + 1))}
+                                disabled={meta.currentPage === meta.totalPages || isLoading || meta.totalPages === 0}
+                                className="p-2 rounded-lg border bg-white hover:bg-gray-50 text-gray-600 disabled:opacity-50 transition-colors"
+                            >
+                                <FiChevronRight />
+                            </button>
                         </div>
                     </div>
                 </div>

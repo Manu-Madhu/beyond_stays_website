@@ -8,7 +8,7 @@ import Image from 'next/image';
 export const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState('admin@gmail.com');
-    const [password, setPassword] = useState('123123');
+    const [password, setPassword] = useState('');
     const { loginAdmin, isLoading } = useAdminAuth();
     const router = useRouter();
 

@@ -25,6 +25,31 @@ export const AdminService = {
             body: JSON.stringify(eventData),
             requireAuth: true // Automatically injects Authorization Bearer Header
         });
+    },
+
+    /**
+     * Retrieves the paginated and filtered list of events from the admin router.
+     */
+    getEvents: async (params: { page?: number, limit?: number, status?: string } = {}) => {
+        const queryParams = new URLSearchParams();
+        if (params.page) queryParams.append('page', params.page.toString());
+        if (params.limit) queryParams.append('limit', params.limit.toString());
+        if (params.status && params.status !== 'All Status') queryParams.append('status', params.status);
+
+        return await apiFetch(`/admin/events?${queryParams.toString()}`, {
+            method: 'GET',
+            requireAuth: true
+        });
+    },
+
+    /**
+     * Retrieves a single event by its ID
+     */
+    getEventById: async (id: string) => {
+        return await apiFetch(`/admin/events/${id}`, {
+            method: 'GET',
+            requireAuth: true
+        });
     }
 
 };
