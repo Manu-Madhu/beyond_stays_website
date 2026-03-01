@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+@theme {
+  /* Define standard custom color utilities here */
+  --color-primary: #36454F;
+
+  /* You can also name them whatever you want!
+     For example, if you want "text-primary": */
+  --color-text-primary: #ffffff;
+
+  /* If you want "text-secondary": */
+  --color-text-secondary: #626262;
+}
+
 /* Add this for carousal*/
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
@@ -15,12 +27,14 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  font-family: var(--font-secondary); /* Roboto */
+  font-family: var(--font-secondary);
+  /* Roboto */
 }
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -30,9 +44,11 @@ body {
 .primaryFont {
   font-family: var(--font-primary);
 }
+
 .secondaryFont {
   font-family: var(--font-secondary);
 }
+
 /* ----- End ----- */
 
 /* ---- Main Container ----- */
@@ -49,6 +65,7 @@ body {
   font-weight: 800;
   line-height: 64px;
 }
+
 .titleHeader {
   font-family: var(--font-primary);
   font-weight: 800;

@@ -63,15 +63,18 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.travelwithbeyondstays.com")
 };
 
+import { Toaster } from "react-hot-toast";
+
 export default function RootLayout({
   children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${roboto.variable} antialiased`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.variable} ${roboto.variable} antialiased`} suppressHydrationWarning>
         <SmoothScrollWrapper>
+          <Toaster position="top-right" />
           <ConditionalLayout>
             {children}
           </ConditionalLayout>
