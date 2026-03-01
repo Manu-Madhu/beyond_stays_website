@@ -101,3 +101,40 @@ export const useEventDetails = (id: string | null) => {
 
     return { event, isLoading, fetchEvent };
 };
+
+/**
+ * Custom React Hook for fetching event registrations.
+ */
+export const useEventRegistrations = (eventId: string | null) => {
+    const [registrations, setRegistrations] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(false); // Initially false, triggered by tab
+    const [meta, setMeta] = useState({
+        totalItems: 0,
+        totalPages: 1,
+        currentPage: 1,
+        itemsPerPage: 10
+    });
+
+    const fetchRegistrations = useCallback(async (params: { page?: number, limit?: number, status?: string, search?: string, date?: string } = {}) => {
+        if (!eventId) return;
+        setIsLoading(true);
+        try {
+            const { data } = await AdminService.getEventRegistrations(eventId, params);
+            if (data?.success) {
+                setRegistrations(data.data || []);
+                if (data.meta) {
+                    setMeta(data.meta);
+                }
+            } else {
+                toast.error(data?.message || 'Failed to fetch registrations');
+            }
+        } catch (error) {
+            console.error('Error fetching event registrations:', error);
+            toast.error('Server connection failed while loading registrations.');
+        } finally {
+            setIsLoading(false);
+        }
+    }, [eventId]);
+
+    return { registrations, meta, isLoading, fetchRegistrations };
+};
