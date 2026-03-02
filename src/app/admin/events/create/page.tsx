@@ -4,10 +4,15 @@ import { AdminLayout } from "@/components/admin/layout/AdminLayout";
 import { FiSave, FiImage, FiUploadCloud, FiX } from "react-icons/fi";
 import { useRouter } from 'next/navigation';
 import { useEvents } from '@/hooks/useEvents';
+import { AdminService } from '@/services/admin.service';
+import toast from 'react-hot-toast';
 
 export default function EventCreationPage() {
     const router = useRouter();
-    const [images, setImages] = useState<string[]>([]);
+    const [images, setImages] = useState<any[]>([]); // To store array of {url, fileType}
+    const [mainBanner, setMainBanner] = useState<{ url: string, fileType: string } | null>(null);
+    const [isUploadingBanner, setIsUploadingBanner] = useState(false);
+    const [isUploadingGallery, setIsUploadingGallery] = useState(false);
     const { publishEvent, isSubmitting } = useEvents();
 
     // Form State mapped to backend Mongoose Event schema
@@ -33,11 +38,57 @@ export default function EventCreationPage() {
         }));
     };
 
+    // Upload main banner using AdminService S3 backend
+    const handleBannerUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+            if (file.size > 5 * 1024 * 1024) return toast.error("File limit is 5MB");
+
+            setIsUploadingBanner(true);
+            const uploadData = new FormData();
+            uploadData.append('file', file);
+
+            try {
+                const { data } = await AdminService.uploadSingleFile(uploadData);
+                if (data?.success && data?.data) {
+                    setMainBanner({ url: data.data.url, fileType: data.data.fileType });
+                    toast.success("Main banner uploaded temporarily.");
+                } else {
+                    toast.error("Upload failed.");
+                }
+            } catch (error) {
+                toast.error("Network error during upload.");
+            } finally {
+                setIsUploadingBanner(false);
+            }
+        }
+    };
+
     // Simulate image upload preview
-    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            const files = Array.from(e.target.files).map(file => URL.createObjectURL(file));
-            setImages(prev => [...prev, ...files]);
+    const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            if (images.length + e.target.files.length > 15) return toast.error("Maximum 15 gallery images allowed.");
+
+            setIsUploadingGallery(true);
+            const uploadData = new FormData();
+            Array.from(e.target.files).forEach(file => {
+                if (file.size <= 5 * 1024 * 1024) uploadData.append('files', file);
+            });
+
+            try {
+                const { data } = await AdminService.uploadMultipleFiles(uploadData);
+                if (data?.success && data?.data) {
+                    const mappedImgs = data.data.map((f: any) => ({ url: f.url, fileType: f.fileType }));
+                    setImages(prev => [...prev, ...mappedImgs]);
+                    toast.success("Gallery images added.");
+                } else {
+                    toast.error("Upload failed.");
+                }
+            } catch (error) {
+                toast.error("Network error during multiple upload.");
+            } finally {
+                setIsUploadingGallery(false);
+            }
         }
     };
 
@@ -47,6 +98,8 @@ export default function EventCreationPage() {
             ...formData,
             registrationFee: Number(formData.registrationFee) || 0,
             capacity: Number(formData.capacity) || 0,
+            mainBanner: mainBanner,
+            gallery: images
         };
 
         const result = await publishEvent(payload);
@@ -135,10 +188,10 @@ export default function EventCreationPage() {
                                 </select>
                             </div>
                         </div>
-                    </div>
+                    </div> {/* End Left Column */}
 
                     {/* Right Column - Media & Settings */}
-                    <div className="space-y-6">
+                    <div className="space-y-6 lg:col-span-1">
                         {/* Event Settings */}
                         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-5">
                             <h3 className="text-lg font-bold text-gray-900 border-b pb-3 border-gray-100">Event Settings</h3>
@@ -167,30 +220,55 @@ export default function EventCreationPage() {
                             {/* Main Banner */}
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-1.5">Main Event Banner</label>
-                                <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center text-center hover:bg-gray-50 transition-colors cursor-pointer group">
-                                    <div className="w-12 h-12 bg-primary/5 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                                        <FiImage className="w-6 h-6 text-primary" />
-                                    </div>
-                                    <div className="text-sm font-semibold text-gray-700">Click to upload main banner</div>
-                                    <p className="text-xs text-gray-400 mt-1">PNG, JPG, WEBP up to 5MB</p>
-                                    <input type="file" className="hidden" />
-                                </div>
+                                <label className={`border-2 border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center text-center transition-colors ${mainBanner ? 'bg-primary/5 min-h-32' : 'hover:bg-gray-50 cursor-pointer group'}`}>
+                                    {mainBanner ? (
+                                        <div className="relative w-full aspect-video rounded-lg overflow-hidden group">
+                                            <img src={mainBanner.url} className="w-full h-full object-cover" />
+                                            <button onClick={(e) => { e.preventDefault(); setMainBanner(null); }} className="absolute top-2 right-2 p-1 bg-red-500 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <FiX size={14} />
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <div className="w-12 h-12 bg-primary/5 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                                                <FiImage className="w-6 h-6 text-primary" />
+                                            </div>
+                                            <div className="text-sm font-semibold text-gray-700">{isUploadingBanner ? "Uploading..." : "Click to upload main banner"}</div>
+                                            <p className="text-xs text-gray-400 mt-1">PNG, JPG, WEBP up to 5MB</p>
+                                        </>
+                                    )}
+
+                                    <input
+                                        type="file"
+                                        className="hidden"
+                                        accept="image/*"
+                                        disabled={isUploadingBanner}
+                                        onChange={handleBannerUpload}
+                                    />
+                                </label>
                             </div>
 
                             {/* Additional Images Galley */}
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-1.5">Event Gallery Images</label>
-                                <label className="border-2 border-dashed border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center text-center hover:bg-gray-50 transition-colors cursor-pointer group">
+                                <label className={`border-2 border-dashed border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center text-center transition-colors ${isUploadingGallery ? 'opacity-50 min-h-32' : 'hover:bg-gray-50 cursor-pointer group'}`}>
                                     <FiUploadCloud className="w-8 h-8 text-gray-400 group-hover:text-primary transition-colors mb-2" />
-                                    <div className="text-sm font-semibold text-primary">Upload Gallery Images</div>
-                                    <input type="file" multiple className="hidden" onChange={handleImageUpload} />
+                                    <div className="text-sm font-semibold text-primary">{isUploadingGallery ? "Uploading..." : "Upload Gallery Images"}</div>
+                                    <input
+                                        type="file"
+                                        multiple
+                                        className="hidden"
+                                        accept="image/*"
+                                        disabled={isUploadingGallery}
+                                        onChange={handleGalleryUpload}
+                                    />
                                 </label>
 
                                 {images.length > 0 && (
                                     <div className="grid grid-cols-3 gap-2 mt-4">
                                         {images.map((img, idx) => (
                                             <div key={idx} className="relative aspect-square rounded-lg bg-gray-100 border overflow-hidden group">
-                                                <img src={img} alt="Preview" className="w-full h-full object-cover" />
+                                                <img src={img.url} alt="Preview" className="w-full h-full object-cover" />
                                                 <button onClick={() => setImages(images.filter((_, i) => i !== idx))} type="button" className="absolute top-1 right-1 bg-black/50 hover:bg-red-500 text-white p-1 rounded-full backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
                                                     <FiX size={12} />
                                                 </button>
@@ -200,8 +278,8 @@ export default function EventCreationPage() {
                                 )}
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div> {/* End Right Column */}
+                </div> {/* End Grid */}
             </div>
         </AdminLayout>
     );

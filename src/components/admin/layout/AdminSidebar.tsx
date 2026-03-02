@@ -58,7 +58,7 @@ export const AdminSidebar = ({ isOpen, setIsOpen }: AdminSidebarProps) => {
                 <div className="flex-1 py-8 px-4 space-y-2 overflow-y-auto custom-scrollbar">
                     <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 ml-3">Menu</div>
                     {menuItems.map((item) => {
-                        const isActive = pathname === item.path;
+                        const isActive = item.path === '/admin' ? pathname === '/admin' : pathname.startsWith(item.path);
                         return (
                             <Link
                                 key={item.name}

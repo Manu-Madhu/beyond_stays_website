@@ -67,6 +67,28 @@ export const AdminService = {
             method: 'GET',
             requireAuth: true
         });
+    },
+
+    /**
+     * Uploads a single file to the media backend
+     */
+    uploadSingleFile: async (fileData: FormData) => {
+        return await apiFetch('/uploads/single', {
+            method: 'POST',
+            body: fileData,
+            requireAuth: true
+        });
+    },
+
+    /**
+     * Uploads multiple files (up to limit) to the media backend
+     */
+    uploadMultipleFiles: async (filesData: FormData) => {
+        return await apiFetch('/uploads/multiple', {
+            method: 'POST',
+            body: filesData,
+            requireAuth: true
+        });
     }
 
 };

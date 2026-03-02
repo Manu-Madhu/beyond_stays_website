@@ -19,9 +19,13 @@ export const apiFetch = async (endpoint: string, options: FetchOptions = {}) => 
     const { requireAuth = false, headers, ...restOptions } = options;
 
     const reqHeaders: Record<string, string> = {
-        'Content-Type': 'application/json',
         ...(headers as any),
     };
+
+    // If body is NOT FormData, default to application/json
+    if (!(restOptions.body instanceof FormData)) {
+        reqHeaders['Content-Type'] = 'application/json';
+    }
 
     if (requireAuth) {
         const token = getAuthToken();

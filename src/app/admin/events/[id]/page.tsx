@@ -1,18 +1,23 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { AdminLayout } from "@/components/admin/layout/AdminLayout";
-import { FiUsers, FiSettings, FiImage, FiCalendar, FiChevronLeft, FiMapPin, FiClock } from "react-icons/fi";
+import { FiUsers, FiSettings, FiImage, FiCalendar, FiChevronLeft, FiMapPin, FiClock, FiX, FiLoader } from "react-icons/fi";
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useEventDetails, useEventRegistrations } from '@/hooks/useEvents';
+import { AdminService } from '@/services/admin.service';
+import toast from 'react-hot-toast';
 
 export default function EventDetailedPage() {
     const params = useParams();
     const id = params?.id as string;
-    const { event, isLoading } = useEventDetails(id);
+    const { event, isLoading, fetchEvent } = useEventDetails(id);
     const router = useRouter();
 
     const [activeTab, setActiveTab] = useState('basic');
+    const bannerInputRef = React.useRef<HTMLInputElement>(null);
+    const galleryInputRef = React.useRef<HTMLInputElement>(null);
+    const [isUploading, setIsUploading] = useState(false);
 
     // Registrations State
     const [regSearch, setRegSearch] = useState('');
@@ -27,6 +32,149 @@ export default function EventDetailedPage() {
             fetchRegistrations({ page: regPage, limit: 10, status: regStatus, search: regSearch, date: regDate });
         }
     }, [activeTab, regPage, regStatus, regSearch, regDate, fetchRegistrations]);
+
+    // Media Upload Handlers
+    const handleBannerUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            const selectedFile = e.target.files[0];
+
+            // Validate Size (1MB max)
+            if (selectedFile.size > 1024 * 1024) {
+                toast.error("File size must be less than 1MB.");
+                return;
+            }
+
+            setIsUploading(true);
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            try {
+                // Upload to S3/Cloud storage via backend
+                const { data } = await AdminService.uploadSingleFile(formData);
+
+                if (data?.success && data?.data) {
+                    const uploadedImage = {
+                        url: data.data.url,
+                        fileType: data.data.fileType
+                    };
+
+                    // Patch Event via existing /admin/events/:id updater
+                    const response = await fetch(`${process.env.NEXT_PUBLIC_ADMIN_API_URL || 'http://127.0.0.1:8080/api/v1'}/admin/events/${id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                        },
+                        body: JSON.stringify({ mainBanner: uploadedImage })
+                    });
+
+                    if (response.ok) {
+                        toast.success("Main banner updated!");
+                        fetchEvent(); // Refresh page data
+                    } else {
+                        toast.error("Failed to map image to event.");
+                    }
+                } else {
+                    toast.error(data?.message || "Image upload failed.");
+                }
+            } catch (error) {
+                console.error("Upload error:", error);
+                toast.error("A network error occurred.");
+            } finally {
+                setIsUploading(false);
+            }
+        }
+    };
+
+    const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            const currentTotal = event?.gallery?.length || 0;
+            const toAddCount = e.target.files.length;
+
+            if (currentTotal + toAddCount > 15) {
+                toast.error(`You can only upload up to ${15 - currentTotal} more images.`);
+                return;
+            }
+
+            setIsUploading(true);
+            const formData = new FormData();
+            Array.from(e.target.files).forEach(file => {
+                if (file.size <= 1024 * 1024) { // Only append if <= 1MB
+                    formData.append('files', file);
+                } else {
+                    toast.error(`Skipped ${file.name} - files must be under 1MB.`);
+                }
+            });
+
+            // Upload multiple files via backend
+            if (!formData.has('files')) {
+                setIsUploading(false);
+                return; // Nothing valid was selected
+            }
+
+            try {
+                const { data } = await AdminService.uploadMultipleFiles(formData);
+
+                if (data?.success && data?.data) {
+                    // Combine old gallery metadata with the newly generated objects
+                    const mergedGallery = [
+                        ...(event?.gallery || []),
+                        ...data.data.map((f: any) => ({ url: f.url, fileType: f.fileType }))
+                    ];
+
+                    const response = await fetch(`${process.env.NEXT_PUBLIC_ADMIN_API_URL || 'http://127.0.0.1:8080/api/v1'}/admin/events/${id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                        },
+                        body: JSON.stringify({ gallery: mergedGallery })
+                    });
+
+                    if (response.ok) {
+                        toast.success("Gallery updated successfully!");
+                        fetchEvent();
+                    } else {
+                        toast.error("Failed to patch gallery.");
+                    }
+                } else {
+                    toast.error(data?.message || "Gallery upload failed.");
+                }
+            } catch (error) {
+                console.error("Upload error:", error);
+                toast.error("A network error occurred.");
+            } finally {
+                setIsUploading(false);
+            }
+        }
+    };
+
+    const handleDeleteGalleryImage = async (urlToRemove: string) => {
+        const filteredGallery = event?.gallery?.filter((img: any) => img.url !== urlToRemove);
+
+        setIsUploading(true);
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_ADMIN_API_URL || 'http://127.0.0.1:8080/api/v1'}/admin/events/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                },
+                body: JSON.stringify({ gallery: filteredGallery })
+            });
+
+            if (response.ok) {
+                toast.success("Image removed.");
+                fetchEvent();
+            } else {
+                toast.error("Error deleting image.");
+            }
+        } catch (error) {
+            toast.error("Network error modifying gallery.");
+        } finally {
+            setIsUploading(false);
+        }
+    };
 
     if (isLoading) {
         return (
@@ -55,9 +203,9 @@ export default function EventDetailedPage() {
             <div className="space-y-6 w-full mx-auto">
                 {/* Header Profile */}
                 <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden relative">
-                    <div className="h-48 bg-primary/20 relative w-full overflow-hidden">
-                        <img src="/assets/travel_admin_login.png" alt="Cover" className="w-full h-full object-cover opacity-80" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
+                    <div className="h-64 bg-primary/20 relative w-full overflow-hidden">
+                        <img src={event.mainBanner?.url || "/assets/travel_admin_login.png"} alt="Cover" className="w-full h-full object-cover opacity-80" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-transparent"></div>
                     </div>
 
                     <div className="absolute top-6 left-6 flex">
@@ -122,15 +270,91 @@ export default function EventDetailedPage() {
                                 </div>
                             </div>
 
-                            <div>
-                                <h3 className="text-lg font-bold text-gray-900 border-b pb-3 mb-4">Event Media Gallery</h3>
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                    <div className="relative aspect-video rounded-xl overflow-hidden bg-gray-100 hidden md:block border shadow-sm">
-                                        <img src="/assets/travel_admin_login.png" alt="Gallery" className="w-full h-full object-cover" />
-                                    </div>
-                                    <div className="border-2 border-dashed border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center text-center hover:bg-gray-50 transition-colors cursor-pointer text-gray-500">
-                                        <FiImage className="w-6 h-6 mb-2 text-primary/40" />
-                                        <span className="text-xs font-semibold">Upload Images</span>
+                            {/* Media Section */}
+                            <div className="space-y-8 border-t pt-8">
+                                <div>
+                                    <h3 className="text-lg font-bold text-gray-900 mb-2">Main Event Banner</h3>
+                                    <p className="text-gray-500 mb-4 text-sm">This is the hero image displayed at the top of the event page.</p>
+
+                                    {/* Expose hidden native inputs for React Refs */}
+                                    <input
+                                        type="file"
+                                        ref={bannerInputRef}
+                                        className="hidden"
+                                        accept="image/png, image/jpeg, image/jpg, image/webp"
+                                        onChange={handleBannerUpload}
+                                        disabled={isUploading}
+                                    />
+
+                                    <input
+                                        type="file"
+                                        ref={galleryInputRef}
+                                        className="hidden"
+                                        multiple
+                                        accept="image/png, image/jpeg, image/jpg, image/webp"
+                                        onChange={handleGalleryUpload}
+                                        disabled={isUploading}
+                                    />
+
+                                    {event.mainBanner ? (
+                                        <div className="relative aspect-video max-w-2xl rounded-xl overflow-hidden bg-gray-100 border shadow-sm group">
+                                            <img src={event.mainBanner.url} alt="Main Banner" className="w-full h-full object-cover transition-opacity" />
+                                            {isUploading && (
+                                                <div className="absolute inset-0 bg-white/50 flex items-center justify-center">
+                                                    <FiLoader className="w-8 h-8 text-primary animate-spin" />
+                                                </div>
+                                            )}
+                                            <div className="absolute top-4 right-4 flex gap-2">
+                                                <button
+                                                    onClick={() => bannerInputRef.current?.click()}
+                                                    disabled={isUploading}
+                                                    className="px-3 py-1.5 bg-white/90 backdrop-blur text-gray-700 text-xs font-bold rounded-lg shadow-sm hover:bg-white transition-colors"
+                                                >
+                                                    Change Banner
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div
+                                            onClick={() => !isUploading && bannerInputRef.current?.click()}
+                                            className="aspect-video max-w-2xl border-2 border-dashed border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center text-center hover:bg-gray-50 transition-colors cursor-pointer text-gray-500"
+                                        >
+                                            {isUploading ? <FiLoader className="w-8 h-8 mb-3 text-primary animate-spin" /> : <FiImage className="w-8 h-8 mb-3 text-primary/40" />}
+                                            <span className="text-sm font-semibold">{isUploading ? "Uploading..." : "Upload Main Banner"}</span>
+                                            <span className="text-xs mt-1 text-gray-400">Max size: 1MB. Recommended: 1920x1080px</span>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div>
+                                    <h3 className="text-lg font-bold text-gray-900 mb-2">Event Gallery Album</h3>
+                                    <p className="text-gray-500 mb-4 text-sm">Upload up to 15 additional photos for this event. These will be displayed in the gallery grid. Max size: 1MB each.</p>
+
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                        {/* Existing Gallery Images */}
+                                        {event.gallery?.map((img: any, idx: number) => (
+                                            <div key={idx} className="relative aspect-square rounded-xl overflow-hidden bg-gray-100 border shadow-sm group">
+                                                <img src={img.url} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" />
+                                                <button
+                                                    disabled={isUploading}
+                                                    onClick={() => handleDeleteGalleryImage(img.url)}
+                                                    className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-md shadow-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 disabled:bg-gray-400"
+                                                >
+                                                    <FiX className="w-3.5 h-3.5" />
+                                                </button>
+                                            </div>
+                                        ))}
+
+                                        {/* Upload Button */}
+                                        {(!event.gallery || event.gallery.length < 15) && (
+                                            <div
+                                                onClick={() => !isUploading && galleryInputRef.current?.click()}
+                                                className={`aspect-square border-2 border-dashed border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center text-center transition-colors ${isUploading ? 'opacity-50 cursor-not-allowed bg-gray-50' : 'hover:bg-gray-50 cursor-pointer text-gray-500'}`}
+                                            >
+                                                {isUploading ? <FiLoader className="w-6 h-6 mb-2 text-primary animate-spin" /> : <FiImage className="w-6 h-6 mb-2 text-primary/40" />}
+                                                <span className="text-xs font-semibold px-2">{isUploading ? 'Uploading...' : `Add to Album \n (${event.gallery?.length || 0}/15)`}</span>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
