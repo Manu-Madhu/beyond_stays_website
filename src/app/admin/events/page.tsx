@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { AdminLayout } from "@/components/admin/layout/AdminLayout";
-import { FiPlus, FiMoreVertical, FiFilter, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiPlus, FiMoreVertical, FiFilter, FiChevronLeft, FiChevronRight, FiCalendar } from "react-icons/fi";
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEventList } from '@/hooks/useEvents';
@@ -111,8 +111,21 @@ export default function EventsPage() {
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan={6} className="py-12 text-center text-gray-500 font-medium">
-                                            No events found matching your criteria.
+                                        <td colSpan={6} className="py-20 text-center">
+                                            <div className="flex flex-col items-center justify-center space-y-4">
+                                                <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100">
+                                                    <FiCalendar className="w-8 h-8 text-gray-300" />
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <h3 className="text-lg font-bold text-gray-900">No Events Found</h3>
+                                                    <p className="text-gray-500 text-sm max-w-xs mx-auto">
+                                                        It looks like you haven't created any events yet. Get started by creating your first expedition.
+                                                    </p>
+                                                </div>
+                                                <Link href="/admin/events/create" className="text-primary font-bold text-sm hover:underline">
+                                                    Create your first event →
+                                                </Link>
+                                            </div>
                                         </td>
                                     </tr>
                                 )}

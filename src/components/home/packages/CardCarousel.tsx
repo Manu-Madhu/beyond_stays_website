@@ -33,8 +33,8 @@ const CardCarousel: React.FC<CardCarouselProps> = ({ cards }) => {
             className="relative rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-500 group min-w-[85%] sm:min-w-[45%] md:min-w-[23%] h-[450px] cursor-pointer"
           >
             <Link
-              title="package detailed page"
-              href={`/property/${card?.slug}`}
+              title={card.type === 'event' ? "event detailed page" : "package detailed page"}
+              href={card.type === 'event' ? `/events/${card.id}` : `/property/${card?.slug}`}
             >
               {/* Image */}
               <img

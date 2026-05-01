@@ -58,7 +58,17 @@ export const AdminSidebar = ({ isOpen, setIsOpen }: AdminSidebarProps) => {
                 <div className="flex-1 py-8 px-4 space-y-2 overflow-y-auto custom-scrollbar">
                     <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 ml-3">Menu</div>
                     {menuItems.map((item) => {
-                        const isActive = item.path === '/admin' ? pathname === '/admin' : pathname.startsWith(item.path);
+                        let isActive = false;
+                        if (item.path === '/admin') {
+                            isActive = pathname === '/admin';
+                        } else if (item.name === 'Events') {
+                            // Only highlight "Events" if it's the events list or create/edit, but NOT registrations
+                            isActive = pathname === '/admin/events' || 
+                                      (pathname.startsWith('/admin/events/') && !pathname.startsWith('/admin/events/registrations'));
+                        } else {
+                            isActive = pathname.startsWith(item.path);
+                        }
+                        
                         return (
                             <Link
                                 key={item.name}

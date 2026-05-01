@@ -1,5 +1,5 @@
 // This base URL allows the frontend to hit the backend without hardcoding localhost explicitly everywhere
-const API_BASE_URL = process.env.NEXT_PUBLIC_ADMIN_API_URL || 'http://127.0.0.1:8080/api/v1';
+const API_ROOT = (process.env.NEXT_PUBLIC_ADMIN_API_URL || 'http://127.0.0.1:8080/api/v1').replace('/v1', '');
 
 export const getAuthToken = (): string | null => {
     if (typeof window !== 'undefined') {
@@ -10,13 +10,14 @@ export const getAuthToken = (): string | null => {
 
 interface FetchOptions extends RequestInit {
     requireAuth?: boolean;
+    version?: 'v1' | 'v2';
 }
 
 /**
  * A wrapper over native fetch that automatically handles the base URL and authorization headers.
  */
 export const apiFetch = async (endpoint: string, options: FetchOptions = {}) => {
-    const { requireAuth = false, headers, ...restOptions } = options;
+    const { requireAuth = false, version = 'v1', headers, ...restOptions } = options;
 
     const reqHeaders: Record<string, string> = {
         ...(headers as any),
@@ -34,7 +35,11 @@ export const apiFetch = async (endpoint: string, options: FetchOptions = {}) => 
         }
     }
 
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    // Ensure no double slashes in URL
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    const url = `${API_ROOT}/${version}${cleanEndpoint}`.replace(/([^:]\/)\/+/g, "$1");
+
+    const response = await fetch(url, {
         ...restOptions,
         headers: reqHeaders,
     });

@@ -23,7 +23,20 @@ export const AdminService = {
         return await apiFetch('/admin/events', {
             method: 'POST',
             body: JSON.stringify(eventData),
-            requireAuth: true // Automatically injects Authorization Bearer Header
+            requireAuth: true,
+            version: 'v2'
+        });
+    },
+
+    /**
+     * Updates (patches) an existing event by ID
+     */
+    updateEvent: async (id: string, eventData: any) => {
+        return await apiFetch(`/admin/events/${id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(eventData),
+            requireAuth: true,
+            version: 'v2'
         });
     },
 
@@ -38,7 +51,8 @@ export const AdminService = {
 
         return await apiFetch(`/admin/events?${queryParams.toString()}`, {
             method: 'GET',
-            requireAuth: true
+            requireAuth: true,
+            version: 'v2'
         });
     },
 
@@ -48,7 +62,8 @@ export const AdminService = {
     getEventById: async (id: string) => {
         return await apiFetch(`/admin/events/${id}`, {
             method: 'GET',
-            requireAuth: true
+            requireAuth: true,
+            version: 'v2'
         });
     },
 
@@ -65,7 +80,8 @@ export const AdminService = {
 
         return await apiFetch(`/admin/events/${eventId}/registrations?${queryParams.toString()}`, {
             method: 'GET',
-            requireAuth: true
+            requireAuth: true,
+            version: 'v2'
         });
     },
 

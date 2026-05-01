@@ -19,7 +19,8 @@ export interface NearToVisitProps {
 }
 
 export interface CardData {
-    id: number;
+    id: number | string;
+    type?: 'event' | 'package';
     slug?: string;
     about?: string;
     nearToVisit?: NearToVisitProps[]
