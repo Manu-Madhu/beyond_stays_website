@@ -86,6 +86,35 @@ export const AdminService = {
     },
 
     /**
+     * Retrieves event-related statistics for the admin dashboard
+     */
+    getEventStats: async () => {
+        return await apiFetch('/admin/events/stats', {
+            method: 'GET',
+            requireAuth: true,
+            version: 'v2'
+        });
+    },
+
+    /**
+     * Retrieves all registrations across all events
+     */
+    getAllRegistrations: async (params: { page?: number, limit?: number, status?: string, search?: string, paymentMethod?: string } = {}) => {
+        const queryParams = new URLSearchParams();
+        if (params.page) queryParams.append('page', params.page.toString());
+        if (params.limit) queryParams.append('limit', params.limit.toString());
+        if (params.status && params.status !== 'All Status') queryParams.append('status', params.status);
+        if (params.search) queryParams.append('search', params.search);
+        if (params.paymentMethod && params.paymentMethod !== 'All Methods') queryParams.append('paymentMethod', params.paymentMethod);
+
+        return await apiFetch(`/admin/events/registrations?${queryParams.toString()}`, {
+            method: 'GET',
+            requireAuth: true,
+            version: 'v2'
+        });
+    },
+
+    /**
      * Uploads a single file to the media backend
      */
     uploadSingleFile: async (fileData: FormData) => {
