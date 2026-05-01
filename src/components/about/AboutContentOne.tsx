@@ -4,8 +4,8 @@ import Button from "../ui/Button";
 import { packagesData } from "@/data/packagesData";
 import Link from "next/link";
 
-interface PackageCard {
-  id: number;
+interface PackageCardType {
+  id: number | string;
   images: string[];
   title: string;
   slug?: string;
@@ -27,7 +27,7 @@ const AboutContentOne = () => {
     card,
     isMobile = false
   }: {
-    card: PackageCard;
+    card: PackageCardType;
     isMobile?: boolean;
   }) => (
     <Link title="package detailed page" href={`/property/${card?.slug}`}>
