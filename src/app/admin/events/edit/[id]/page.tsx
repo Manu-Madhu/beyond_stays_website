@@ -70,9 +70,24 @@ export default function EventEditPage() {
                 capacity: event.capacity?.toString() || ''
             });
 
-            if (event.mainBanner) setMainBanner(event.mainBanner);
-            if (event.listingBanner) setListingBanner(event.listingBanner);
-            if (event.gallery && event.gallery.length > 0) setImages(event.gallery);
+            if (event.mainBanner) {
+                setMainBanner({
+                    url: event.mainBanner.url || event.mainBanner.location || '',
+                    fileType: event.mainBanner.fileType || 'image/jpeg'
+                });
+            }
+            if (event.listingBanner) {
+                setListingBanner({
+                    url: event.listingBanner.url || event.listingBanner.location || '',
+                    fileType: event.listingBanner.fileType || 'image/jpeg'
+                });
+            }
+            if (event.gallery && event.gallery.length > 0) {
+                setImages(event.gallery.map((img: any) => ({
+                    url: img.url || img.location || '',
+                    fileType: img.fileType || 'image/jpeg'
+                })));
+            }
             
             if (event.registrationForm) {
                 setRegistrationForm({
@@ -200,9 +215,9 @@ export default function EventEditPage() {
                 ...formData,
                 registrationFee: Number(formData.registrationFee) || 0,
                 capacity: Number(formData.capacity) || 0,
-                mainBanner,
-                listingBanner,
-                gallery: images,
+                mainBanner: mainBanner ? { ...mainBanner, location: mainBanner.url } : null,
+                listingBanner: listingBanner ? { ...listingBanner, location: listingBanner.url } : null,
+                gallery: images.map(img => ({ ...img, location: img.url })),
                 registrationForm: registrationForm
             };
 

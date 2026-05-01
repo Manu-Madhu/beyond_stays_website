@@ -52,9 +52,9 @@ export default function EventDetailsPage() {
     }
 
     const allImages = [
-        event.mainBanner?.url,
-        ...(event.banners?.map((b: any) => b.url) || []),
-        ...(event.gallery?.map((g: any) => g.url) || [])
+        event.mainBanner?.url || event.mainBanner?.location,
+        ...(event.banners?.map((b: any) => b.url || b.location) || []),
+        ...(event.gallery?.map((g: any) => g.url || g.location) || [])
     ].filter(Boolean);
 
     return (

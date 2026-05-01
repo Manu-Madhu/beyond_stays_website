@@ -140,7 +140,11 @@ export default function EventDetailedPage() {
             try {
                 const { data } = await AdminService.uploadSingleFile(formData);
                 if (data?.success && data?.data) {
-                    const uploadedImage = { url: data.data.url, fileType: data.data.fileType };
+                    const uploadedImage = { 
+                        url: data.data.url, 
+                        location: data.data.url, 
+                        fileType: data.data.fileType 
+                    };
                     const response = await AdminService.updateEvent(id, { mainBanner: uploadedImage });
                     if (response.data?.success) {
                         toast.success("Main banner updated!");
@@ -180,7 +184,11 @@ export default function EventDetailedPage() {
                 if (data?.success && data?.data) {
                     const mergedGallery = [
                         ...(event?.gallery || []),
-                        ...data.data.map((f: any) => ({ url: f.url, fileType: f.fileType }))
+                        ...data.data.map((f: any) => ({ 
+                            url: f.url, 
+                            location: f.url, 
+                            fileType: f.fileType 
+                        }))
                     ];
                     const response = await AdminService.updateEvent(id, { gallery: mergedGallery });
                     if (response.data?.success) {
@@ -249,7 +257,7 @@ export default function EventDetailedPage() {
                 {/* Header Profile */}
                 <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden relative">
                     <div className="h-64 bg-primary/20 relative w-full overflow-hidden">
-                        <img src={event.mainBanner?.url || "/assets/travel_admin_login.png"} alt="Cover" className="w-full h-full object-cover opacity-80" />
+                        <img src={event.mainBanner?.url || event.mainBanner?.location || "/assets/travel_admin_login.png"} alt="Cover" className="w-full h-full object-cover opacity-80" />
                         <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-transparent"></div>
                     </div>
 
@@ -356,7 +364,7 @@ export default function EventDetailedPage() {
                                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                                 {event.banners?.map((img: any, idx: number) => (
                                                     <div key={idx} className="group relative aspect-video rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                                                        <img src={img.url} className="w-full h-full object-cover" />
+                                                        <img src={img.url || img.location} className="w-full h-full object-cover" />
                                                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                                             <button
                                                                 onClick={async () => {
@@ -398,7 +406,7 @@ export default function EventDetailedPage() {
                                         <div className="max-w-3xl">
                                             {event.mainBanner ? (
                                                 <div className="relative aspect-video rounded-3xl overflow-hidden bg-white border-2 border-gray-100 shadow-xl group">
-                                                    <img src={event.mainBanner.url} alt="Main Banner" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                                                    <img src={event.mainBanner.url || event.mainBanner.location} alt="Main Banner" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                                                     {isUploading && (
                                                         <div className="absolute inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center">
                                                             <FiLoader className="w-10 h-10 text-primary animate-spin" />
@@ -469,7 +477,7 @@ export default function EventDetailedPage() {
                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                         {event.gallery?.map((img: any, idx: number) => (
                                             <div key={idx} className="relative aspect-square rounded-xl overflow-hidden bg-gray-100 border shadow-sm group">
-                                                <img src={img.url} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" />
+                                                <img src={img.url || img.location} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" />
                                                 <button disabled={isUploading} onClick={() => handleDeleteGalleryImage(img.url)} className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-md shadow-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 disabled:bg-gray-400">
                                                     <FiX className="w-3.5 h-3.5" />
                                                 </button>

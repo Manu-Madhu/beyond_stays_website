@@ -159,9 +159,9 @@ export default function EventCreationPage() {
             ...formData,
             registrationFee: Number(formData.registrationFee) || 0,
             capacity: Number(formData.capacity) || 0,
-            mainBanner: mainBanner,
-            listingBanner: listingBanner,
-            gallery: images,
+            mainBanner: mainBanner ? { ...mainBanner, location: mainBanner.url } : null,
+            listingBanner: listingBanner ? { ...listingBanner, location: listingBanner.url } : null,
+            gallery: images.map(img => ({ ...img, location: img.url })),
             registrationForm: registrationForm
         };
 

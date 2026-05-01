@@ -28,7 +28,7 @@ const TabSection: React.FC = () => {
             description: event.description,
             // Use listingBanner if available, else mainBanner, else fallback
             images: [
-                event.listingBanner?.url || event.mainBanner?.url || "/assets/travel_placeholder.png"
+                event.listingBanner?.url || event.listingBanner?.location || event.mainBanner?.url || event.mainBanner?.location || "/assets/travel_placeholder.png"
             ],
             type: 'event' // Add type to distinguish
           }));
