@@ -103,6 +103,9 @@ export default function EventsPage() {
                                                 <Link href={`/admin/events/${event._id}`} className="text-primary hover:text-primary/70 font-semibold text-sm mr-4 transition-colors">
                                                     View Details
                                                 </Link>
+                                                <Link href={`/admin/events/edit/${event._id}`} className="text-gray-600 hover:text-gray-900 font-semibold text-sm mr-4 transition-colors">
+                                                    Edit
+                                                </Link>
                                                 <button className="text-gray-400 hover:text-gray-900 transition-colors p-1 rounded-md hover:bg-gray-100">
                                                     <FiMoreVertical size={18} />
                                                 </button>
