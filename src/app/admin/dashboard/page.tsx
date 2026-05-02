@@ -62,7 +62,7 @@ export default function DashboardPage() {
         },
         { 
             title: 'Active Ratio', 
-            value: '94%', 
+            value: `${stats?.activeRatio || 0}%`, 
             icon: <FiActivity className="w-6 h-6 text-orange-600" />, 
             bg: 'bg-orange-50',
             link: '#'
@@ -85,9 +85,6 @@ export default function DashboardPage() {
                                 <div className={`p-3 rounded-xl ${card.bg} group-hover:scale-110 transition-transform`}>
                                     {card.icon}
                                 </div>
-                                <span className="text-emerald-500 bg-emerald-50 text-[10px] font-bold px-2 py-1 rounded-lg flex items-center gap-1">
-                                    <FiArrowUpRight /> +12%
-                                </span>
                             </div>
                             <h3 className="text-gray-500 text-sm font-medium">{card.title}</h3>
                             <p className="text-2xl font-bold text-gray-900 mt-1">{card.value}</p>
@@ -173,16 +170,16 @@ export default function DashboardPage() {
                                         </div>
                                         <span className="text-sm font-medium text-gray-700">Online UPI/Card</span>
                                     </div>
-                                    <span className="text-sm font-bold text-gray-900">65%</span>
+                                    <span className="text-sm font-bold text-gray-900">{stats?.paymentStats?.online || 0}%</span>
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600">
                                             <FiClock size={16} />
                                         </div>
-                                        <span className="text-sm font-medium text-gray-700">Screenshot Verification</span>
+                                        <span className="text-sm font-medium text-gray-700">Screenshot Ver.</span>
                                     </div>
-                                    <span className="text-sm font-bold text-gray-900">28%</span>
+                                    <span className="text-sm font-bold text-gray-900">{stats?.paymentStats?.screenshot || 0}%</span>
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-3">
@@ -191,7 +188,7 @@ export default function DashboardPage() {
                                         </div>
                                         <span className="text-sm font-medium text-gray-700">Direct Venue Pay</span>
                                     </div>
-                                    <span className="text-sm font-bold text-gray-900">7%</span>
+                                    <span className="text-sm font-bold text-gray-900">{stats?.paymentStats?.direct || 0}%</span>
                                 </div>
                             </div>
                         </div>
