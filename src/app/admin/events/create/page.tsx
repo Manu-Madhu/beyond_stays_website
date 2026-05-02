@@ -464,7 +464,7 @@ export default function EventCreationPage() {
                                 <label className="block text-sm font-semibold text-gray-700 mb-1.5">Status</label>
                                 <select name="status" value={formData.status} onChange={handleChange} className="w-full px-4 py-3 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium text-gray-800">
                                     <option value="Draft">Draft</option>
-                                    <option value="Active (Published)">Active (Published)</option>
+                                    <option value="Active">Active</option>
                                     <option value="Passed">Passed</option>
                                 </select>
                             </div>

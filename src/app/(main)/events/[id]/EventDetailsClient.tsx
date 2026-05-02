@@ -44,7 +44,7 @@ export default function EventDetailsClient({ event }: EventDetailsClientProps) {
     
     const isExpired = new Date(event.endDate) < new Date();
     const isFull = capacity > 0 && registrationCount >= capacity;
-    const canRegister = !isExpired && !isFull && event.status === 'Active (Published)';
+    const canRegister = !isExpired && !isFull && event.status === 'Active';
 
     const slotsAvailable = !isMounted ? '...' : (isFull ? '0' : (capacity > 0 ? (capacity - registrationCount) : 'Unlimited'));
 

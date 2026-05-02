@@ -49,7 +49,7 @@ export default function EventsPage() {
                             className="bg-white border border-gray-200 rounded-xl px-4 py-2 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/20 shadow-sm cursor-pointer hover:border-primary/50 transition-colors"
                         >
                             <option value="All Status">All Status</option>
-                            <option value="Active (Published)">Active (Published)</option>
+                            <option value="Active">Active</option>
                             <option value="Draft">Draft</option>
                             <option value="Passed">Passed</option>
                         </select>
@@ -100,10 +100,11 @@ export default function EventsPage() {
                                             <td className="py-4 px-6 text-gray-600 font-medium">{new Date(event.startDate).toLocaleDateString()}</td>
                                             <td className="py-4 px-6 text-center font-semibold text-gray-900">{event.registrations || 0} / {event.capacity || '∞'}</td>
                                             <td className="py-4 px-6">
-                                                <span className={`px-3 py-1 text-xs font-bold rounded-full border ${event.status === 'Active (Published)' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
-                                                    'bg-gray-50 text-gray-600 border-gray-200'
-                                                    }`}>
-                                                    {event.status === 'Active (Published)' ? 'Active' : event.status}
+                                                <span className={`px-3 py-1 text-xs font-bold rounded-full border ${event.status === 'Active' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                                                    event.status === 'Draft' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+                                                    'bg-gray-50 text-gray-500 border-gray-200'
+                                                }`}>
+                                                    {event.status}
                                                 </span>
                                             </td>
                                             <td className="py-4 px-6 text-right relative">

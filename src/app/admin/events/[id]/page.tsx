@@ -4,7 +4,7 @@ import { AdminLayout } from "@/components/admin/layout/AdminLayout";
 import {
     FiUsers, FiSettings, FiImage, FiCalendar, FiChevronLeft, FiMapPin,
     FiX, FiLoader, FiCreditCard, FiUpload,
-    FiDollarSign, FiSave, FiAlertCircle, FiInfo, FiExternalLink
+    FiDollarSign, FiSave, FiAlertCircle, FiInfo, FiExternalLink, FiMoreVertical
 } from "react-icons/fi";
 import { MdOutlineQrCode2 } from "react-icons/md";
 import Link from 'next/link';
@@ -55,6 +55,7 @@ export default function EventDetailedPage() {
     const [regPage, setRegPage] = useState(1);
 
     const { registrations, meta: regMeta, isLoading: isRegLoading, fetchRegistrations } = useEventRegistrations(id);
+    const [openRegMenuId, setOpenRegMenuId] = useState<string | null>(null);
 
     // Registration Form Config State
     const [formConfig, setFormConfig] = useState({
@@ -280,7 +281,7 @@ export default function EventDetailedPage() {
                                     <span className="opacity-75">@ {new Date(event.startDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</span>
                                 </span>
                                 <span className="px-3 py-1 bg-primary text-white rounded-lg text-[10px] uppercase tracking-widest font-black border border-white/20 shadow-lg">{event.ageRestriction}</span>
-                                <span className={`px-3 py-1 rounded-lg text-[10px] uppercase tracking-widest font-black border shadow-lg ${event.status === 'Active (Published)' ? 'bg-emerald-500 text-white border-emerald-400' : 'bg-gray-700 text-white border-gray-600'}`}>{event.status}</span>
+                                <span className={`px-3 py-1 rounded-lg text-[10px] uppercase tracking-widest font-black border shadow-lg ${event.status === 'Active' ? 'bg-emerald-500 text-white border-emerald-400' : 'bg-gray-700 text-white border-gray-600'}`}>{event.status}</span>
                             </div>
                         </div>
                         <div className="flex gap-3 shrink-0">
@@ -880,14 +881,21 @@ export default function EventDetailedPage() {
                                             registrations.map(reg => (
                                                 <tr key={reg._id || reg.id} className="hover:bg-gray-50/50 transition-colors">
                                                     <td className="py-4 px-4">
-                                                        <p className="font-bold text-gray-900">{reg.user}</p>
-                                                        <p className="text-gray-500 text-xs">{reg.email}</p>
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">
+                                                                {(reg.user || 'U').charAt(0).toUpperCase()}
+                                                            </div>
+                                                            <div>
+                                                                <p className="font-bold text-gray-900">{reg.user}</p>
+                                                                <p className="text-gray-500 text-xs">{reg.email}</p>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                     <td className="py-4 px-4 text-gray-500 text-center font-medium">
-                                                        {new Date(reg.createdAt || reg.date).toLocaleDateString()}
+                                                        {new Date(reg.createdAt || reg.date).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })}
                                                     </td>
                                                     <td className="py-4 px-4 text-center">
-                                                        <span className={`px-2.5 py-1 text-xs font-bold rounded-lg border ${
+                                                        <span className={`px-2.5 py-1 text-[10px] uppercase tracking-wider font-bold rounded-lg border ${
                                                             reg.paymentMethod === 'online' ? 'bg-blue-50 text-blue-700 border-blue-200' :
                                                             reg.paymentMethod === 'screenshot' ? 'bg-amber-50 text-amber-700 border-amber-200' :
                                                             reg.paymentMethod === 'direct' ? 'bg-purple-50 text-purple-700 border-purple-200' :
@@ -899,7 +907,7 @@ export default function EventDetailedPage() {
                                                         </span>
                                                     </td>
                                                     <td className="py-4 px-4 text-center">
-                                                        <span className={`px-2.5 py-1 text-xs font-bold rounded-lg ${
+                                                        <span className={`px-2.5 py-1 text-[10px] uppercase tracking-wider font-bold rounded-lg ${
                                                             reg.status === 'Registered' ? 'bg-emerald-50 text-emerald-700' :
                                                             reg.status === 'Cancelled' ? 'bg-red-50 text-red-700' :
                                                             'bg-amber-50 text-amber-700'
@@ -907,8 +915,27 @@ export default function EventDetailedPage() {
                                                             {reg.status}
                                                         </span>
                                                     </td>
-                                                    <td className="py-4 px-4 text-right">
-                                                        <Link href={`/admin/events/registrations/${reg._id || reg.id}`} className="text-primary font-bold hover:underline">View Details</Link>
+                                                    <td className="py-4 px-4 text-right relative">
+                                                        <button 
+                                                            onClick={() => setOpenRegMenuId(openRegMenuId === reg._id ? null : reg._id)}
+                                                            className="text-gray-400 hover:text-gray-900 transition-colors p-2 rounded-lg hover:bg-gray-100"
+                                                        >
+                                                            <FiMoreVertical size={16} />
+                                                        </button>
+
+                                                        {openRegMenuId === reg._id && (
+                                                            <>
+                                                                <div className="fixed inset-0 z-10" onClick={() => setOpenRegMenuId(null)}></div>
+                                                                <div className="absolute right-4 top-12 w-40 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-20 overflow-hidden animate-in fade-in zoom-in-95 duration-100">
+                                                                    <Link 
+                                                                        href={`/admin/events/registrations?search=${reg.email}`} 
+                                                                        className="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors font-bold uppercase tracking-wider"
+                                                                    >
+                                                                        View Detailed
+                                                                    </Link>
+                                                                </div>
+                                                            </>
+                                                        )}
                                                     </td>
                                                 </tr>
                                             ))
