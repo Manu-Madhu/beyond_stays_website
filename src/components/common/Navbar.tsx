@@ -23,8 +23,8 @@ const Navbar = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full h-[80px] z-40 transition-all duration-300 ${scrolled
-          ? "bg-white/60 backdrop-blur-md  shadow-lg z-40"
-          : "bg-transparent"
+        ? "bg-white/60 backdrop-blur-md  shadow-lg z-40"
+        : "bg-transparent z-40"
         }`}
     >
       <div className="max-w-[1350px] mx-auto h-full flex items-center justify-between px-5 md:px-8">
@@ -76,8 +76,8 @@ const Navbar = () => {
           <Button
             title="Contact Now"
             className={`text-sm ${scrolled
-                ? "bg-black text-white hover:bg-gray-800 border-2 border-black"
-                : "border-2 text-white hover:bg-white/10"
+              ? "bg-black text-white hover:bg-gray-800 border-2 border-black"
+              : "border-2 text-white hover:bg-white/10"
               }`}
             link="/contact"
           />

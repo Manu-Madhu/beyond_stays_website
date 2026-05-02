@@ -60,7 +60,8 @@ export default function EventDetailsPage() {
     return (
         <div className="min-h-screen bg-gray-50 pb-20">
             {/* Hero Section */}
-            <div className="relative h-[60vh] overflow-hidden">
+            <div className="relative h-[60vh] overflow-hidden z-20">
+                <div className='bg-gradient-to-tr from-black/10 via-black/50 to-transparent w-full h-full absolute top-0 left-0 right-0 bottom-0 z-10'></div>
                 <img 
                     src={allImages[activeImage] || "/assets/travel_placeholder.png"} 
                     alt={event.title} 
