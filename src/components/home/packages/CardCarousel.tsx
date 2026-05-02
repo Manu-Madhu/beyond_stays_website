@@ -34,7 +34,7 @@ const CardCarousel: React.FC<CardCarouselProps> = ({ cards }) => {
           >
             <Link
               title={card.type === 'event' ? "event detailed page" : "package detailed page"}
-              href={card.type === 'event' ? `/events/${card.id}` : `/property/${card?.slug}`}
+              href={card.type === 'event' ? `/events/${card.slug || card.id}` : `/property/${card?.slug}`}
             >
               {/* Image */}
               <img

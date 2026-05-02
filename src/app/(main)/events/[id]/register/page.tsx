@@ -92,11 +92,18 @@ export default function EventRegistrationPage() {
     useEffect(() => {
         const fetchEvent = async () => {
             try {
-                const { data } = await PublicService.getEventById(id);
-                if (data?.success) {
-                    setEvent(data.data);
+                // Try slug first
+                const { data: slugData } = await PublicService.getEventBySlug(id);
+                if (slugData?.success) {
+                    setEvent(slugData.data);
                 } else {
-                    setError(data?.message || 'Event not found.');
+                    // Fallback to ID
+                    const { data } = await PublicService.getEventById(id);
+                    if (data?.success) {
+                        setEvent(data.data);
+                    } else {
+                        setError(data?.message || 'Event not found.');
+                    }
                 }
             } catch {
                 setError('Failed to load event.');
@@ -193,7 +200,9 @@ export default function EventRegistrationPage() {
                 ...(paymentMethod === 'screenshot' && uploadedScreenshot && { paymentScreenshot: uploadedScreenshot })
             };
 
-            const { data } = await PublicService.registerForEvent(id, payload);
+            // Use event._id for registration to ensure backend gets a valid ObjectId
+            const targetId = event?._id || id;
+            const { data } = await PublicService.registerForEvent(targetId, payload);
 
             if (data?.success) {
                 setIsSuccess(true);

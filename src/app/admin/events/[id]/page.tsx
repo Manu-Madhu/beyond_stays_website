@@ -257,8 +257,8 @@ export default function EventDetailedPage() {
                 {/* Header Profile */}
                 <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden relative">
                     <div className="h-64 bg-primary/20 relative w-full overflow-hidden">
-                        <img src={event.mainBanner?.url || event.mainBanner?.location || "/assets/travel_admin_login.png"} alt="Cover" className="w-full h-full object-cover opacity-80" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-transparent"></div>
+                        <img src={event.mainBanner?.url || event.mainBanner?.location || "/assets/travel_admin_login.png"} alt="Cover" className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
                     </div>
 
                     <div className="absolute top-6 left-6 flex">
@@ -269,12 +269,18 @@ export default function EventDetailedPage() {
 
                     <div className="p-8 pt-6 relative flex flex-col sm:flex-row gap-6 justify-between items-start sm:items-end -mt-16">
                         <div className="flex-1">
-                            <h1 className="text-3xl font-extrabold text-white mb-4 tracking-tight drop-shadow-md">{event.title}</h1>
-                            <div className="flex flex-wrap gap-4 text-sm font-medium text-gray-600 mt-2">
-                                <span className="flex items-center gap-1.5"><FiMapPin className="text-primary" /> {event.location}</span>
-                                <span className="flex items-center gap-1.5"><FiCalendar className="text-primary" /> {new Date(event.startDate).toLocaleDateString()}</span>
-                                <span className="px-3 py-1 bg-red-50 text-red-700 rounded-lg text-xs font-bold border border-red-200">{event.ageRestriction}</span>
-                                <span className={`px-3 py-1 rounded-lg text-xs font-bold border ${event.status === 'Active (Published)' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-gray-50 text-gray-600 border-gray-200'}`}>{event.status}</span>
+                            <h1 className="text-2xl font-black text-white mb-4 tracking-tight leading-tight uppercase italic drop-shadow-[0_4px_12px_rgba(0,0,0,0.7)]">
+                                {event.title}
+                            </h1>
+                            <div className="flex flex-wrap gap-4 text-sm font-bold text-white/90 mt-2">
+                                <span className="flex items-center gap-1.5 drop-shadow-md text-primary"><FiMapPin className="text-primary" /> {event.location}</span>
+                                <span className="flex items-center gap-1.5 drop-shadow-md text-primary">
+                                    <FiCalendar className="text-primary" /> 
+                                    {new Date(event.startDate).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })}
+                                    <span className="opacity-75">@ {new Date(event.startDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</span>
+                                </span>
+                                <span className="px-3 py-1 bg-primary text-white rounded-lg text-[10px] uppercase tracking-widest font-black border border-white/20 shadow-lg">{event.ageRestriction}</span>
+                                <span className={`px-3 py-1 rounded-lg text-[10px] uppercase tracking-widest font-black border shadow-lg ${event.status === 'Active (Published)' ? 'bg-emerald-500 text-white border-emerald-400' : 'bg-gray-700 text-white border-gray-600'}`}>{event.status}</span>
                             </div>
                         </div>
                         <div className="flex gap-3 shrink-0">
@@ -306,20 +312,124 @@ export default function EventDetailedPage() {
 
                     {/* Basic Details Tab */}
                     {activeTab === 'basic' && (
-                        <div className="space-y-8 animate-in fade-in duration-300">
+                        <div className="space-y-10 animate-in fade-in duration-300">
+                            {/* Event Description */}
                             <div>
-                                <h3 className="text-lg font-bold text-gray-900 border-b pb-3 mb-4">Event Description</h3>
-                                <p className="text-gray-600 leading-relaxed text-sm whitespace-pre-line">{event.description}</p>
+                                <h3 className="text-lg font-black text-gray-900 border-b-2 border-primary/20 pb-3 mb-4 uppercase tracking-tighter italic">Event Description</h3>
+                                <div className="min-h-[50px]">
+                                    {event?.description ? (
+                                        <div 
+                                            className="rich-text-content text-gray-700 leading-relaxed text-sm"
+                                            dangerouslySetInnerHTML={{ __html: event.description }}
+                                        />
+                                    ) : (
+                                        <p className="text-gray-400 italic text-sm py-2">No description provided.</p>
+                                    )}
+                                </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <h3 className="text-lg font-bold text-gray-900 border-b pb-3 mb-4">Guidelines &amp; Restrictions</h3>
-                                    <p className="text-gray-600 leading-relaxed text-sm whitespace-pre-line">{event.guidelines || "No specific guidelines provided."}</p>
+                            {/* Trip Itinerary */}
+                            <div>
+                                <h3 className="text-lg font-black text-gray-900 border-b-2 border-primary/20 pb-3 mb-4 uppercase tracking-tighter italic">Trip Itinerary</h3>
+                                <div className="min-h-[50px]">
+                                    {event?.itinerary ? (
+                                        <div 
+                                            className="rich-text-content text-gray-700 leading-relaxed text-sm"
+                                            dangerouslySetInnerHTML={{ __html: event.itinerary }}
+                                        />
+                                    ) : (
+                                        <p className="text-gray-400 italic text-sm py-2">No itinerary overview provided.</p>
+                                    )}
                                 </div>
-                                <div>
-                                    <h3 className="text-lg font-bold text-gray-900 border-b pb-3 mb-4">Things to Carry</h3>
-                                    <p className="text-gray-600 leading-relaxed text-sm whitespace-pre-line">{event.thingsToCarry || "Standard travel essentials."}</p>
+                            </div>
+
+                            {/* Inclusions & Exclusions */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                <div className="min-w-0">
+                                    <h3 className="text-lg font-black text-gray-900 border-b-2 border-emerald-500/20 pb-3 mb-4 uppercase tracking-tighter italic">Inclusions</h3>
+                                    <div className="min-h-[50px]">
+                                        {event?.inclusions ? (
+                                            <div 
+                                                className="rich-text-content text-gray-700 leading-relaxed text-sm"
+                                                dangerouslySetInnerHTML={{ __html: event.inclusions }}
+                                            />
+                                        ) : (
+                                            <p className="text-gray-400 italic text-sm py-2">Not specified.</p>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="min-w-0">
+                                    <h3 className="text-lg font-black text-gray-900 border-b-2 border-red-500/20 pb-3 mb-4 uppercase tracking-tighter italic">Exclusions</h3>
+                                    <div className="min-h-[50px]">
+                                        {event?.exclusions ? (
+                                            <div 
+                                                className="rich-text-content text-gray-700 leading-relaxed text-sm"
+                                                dangerouslySetInnerHTML={{ __html: event.exclusions }}
+                                            />
+                                        ) : (
+                                            <p className="text-gray-400 italic text-sm py-2">Not specified.</p>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Who & Why Join */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                <div className="min-w-0">
+                                    <h3 className="text-lg font-black text-gray-900 border-b-2 border-primary/20 pb-3 mb-4 uppercase tracking-tighter italic">Who Can Join?</h3>
+                                    <div className="min-h-[50px]">
+                                        {event?.whoCanJoin ? (
+                                            <div 
+                                                className="rich-text-content text-gray-700 leading-relaxed text-sm"
+                                                dangerouslySetInnerHTML={{ __html: event.whoCanJoin }}
+                                            />
+                                        ) : (
+                                            <p className="text-gray-400 italic text-sm py-2">Not specified.</p>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="min-w-0">
+                                    <h3 className="text-lg font-black text-gray-900 border-b-2 border-primary/20 pb-3 mb-4 uppercase tracking-tighter italic">Why Join This Trip?</h3>
+                                    <div className="min-h-[50px]">
+                                        {event?.whyJoin ? (
+                                            <div 
+                                                className="rich-text-content text-gray-700 leading-relaxed text-sm"
+                                                dangerouslySetInnerHTML={{ __html: event.whyJoin }}
+                                            />
+                                        ) : (
+                                            <p className="text-gray-400 italic text-sm py-2">Not specified.</p>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Guidelines & Things to Carry */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 border-t border-gray-100 pt-8">
+                                <div className="min-w-0">
+                                    <h3 className="text-lg font-bold text-gray-900 mb-4">Guidelines &amp; Restrictions</h3>
+                                    <div className="min-h-[50px]">
+                                        {event?.guidelines ? (
+                                            <div 
+                                                className="rich-text-content text-gray-600 leading-relaxed text-sm"
+                                                dangerouslySetInnerHTML={{ __html: event.guidelines }}
+                                            />
+                                        ) : (
+                                            <p className="text-gray-400 italic text-sm py-2">No specific guidelines provided.</p>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="min-w-0">
+                                    <h3 className="text-lg font-bold text-gray-900 mb-4">Things to Carry</h3>
+                                    <div className="min-h-[50px]">
+                                        {event?.thingsToCarry ? (
+                                            <div 
+                                                className="rich-text-content text-gray-600 leading-relaxed text-sm"
+                                                dangerouslySetInnerHTML={{ __html: event.thingsToCarry }}
+                                            />
+                                        ) : (
+                                            <p className="text-gray-400 italic text-sm py-2">No items listed.</p>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
 
@@ -397,21 +507,12 @@ export default function EventDetailedPage() {
                                                     </div>
                                                 )}
                                             </div>
-                                            <div className="flex items-center gap-2 p-3 bg-blue-50/50 border border-blue-100 rounded-xl">
-                                                <FiInfo className="w-4 h-4 text-blue-600 shrink-0" />
-                                                <p className="text-[11px] text-blue-700 font-medium">Carousel slides will automatically transition every 5 seconds on the registration page.</p>
-                                            </div>
                                         </div>
                                     ) : (
                                         <div className="max-w-3xl">
                                             {event.mainBanner ? (
                                                 <div className="relative aspect-video rounded-3xl overflow-hidden bg-white border-2 border-gray-100 shadow-xl group">
                                                     <img src={event.mainBanner.url || event.mainBanner.location} alt="Main Banner" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                                                    {isUploading && (
-                                                        <div className="absolute inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center">
-                                                            <FiLoader className="w-10 h-10 text-primary animate-spin" />
-                                                        </div>
-                                                    )}
                                                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
                                                         <button 
                                                             onClick={() => bannerInputRef.current?.click()} 
@@ -428,7 +529,6 @@ export default function EventDetailedPage() {
                                                         <FiImage className="w-8 h-8 text-primary/40" />
                                                     </div>
                                                     <h4 className="text-lg font-bold text-gray-900">Upload Header Banner</h4>
-                                                    <p className="text-sm text-gray-500 mt-1 max-w-xs text-center">This image will greet users at the top of the registration portal.</p>
                                                     <span className="mt-6 px-5 py-2.5 bg-primary text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg shadow-primary/20">
                                                         {isUploading ? "Uploading..." : "Select File"}
                                                     </span>
@@ -458,7 +558,6 @@ export default function EventDetailedPage() {
                                                     } else {
                                                         await AdminService.updateEvent(id, { mainBanner: img });
                                                     }
-                                                    toast.success("Media updated!");
                                                     fetchEvent();
                                                 }
                                             } catch (err) {
@@ -730,7 +829,7 @@ export default function EventDetailedPage() {
                                 <h3 className="text-lg font-bold text-gray-900 shrink-0">Registered Users ({regMeta.totalItems})</h3>
 
                                 <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
-                                    <div className="relative flex-1 md:w-48">
+                                    <div className="flex-1 md:w-48">
                                         <input
                                             type="text"
                                             placeholder="Search name or email..."
@@ -800,22 +899,22 @@ export default function EventDetailedPage() {
                                                         </span>
                                                     </td>
                                                     <td className="py-4 px-4 text-center">
-                                                        <span className={`px-2.5 py-1 text-xs font-bold rounded-lg border ${
-                                                            reg.status === 'Registered' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
-                                                            reg.status === 'Pending' ? 'bg-orange-50 text-orange-700 border-orange-200' :
-                                                            'bg-red-50 text-red-700 border-red-200'
+                                                        <span className={`px-2.5 py-1 text-xs font-bold rounded-lg ${
+                                                            reg.status === 'Registered' ? 'bg-emerald-50 text-emerald-700' :
+                                                            reg.status === 'Cancelled' ? 'bg-red-50 text-red-700' :
+                                                            'bg-amber-50 text-amber-700'
                                                         }`}>
                                                             {reg.status}
                                                         </span>
                                                     </td>
                                                     <td className="py-4 px-4 text-right">
-                                                        <button className="text-primary hover:underline font-semibold text-sm">View Reg</button>
+                                                        <Link href={`/admin/events/registrations/${reg._id || reg.id}`} className="text-primary font-bold hover:underline">View Details</Link>
                                                     </td>
                                                 </tr>
                                             ))
                                         ) : (
                                             <tr>
-                                                <td colSpan={5} className="py-12 text-center text-gray-500 font-medium">No registrations found matching your criteria.</td>
+                                                <td colSpan={5} className="py-12 text-center text-gray-500 font-medium">No registrations found.</td>
                                             </tr>
                                         )}
                                     </tbody>
@@ -848,6 +947,18 @@ export default function EventDetailedPage() {
                     )}
                 </div>
             </div>
+            <style jsx global>{`
+                .rich-text-content {
+                    overflow-wrap: break-word;
+                    word-wrap: break-word;
+                    word-break: break-word;
+                }
+                .rich-text-content p { margin-bottom: 0.5rem; }
+                .rich-text-content ul { list-style-type: disc; margin-left: 1.25rem; margin-bottom: 0.5rem; }
+                .rich-text-content ol { list-style-type: decimal; margin-left: 1.25rem; margin-bottom: 0.5rem; }
+                .rich-text-content strong { font-weight: bold; }
+                .rich-text-content a { color: #8b5cf6; text-decoration: underline; }
+            `}</style>
         </AdminLayout>
     );
 }

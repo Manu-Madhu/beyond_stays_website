@@ -22,7 +22,7 @@ const TabSection: React.FC = () => {
           // Map DB events to CardData structure for the carousel
           const mappedEvents = data.data.map((event: any) => ({
             id: event._id,
-            slug: event._id, // Use ID as slug for events for now
+            slug: event.slug || event._id, 
             title: event.title,
             category: event.ageRestriction, // Or use a category if available
             description: event.description,
@@ -30,7 +30,12 @@ const TabSection: React.FC = () => {
             images: [
                 event.listingBanner?.url || event.listingBanner?.location || event.mainBanner?.url || event.mainBanner?.location || "/assets/travel_placeholder.png"
             ],
-            type: 'event' // Add type to distinguish
+            type: 'event',
+            itinerary: event.itinerary,
+            inclusions: event.inclusions,
+            exclusions: event.exclusions,
+            whoCanJoin: event.whoCanJoin,
+            whyJoin: event.whyJoin
           }));
           setEvents(mappedEvents);
         }

@@ -32,6 +32,17 @@ export const PublicService = {
     },
 
     /**
+     * Get a single published event by Slug
+     */
+    getEventBySlug: async (slug: string) => {
+        return await apiFetch(`/events/slug/${slug}`, {
+            method: 'GET',
+            requireAuth: false,
+            version: 'v2'
+        });
+    },
+
+    /**
      * Register for an event
      */
     registerForEvent: async (id: string, payload: any) => {
