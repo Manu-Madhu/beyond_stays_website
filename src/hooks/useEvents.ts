@@ -39,6 +39,7 @@ export const useEvents = () => {
 export const useEventList = () => {
     const [events, setEvents] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [meta, setMeta] = useState({
         totalItems: 0,
         totalPages: 1,
@@ -46,28 +47,26 @@ export const useEventList = () => {
         itemsPerPage: 10
     });
 
-    const fetchEvents = useCallback(async (params: { page?: number, limit?: number, status?: string } = {}) => {
+    const fetchEvents = useCallback(async (params: { page?: number, limit?: number, status?: string, search?: string } = {}) => {
         setIsLoading(true);
+        setError(null);
         try {
             const { data } = await AdminService.getEvents(params);
-
             if (data?.success) {
-                setEvents(data.data || []);
-                if (data.meta) {
-                    setMeta(data.meta);
-                }
+                setEvents(data.data);
+                setMeta(data.meta || { totalItems: 0, totalPages: 0, currentPage: 1, itemsPerPage: 10 });
             } else {
-                toast.error(data?.message || 'Failed to fetch events');
+                throw new Error(data?.message || 'Failed to fetch events');
             }
-        } catch (error) {
-            console.error('Error fetching events:', error);
-            toast.error('Server connection failed while loading events.');
+        } catch (err: any) {
+            setError(err.message || 'An error occurred while fetching events');
+            console.error('Fetch events error:', err);
         } finally {
             setIsLoading(false);
         }
     }, []);
 
-    return { events, meta, isLoading, fetchEvents };
+    return { events, meta, isLoading, error, fetchEvents };
 };
 
 /**

@@ -43,11 +43,12 @@ export const AdminService = {
     /**
      * Retrieves the paginated and filtered list of events from the admin router.
      */
-    getEvents: async (params: { page?: number, limit?: number, status?: string } = {}) => {
+    getEvents: async (params: { page?: number, limit?: number, status?: string, search?: string } = {}) => {
         const queryParams = new URLSearchParams();
         if (params.page) queryParams.append('page', params.page.toString());
         if (params.limit) queryParams.append('limit', params.limit.toString());
         if (params.status && params.status !== 'All Status') queryParams.append('status', params.status);
+        if (params.search) queryParams.append('search', params.search);
 
         return await apiFetch(`/admin/events?${queryParams.toString()}`, {
             method: 'GET',

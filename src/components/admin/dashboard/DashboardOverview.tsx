@@ -29,8 +29,8 @@ export const DashboardOverview = () => {
 
     const stats = [
         { title: "Total Events", value: apiStats?.totalEvents || 0, icon: FiCalendar, color: "text-primary", bg: "bg-primary/10", link: "/admin/events" },
-        { title: "Registrations", value: apiStats?.totalRegistrations || 0, icon: FiUsers, color: "text-emerald-600", bg: "bg-emerald-100/50", link: "/admin/payments" },
-        { title: "Total Revenue", value: `₹${(apiStats?.totalRevenue || 0).toLocaleString()}`, icon: FiDollarSign, color: "text-indigo-600", bg: "bg-indigo-100/50", link: "/admin/payments" },
+        { title: "Registrations", value: apiStats?.totalRegistrations || 0, icon: FiUsers, color: "text-emerald-600", bg: "bg-emerald-100/50", link: "/admin/events/registrations" },
+        { title: "Total Revenue", value: `₹${(apiStats?.totalRevenue || 0).toLocaleString()}`, icon: FiDollarSign, color: "text-indigo-600", bg: "bg-indigo-100/50", link: "/admin/events/registrations" },
         { title: "Active Events", value: apiStats?.activeEvents || 0, icon: FiActivity, color: "text-orange-600", bg: "bg-orange-100/50", link: "/admin/events" },
     ];
 
@@ -123,7 +123,7 @@ export const DashboardOverview = () => {
                             <h3 className="text-lg font-bold text-gray-900">Recent Registrations</h3>
                             <p className="text-sm text-gray-500">Latest people who booked events</p>
                         </div>
-                        <Link href="/admin/payments" className="text-sm font-semibold text-primary hover:text-primary/80 flex items-center gap-1 transition-colors">
+                        <Link href="/admin/events/registrations" className="text-sm font-semibold text-primary hover:text-primary/80 flex items-center gap-1 transition-colors">
                             View All <FiArrowUpRight />
                         </Link>
                     </div>

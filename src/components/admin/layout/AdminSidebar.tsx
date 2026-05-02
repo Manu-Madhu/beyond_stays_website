@@ -11,7 +11,6 @@ const menuItems = [
     { name: 'Dashboard', icon: FiHome, path: '/admin' },
     { name: 'Events', icon: FiCalendar, path: '/admin/events' },
     { name: 'Event Registration', icon: FiUsers, path: '/admin/events/registrations' },
-    { name: 'Payment Listing', icon: FiCreditCard, path: '/admin/payments' },
     { name: 'Settings', icon: FiSettings, path: '/admin/settings' },
 ];
 
