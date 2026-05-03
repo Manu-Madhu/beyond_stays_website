@@ -110,12 +110,12 @@ export const EventGallery: React.FC<EventGalleryProps> = ({ images, title }) => 
                 <div className="fixed inset-0 z-[100] flex items-end justify-center p-0 md:p-4">
                     {/* Backdrop */}
                     <div 
-                        className="absolute inset-0 bg-black/95 backdrop-blur-md animate-in fade-in duration-300"
+                        className="absolute inset-0 bg-black/55 backdrop-blur-md animate-in fade-in duration-300"
                         onClick={() => setIsOpen(false)}
                     />
                     
                     {/* Content Container */}
-                    <div className="relative w-full max-w-[1400px] h-full md:h-[90vh] bg-white rounded-t-[2rem] md:rounded-2xl shadow-2xl flex flex-col animate-in slide-in-from-bottom duration-500 overflow-hidden">
+                    <div className="relative w-full max-w-[1400px] h-full md:h-[90vh] bg-white rounded-t-[2rem] md:rounded-2xl shadow-2xl flex flex-col animate-in slide-in-from-bottom duration-500  overflow-y-auto">
                         
                         {/* Header */}
                         <div className="flex-none p-6 md:p-8 flex items-center justify-between border-b border-gray-100 bg-white z-10">

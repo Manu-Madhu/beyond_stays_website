@@ -136,6 +136,18 @@ export const AdminService = {
             body: filesData,
             requireAuth: true
         });
+    },
+
+    /**
+     * Updates a registration's status (Confirm → sends confirmation email, Cancel → sends rejection email)
+     */
+    updateRegistrationStatus: async (registrationId: string, status: 'Registered' | 'Pending' | 'Cancelled', reason?: string) => {
+        return await apiFetch(`/admin/events/registrations/${registrationId}/status`, {
+            method: 'PATCH',
+            body: JSON.stringify({ status, reason }),
+            requireAuth: true,
+            version: 'v2'
+        });
     }
 
 };
