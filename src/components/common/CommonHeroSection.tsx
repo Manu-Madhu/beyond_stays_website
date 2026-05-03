@@ -8,7 +8,7 @@ const CommonHeroSection: React.FC<BannerProps> = ({
   subtitle
 }) => {
   return (
-    <div className="h-[60vh] md:h-[70vh] w-full overflow-hidden relative">
+    <div className="h-[60vh] md:h-[50vh] w-full overflow-hidden relative">
       <Image
         src={banner}
         alt="Gallery image 1"

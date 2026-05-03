@@ -10,6 +10,7 @@ import { FormattedContent } from '@/components/events/FormattedContent';
 import { ItineraryTimeline } from '@/components/events/ItineraryTimeline';
 import { EventHero } from '@/components/events/EventHero';
 import { EventSidebar } from '@/components/events/EventSidebar';
+import { EventGallery } from '@/components/events/EventGallery';
 
 interface EventDetailsClientProps {
     event: any;
@@ -152,23 +153,8 @@ export default function EventDetailsClient({ event }: EventDetailsClientProps) {
                             </div>
                         )}
 
-                        {/* Gallery Section */}
-                        {galleryImages.length > 0 && (
-                            <div className="space-y-6 pt-6">
-                                <h3 className="titleHeader text-xl uppercase text-gray-900 border-b border-gray-200 pb-4">Journey Gallery</h3>
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                    {galleryImages.map((img: string, idx: number) => (
-                                        <div 
-                                            key={idx} 
-                                            onClick={() => setActiveImage(heroImages.length + idx)}
-                                            className={`relative aspect-square rounded-xl overflow-hidden cursor-pointer border-2 transition-all hover:scale-[1.05] duration-300 ${activeImage === (heroImages.length + idx) ? 'border-primary' : 'border-transparent'}`}
-                                        >
-                                            <Image src={img} alt={`Gallery ${idx}`} fill className="object-cover" />
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
+                        {/* Journey Gallery */}
+                        <EventGallery images={galleryImages} title={event.title} />
                     </div>
 
                     {/* Right Column - Extracted Booking Card */}

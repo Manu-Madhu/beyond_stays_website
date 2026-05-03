@@ -7,11 +7,12 @@ export const PublicService = {
     /**
      * Get published events for listing on homepage/events page
      */
-    getPublishedEvents: async (params: { page?: number, limit?: number, upcoming?: boolean } = {}) => {
+    getPublishedEvents: async (params: { page?: number, limit?: number, upcoming?: boolean, past?: boolean } = {}) => {
         const queryParams = new URLSearchParams();
         if (params.page) queryParams.append('page', params.page.toString());
         if (params.limit) queryParams.append('limit', params.limit.toString());
         if (params.upcoming !== undefined) queryParams.append('upcoming', params.upcoming.toString());
+        if (params.past !== undefined) queryParams.append('past', params.past.toString());
         
         return await apiFetch(`/events?${queryParams.toString()}`, {
             method: 'GET',
