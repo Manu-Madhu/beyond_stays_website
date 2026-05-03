@@ -89,7 +89,12 @@ export default function EventsPage() {
                                             <td className="py-4 px-6">
                                                 <div className="flex items-center gap-3">
                                                     <div className="h-10 w-10 relative rounded-lg overflow-hidden bg-gray-100 shrink-0">
-                                                        <Image src={'/assets/travel_admin_login.png'} alt={event.title || 'Event Image'} fill className="object-cover" />
+                                                        <Image 
+                                                            src={event.mainBanner?.url || event.mainBanner?.location || '/assets/travel_admin_login.png'} 
+                                                            alt={event.title || 'Event Image'} 
+                                                            fill 
+                                                            className="object-cover" 
+                                                        />
                                                     </div>
                                                     <Link href={`/admin/events/${event._id}`} className="font-semibold text-gray-900 group-hover:text-primary transition-colors">
                                                         {event.title}

@@ -14,6 +14,7 @@ type PaymentMethod = 'online' | 'screenshot' | 'direct' | '';
 
 interface EventData {
     _id: string;
+    slug?: string;
     title: string;
     location: string;
     startDate: string;
