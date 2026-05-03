@@ -675,7 +675,7 @@ export default function EventCreationPage() {
                                 </label>
 
                                 {images.length > 0 && (
-                                    <div className="grid grid-cols-3 gap-2 mt-4">
+                                    <div className="grid grid-cols-5 gap-2 mt-4">
                                         {images.map((img, idx) => (
                                             <div key={idx} className="relative aspect-square rounded-lg bg-gray-100 border overflow-hidden group">
                                                 <img src={img.url} alt="Preview" className="w-full h-full object-cover" />
