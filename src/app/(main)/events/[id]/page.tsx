@@ -4,18 +4,19 @@ import EventDetailsClient from './EventDetailsClient';
 import Link from 'next/link';
 
 type Props = {
-    params: Promise<{ id: string }>;
+    params: Promise<{ id?: string; slug?: string }>;
 };
 
-async function getEvent(id: string) {
+async function getEvent(identifier: string | undefined) {
+    if (!identifier) return null;
     try {
         // Try slug first
-        const { data: slugData } = await PublicService.getEventBySlug(id);
+        const { data: slugData } = await PublicService.getEventBySlug(identifier);
         if (slugData?.success) return slugData.data;
 
-        // Fallback to ID
-        if (id.length === 24) { // Only try ID if it looks like a Mongo ID
-            const { data: idData } = await PublicService.getEventById(id);
+        // Fallback to ID (only if it looks like a Mongo ObjectId)
+        if (identifier.length === 24) {
+            const { data: idData } = await PublicService.getEventById(identifier);
             if (idData?.success) return idData.data;
         }
     } catch (error) {
@@ -25,8 +26,9 @@ async function getEvent(id: string) {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { id } = await params;
-    const event = await getEvent(id);
+    const resolvedParams = await params;
+    const identifier = resolvedParams.slug ?? resolvedParams.id;
+    const event = await getEvent(identifier);
 
     if (!event) {
         return {
@@ -58,8 +60,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Page({ params }: Props) {
-    const { id } = await params;
-    const event = await getEvent(id);
+    const resolvedParams = await params;
+    const identifier = resolvedParams.slug ?? resolvedParams.id;
+    const event = await getEvent(identifier);
 
     if (!event) {
         return (

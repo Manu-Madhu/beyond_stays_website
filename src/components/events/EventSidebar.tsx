@@ -47,7 +47,7 @@ export const EventSidebar = ({
                 <div className="p-8 pt-6 space-y-6">
                     {canRegister ? (
                         <Link 
-                            href={`/events/${event._id}/register`}
+                            href={`/events/${event.slug || event._id}/register`}
                             className="block w-full bg-white text-black text-center py-4 rounded-xl font-black text-[12px] uppercase tracking-[0.2em] hover:bg-gray-200 transition-colors"
                         >
                             Confirm Booking

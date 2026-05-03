@@ -52,7 +52,7 @@ interface EventData {
 export default function RegistrationClient({ initialEvent }: { initialEvent: any }) {
     const params = useParams();
     const router = useRouter();
-    const id = params?.id as string;
+    const slug = params?.slug as string;
 
     const [event, setEvent] = useState<EventData | null>(initialEvent || null);
     const [isLoading, setIsLoading] = useState(!initialEvent);
@@ -94,11 +94,11 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
 
         const fetchEvent = async () => {
             try {
-                const { data: slugData } = await PublicService.getEventBySlug(id);
+                const { data: slugData } = await PublicService.getEventBySlug(slug);
                 if (slugData?.success) {
                     setEvent(slugData.data);
                 } else {
-                    const { data } = await PublicService.getEventById(id);
+                    const { data } = await PublicService.getEventById(slug);
                     if (data?.success) {
                         setEvent(data.data);
                     } else {
@@ -111,8 +111,8 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
                 setIsLoading(false);
             }
         };
-        if (id && !initialEvent) fetchEvent();
-    }, [id, initialEvent]);
+        if (slug && !initialEvent) fetchEvent();
+    }, [slug, initialEvent]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -190,7 +190,7 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
                 ...(paymentMethod === 'screenshot' && uploadedScreenshot && { paymentScreenshot: { ...uploadedScreenshot, location: uploadedScreenshot.url } })
             };
 
-            const targetId = event?._id || id;
+            const targetId = event?._id || slug;
             const { data } = await PublicService.registerForEvent(targetId, payload);
 
             if (data?.success) {
