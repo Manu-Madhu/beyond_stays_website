@@ -8,10 +8,19 @@ import CardCarousel from "../home/packages/CardCarousel";
 const tabs = ["Packages", "Events"] as const;
 type TabType = (typeof tabs)[number];
 
-const TabSection: React.FC = () => {
+interface TabSectionProps {
+  onTabChange?: (tab: TabType) => void;
+}
+
+const TabSection: React.FC<TabSectionProps> = ({ onTabChange }) => {
   const [activeTab, setActiveTab] = useState<TabType>("Packages");
   const [events, setEvents] = useState<any[]>([]);
   const [isLoadingEvents, setIsLoadingEvents] = useState(false);
+
+  const handleTabClick = (tab: TabType) => {
+    setActiveTab(tab);
+    if (onTabChange) onTabChange(tab);
+  };
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -71,7 +80,7 @@ const TabSection: React.FC = () => {
           {tabs.map((tab) => (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => handleTabClick(tab)}
               className={`font-bold text-[18px] transition-all cursor-pointer ${
                 activeTab === tab
                   ? "text-black border-b-2 border-black pb-1"

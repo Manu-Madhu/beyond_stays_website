@@ -1,32 +1,35 @@
+"use client";
 import React from "react";
 import Header from "../common/Header";
 import Button from "../ui/Button";
 import TabSection from "../common/TabSection";
 
 const PackagesSection = () => {
+  const [activeTab, setActiveTab] = React.useState<"Packages" | "Events">("Packages");
+
   return (
     <div className="mt-5 md:mt-20 relative">
       <div className="max-w-[1350px] mx-auto md:min-h-full p-5 md:px-8">
         {/* Header */}
         <Header
-          title="Experience Packages"
+          title={activeTab === "Packages" ? "Experience Packages" : "Upcoming Expeditions"}
           className="w-full md:w-[20%] gap-2 md:gap-10 flex flex-col md:flex-row md:items-end"
         >
           <Button
-            title="View All Packages"
-            link="/packages"
+            title={activeTab === "Packages" ? "View All Packages" : "View All Events"}
+            link={activeTab === "Packages" ? "/packages" : "/events"}
             className="border-2 text-black md:mb-2 w-fit hidden md:block"
           />
         </Header>
 
         {/* Tab section */}
         <div className=" md:mt-8">
-          <TabSection />
+          <TabSection onTabChange={(tab) => setActiveTab(tab)} />
         </div>
 
         <Button
-          title="View All Packages"
-          link="/packages"
+          title={activeTab === "Packages" ? "View All Packages" : "View All Events"}
+          link={activeTab === "Packages" ? "/packages" : "/events"}
           className="border-2 text-black md:mb-2 w-fit  md:hidden mt-4"
         />
       </div>
