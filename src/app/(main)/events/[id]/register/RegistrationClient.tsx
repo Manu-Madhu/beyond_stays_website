@@ -74,7 +74,8 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
         vehicleOption: '',
         passportId: '',
         allergies: '',
-        emergencyContact: '',
+        emergencyContactName: '',
+        emergencyContactPhone: '',
         dietaryPreference: '',
         specialRequests: ''
     });
@@ -124,7 +125,7 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
         const fd = new FormData();
         fd.append('file', file);
         try {
-            const res = await fetch(`${API_BASE}/uploads/single`, { method: 'POST', body: fd });
+            const res = await fetch(`${API_BASE}/public-uploads/single`, { method: 'POST', body: fd });
             const json = await res.json();
             if (json.success && json.data) {
                 setIdProofFile({ url: json.data.url, fileType: json.data.fileType });
@@ -147,7 +148,7 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
         const fd = new FormData();
         fd.append('file', file);
         try {
-            const res = await fetch(`${API_BASE}/uploads/single`, { method: 'POST', body: fd });
+            const res = await fetch(`${API_BASE}/public-uploads/single`, { method: 'POST', body: fd });
             const json = await res.json();
             if (json.success && json.data) {
                 setUploadedScreenshot({ url: json.data.url, fileType: json.data.fileType });
@@ -185,8 +186,8 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
             const payload: any = {
                 ...formData,
                 paymentMethod: paymentMethod || 'direct',
-                idProof: idProofFile || undefined,
-                ...(paymentMethod === 'screenshot' && uploadedScreenshot && { paymentScreenshot: uploadedScreenshot })
+                idProof: idProofFile ? { ...idProofFile, location: idProofFile.url } : undefined,
+                ...(paymentMethod === 'screenshot' && uploadedScreenshot && { paymentScreenshot: { ...uploadedScreenshot, location: uploadedScreenshot.url } })
             };
 
             const targetId = event?._id || id;
@@ -236,7 +237,7 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
     if (isSuccess) {
         return (
             <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
-                <div className="max-w-lg w-full bg-white rounded-xl shadow-sm border border-gray-200 p-10 text-center space-y-6">
+                <div className="max-w-lg w-full bg-white rounded-lg shadow-sm border border-gray-200 p-10 text-center space-y-6">
                     <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
                         <FiCheck className="w-10 h-10" />
                     </div>
@@ -278,10 +279,10 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
     return (
         <div className="min-h-screen bg-gray-50 pb-20">
             {/* Standard Hero Section */}
-            <div className="relative h-[35vh] w-full overflow-hidden bg-gray-900">
-                <img 
-                    src={event.mainBanner?.url || "/assets/travel_placeholder.png"} 
-                    className="w-full h-full object-cover opacity-50" 
+            <div className="relative h-[45vh] overflow-hidden bg-gray-900">
+                <img
+                    src={event.mainBanner?.url || "/assets/travel_placeholder.png"}
+                    className="w-full h-full object-cover opacity-50"
                     alt="Hero"
                 />
                 <div className="absolute top-6 left-6 z-20">
@@ -289,17 +290,20 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
                         <FiArrowLeft size={20} />
                     </button>
                 </div>
-                <div className="absolute bottom-8 left-6 md:left-12 z-20 max-w-4xl">
-                    <h1 className="text-3xl md:text-4xl font-black text-white uppercase italic tracking-tight">{event.title}</h1>
-                    <div className="flex items-center gap-4 mt-2 text-white/90 text-sm font-medium">
-                        <span className="flex items-center gap-1"><FiMapPin /> {event.location}</span>
-                        <span className="flex items-center gap-1"><FiCalendar /> {new Date(event.startDate).toLocaleDateString()}</span>
+                <div className="absolute bottom-8 left-6 md:left-12 z-20 w-full ">
+                    <div className='max-w-[1350px] mx-auto w-full'>
+
+                        <h1 className="text-3xl md:text-4xl font-black text-white uppercase italic tracking-tight">{event.title}</h1>
+                        <div className="flex items-center gap-4 mt-2 text-white/90 text-sm font-medium">
+                            <span className="flex items-center gap-1"><FiMapPin /> {event.location}</span>
+                            <span className="flex items-center gap-1"><FiCalendar /> {new Date(event.startDate).toLocaleDateString()}</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <main className="max-w-[1000px] mx-auto px-4 md:px-8 mt-10">
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 md:p-12">
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 md:p-12">
                     <div className="mb-10 border-b border-gray-100 pb-6">
                         <h2 className="text-2xl font-bold text-gray-900">Event Registration</h2>
                         <p className="text-gray-500 mt-2 text-sm">Please fill out the form below to secure your spot.</p>
@@ -338,7 +342,7 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
                         {/* Logistics, ID & Health */}
                         {(rf.requireAddress || rf.requirePassport || rf.requireIdProof || rf.requireVehicleInfo || rf.requireEmergencyContact || rf.requireDietaryPreference || rf.requireAllergies || rf.requireSpecialRequests) && (
                             <div className="space-y-10 pt-8 border-t border-gray-100">
-                                
+
                                 {/* Logistics & ID */}
                                 {(rf.requireAddress || rf.requirePassport || rf.requireIdProof || rf.requireVehicleInfo) && (
                                     <div className="space-y-6">
@@ -352,7 +356,7 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
                                                     <textarea name="address" rows={2} value={formData.address} onChange={handleChange} required className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-sm resize-none" placeholder="Enter your full residential address" />
                                                 </div>
                                             )}
-                                            
+
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                                 {rf.requirePassport && (
                                                     <div className="space-y-2">
@@ -363,11 +367,26 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
                                                 {rf.requireIdProof && (
                                                     <div className="space-y-2">
                                                         <label className="text-sm font-semibold text-gray-700">ID Proof Upload *</label>
-                                                        <div 
+                                                        <div
                                                             onClick={() => document.getElementById('idProofInp')?.click()}
-                                                            className={`px-4 py-3 border-2 border-dashed rounded-lg cursor-pointer text-center text-sm transition-all ${idProofFile ? 'border-primary bg-primary/5 text-primary font-medium' : 'border-gray-300 text-gray-500 hover:bg-gray-50'}`}
+                                                            className={`relative h-24 border-2 border-dashed rounded-lg cursor-pointer flex flex-col items-center justify-center transition-all ${idProofFile ? 'border-primary bg-primary/5' : 'border-gray-300 hover:bg-gray-50'}`}
                                                         >
-                                                            {isUploadingIdProof ? <FiLoader className="animate-spin mx-auto text-primary" /> : idProofFile ? 'ID File Uploaded' : 'Click to Upload ID File'}
+                                                            {isUploadingIdProof ? (
+                                                                <FiLoader className="animate-spin text-primary" />
+                                                            ) : idProofFile ? (
+                                                                <>
+                                                                    {idProofFile.fileType.startsWith('image') ? (
+                                                                        <img src={idProofFile.url} className="h-full w-full object-cover rounded-lg" />
+                                                                    ) : (
+                                                                        <span className="text-primary font-bold text-xs uppercase">PDF Attached</span>
+                                                                    )}
+                                                                    <div className="absolute inset-0 bg-black/20 opacity-0 hover:opacity-100 flex items-center justify-center transition-opacity rounded-lg">
+                                                                        <span className="text-white text-[10px] font-bold">CHANGE FILE</span>
+                                                                    </div>
+                                                                </>
+                                                            ) : (
+                                                                <span className="text-gray-400 text-xs font-medium">Click to Upload ID File</span>
+                                                            )}
                                                         </div>
                                                         <input id="idProofInp" type="file" className="hidden" onChange={handleIdProofUpload} accept="image/*,application/pdf" />
                                                     </div>
@@ -375,25 +394,25 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
                                             </div>
 
                                             {rf.requireVehicleInfo && (
-                                                <div className="space-y-3 bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                                <div className="space-y-3 bg-gray-50 p-5 rounded-lg border border-gray-200">
                                                     <label className="text-sm font-bold text-gray-900 block">Vehicle / Transport Preference</label>
                                                     {rf.vehicleDescription && <p className="text-xs text-gray-500 italic mb-2">{rf.vehicleDescription}</p>}
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                                        <button 
-                                                            type="button" 
-                                                            onClick={() => setFormData(prev => ({ ...prev, vehicleOption: 'Own Vehicle' }))}
-                                                            className={`px-4 py-3 rounded-lg text-xs font-bold border transition-all text-left flex items-center justify-between ${formData.vehicleOption === 'Own Vehicle' ? 'bg-primary border-primary text-white shadow-md' : 'bg-white border-gray-200 text-gray-600 hover:border-primary/50'}`}
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setFormData(prev => ({ ...prev, vehicleOption: 'own' }))}
+                                                            className={`px-4 py-3 rounded-lg text-xs font-bold border transition-all text-left flex items-center justify-between ${formData.vehicleOption === 'own' ? 'bg-primary border-primary text-white shadow-md' : 'bg-white border-gray-200 text-gray-600 hover:border-primary/50'}`}
                                                         >
                                                             I have my own vehicle
-                                                            {formData.vehicleOption === 'Own Vehicle' && <FiCheck />}
+                                                            {formData.vehicleOption === 'own' && <FiCheck />}
                                                         </button>
-                                                        <button 
-                                                            type="button" 
-                                                            onClick={() => setFormData(prev => ({ ...prev, vehicleOption: 'Need Transport' }))}
-                                                            className={`px-4 py-3 rounded-lg text-xs font-bold border transition-all text-left flex items-center justify-between ${formData.vehicleOption === 'Need Transport' ? 'bg-primary border-primary text-white shadow-md' : 'bg-white border-gray-200 text-gray-600 hover:border-primary/50'}`}
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setFormData(prev => ({ ...prev, vehicleOption: 'assistance' }))}
+                                                            className={`px-4 py-3 rounded-lg text-xs font-bold border transition-all text-left flex items-center justify-between ${formData.vehicleOption === 'assistance' ? 'bg-primary border-primary text-white shadow-md' : 'bg-white border-gray-200 text-gray-600 hover:border-primary/50'}`}
                                                         >
                                                             I need transport assistance
-                                                            {formData.vehicleOption === 'Need Transport' && <FiCheck />}
+                                                            {formData.vehicleOption === 'assistance' && <FiCheck />}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -410,21 +429,27 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
                                         </h3>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             {rf.requireEmergencyContact && (
-                                                <div className="space-y-2">
-                                                    <label className="text-sm font-semibold text-gray-700">Emergency Contact (Name & Phone) *</label>
-                                                    <input type="text" name="emergencyContact" value={formData.emergencyContact} onChange={handleChange} required className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-sm" placeholder="Name - 9876543210" />
-                                                </div>
+                                                <>
+                                                    <div className="space-y-2">
+                                                        <label className="text-sm font-semibold text-gray-700">Emergency Contact Name *</label>
+                                                        <input type="text" name="emergencyContactName" value={formData.emergencyContactName} onChange={handleChange} required className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-sm" placeholder="Contact Person Name" />
+                                                    </div>
+                                                    <div className="space-y-2">
+                                                        <label className="text-sm font-semibold text-gray-700">Emergency Contact Phone *</label>
+                                                        <input type="tel" name="emergencyContactPhone" value={formData.emergencyContactPhone} onChange={handleChange} required className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-sm" placeholder="+91 9876543210" />
+                                                    </div>
+                                                </>
                                             )}
                                             {rf.requireDietaryPreference && (
                                                 <div className="space-y-2">
                                                     <label className="text-sm font-semibold text-gray-700">Dietary Preference</label>
-                                                    <select name="dietaryPreference" value={formData.dietaryPreference} onChange={handleChange} className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-sm cursor-pointer">
+                                                    <select name="dietaryPreference" value={formData.dietaryPreference} onChange={handleChange} className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-sm cursor-pointer font-bold">
                                                         <option value="">Select Option</option>
-                                                        <option value="Veg">Vegetarian</option>
-                                                        <option value="Non-Veg">Non-Vegetarian</option>
-                                                        <option value="Egg">Eggitarian</option>
-                                                        <option value="Jain">Jain Food</option>
-                                                        <option value="Vegan">Vegan</option>
+                                                        <option value="vegetarian">Vegetarian</option>
+                                                        <option value="non-vegetarian">Non-Vegetarian</option>
+                                                        <option value="vegan">Vegan</option>
+                                                        <option value="jain">Jain Food</option>
+                                                        <option value="other">Other</option>
                                                     </select>
                                                 </div>
                                             )}
@@ -450,33 +475,41 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
                         {event.registrationFee > 0 && (
                             <div className="space-y-6 pt-8 border-t border-gray-100">
                                 <h3 className="text-lg font-bold text-gray-900 flex justify-between items-center">
-                                    <span>Payment Settlement</span>
-                                    <span className="text-xl">₹{event.registrationFee.toLocaleString()}</span>
+                                    <span className="uppercase tracking-widest text-[10px] text-gray-400">Payment Settlement</span>
+                                    <span className="text-2xl font-black italic">₹{event.registrationFee.toLocaleString()}</span>
                                 </h3>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                                     {rf.enableOnlinePayment && (
-                                        <button type="button" onClick={() => setPaymentMethod('online')} className={`p-4 rounded-xl border text-sm font-bold uppercase tracking-wider transition-all ${paymentMethod === 'online' ? 'bg-primary border-primary text-white' : 'bg-white border-gray-300 text-gray-600 hover:border-primary'}`}>Pay Online</button>
+                                        <button type="button" onClick={() => setPaymentMethod('online')} className={`py-4 rounded-lg border text-[10px] font-black uppercase tracking-widest transition-all ${paymentMethod === 'online' ? 'bg-primary border-primary text-white shadow-lg' : 'bg-white border-gray-200 text-gray-500 hover:border-primary/50'}`}>Pay Online</button>
                                     )}
                                     {rf.enablePaidScreenshot && (
-                                        <button type="button" onClick={() => setPaymentMethod('screenshot')} className={`p-4 rounded-xl border text-sm font-bold uppercase tracking-wider transition-all ${paymentMethod === 'screenshot' ? 'bg-primary border-primary text-white' : 'bg-white border-gray-300 text-gray-600 hover:border-primary'}`}>Upload Screenshot</button>
+                                        <button type="button" onClick={() => setPaymentMethod('screenshot')} className={`py-4 rounded-lg border text-[10px] font-black uppercase tracking-widest transition-all ${paymentMethod === 'screenshot' ? 'bg-primary border-primary text-white shadow-lg' : 'bg-white border-gray-200 text-gray-500 hover:border-primary/50'}`}>Upload Screenshot</button>
                                     )}
                                     {rf.enableDirectPay && (
-                                        <button type="button" onClick={() => setPaymentMethod('direct')} className={`p-4 rounded-xl border text-sm font-bold uppercase tracking-wider transition-all ${paymentMethod === 'direct' ? 'bg-primary border-primary text-white' : 'bg-white border-gray-300 text-gray-600 hover:border-primary'}`}>Direct Pay</button>
+                                        <button type="button" onClick={() => setPaymentMethod('direct')} className={`py-4 rounded-lg border text-[10px] font-black uppercase tracking-widest transition-all ${paymentMethod === 'direct' ? 'bg-primary border-primary text-white shadow-lg' : 'bg-white border-gray-200 text-gray-500 hover:border-primary/50'}`}>Direct Pay</button>
                                     )}
                                 </div>
 
                                 {paymentMethod === 'screenshot' && (
-                                    <div className="p-6 bg-gray-50 rounded-xl border border-gray-200 space-y-4">
+                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
                                         <div className="space-y-2">
-                                            <h4 className="text-sm font-bold text-gray-900">Payment Details</h4>
-                                            {rf.upiId && <p className="text-sm text-gray-700">UPI ID: <span className="font-semibold">{rf.upiId}</span></p>}
-                                            {rf.bankDetails && <p className="text-sm text-gray-700 whitespace-pre-line">{rf.bankDetails}</p>}
+                                            <h4 className="text-[10px] font-black uppercase tracking-widest text-primary">Payment Details</h4>
+                                            {rf.upiId && <p className="text-sm font-bold text-gray-800">UPI ID: <span className="text-primary underline">{rf.upiId}</span></p>}
+                                            {rf.bankDetails && <p className="text-xs text-gray-600 whitespace-pre-line leading-relaxed">{rf.bankDetails}</p>}
                                         </div>
-                                        <div 
+                                        <div
                                             onClick={() => screenshotInputRef.current?.click()}
-                                            className="w-full h-32 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center bg-white cursor-pointer hover:bg-gray-50 transition-all text-sm"
+                                            className="relative w-full h-40 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center bg-white cursor-pointer hover:bg-gray-50 transition-all overflow-hidden"
                                         >
-                                            {isUploadingScreenshot ? <FiLoader className="animate-spin text-primary" /> : uploadedScreenshot ? <span className="text-primary font-medium">Screenshot Uploaded</span> : <span className="text-gray-500">Click to Attach Screenshot</span>}
+                                            {isUploadingScreenshot ? (
+                                                <FiLoader className="animate-spin text-primary" />
+                                            ) : uploadedScreenshot ? (
+                                                <img src={uploadedScreenshot.url} className="w-full h-full object-cover" />
+                                            ) : (
+                                                <div className="text-center">
+                                                    <span className="text-gray-400 text-xs font-bold uppercase">Click to Attach Screenshot</span>
+                                                </div>
+                                            )}
                                         </div>
                                         <input ref={screenshotInputRef} type="file" className="hidden" onChange={handleScreenshotSelect} />
                                     </div>
@@ -488,7 +521,7 @@ export default function RegistrationClient({ initialEvent }: { initialEvent: any
                             <button
                                 type="submit"
                                 disabled={isSubmitting || isUploadingScreenshot || isUploadingIdProof}
-                                className={`w-full py-4 rounded-xl text-white font-bold text-lg transition-all ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-primary hover:bg-primary/90'}`}
+                                className={`w-full py-5 rounded-lg text-white text-sm font-semibold uppercase tracking-widest transition-all shadow-xl ${isSubmitting ? 'bg-gray-400 cursor-not-allowed translate-y-1' : 'bg-primary hover:bg-primary/90 active:scale-[0.98]'}`}
                             >
                                 {isSubmitting ? 'Processing...' : 'Complete Registration'}
                             </button>
