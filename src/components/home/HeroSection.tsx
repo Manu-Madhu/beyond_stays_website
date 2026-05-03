@@ -10,6 +10,7 @@ const HeroSection = () => {
           autoPlay
           loop
           playsInline
+          preload="auto"
           className="w-full h-full object-cover"
         >
           {/* <source src={"/assets/video/coverVideo.mp4"} type="video/mp4" /> */}

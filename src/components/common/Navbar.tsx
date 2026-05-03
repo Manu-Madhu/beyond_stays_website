@@ -14,7 +14,7 @@ const Navbar = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 0);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -32,10 +32,11 @@ const Navbar = () => {
         <Link title="logo" href={"/"}>
           <Image
             src={scrolled ? "/logo/navLogo.png" : "/logo/navLogoWhite.png"}
-            alt="logo"
-            width={700}
-            height={700}
+            alt="Beyond Stays"
+            width={120}
+            height={40}
             className="w-[110px]"
+            priority
           />
         </Link>
 
@@ -112,9 +113,9 @@ const Navbar = () => {
           <div className="flex justify-between items-center mb-5">
             <Image
               src="/logo/navLogo.png"
-              alt="logo"
-              width={700}
-              height={700}
+              alt="Beyond Stays"
+              width={120}
+              height={40}
               className="w-[100px]"
             />
             <IoClose

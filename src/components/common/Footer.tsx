@@ -34,10 +34,10 @@ const Footer = () => {
             <Image
               src={"/logo/navLogoWhite.png"}
               className="w-45"
-              width={500}
-              height={500}
-              alt="logo"
-              title="logo"
+              width={180}
+              height={60}
+              alt="Beyond Stays"
+              title="Beyond Stays"
             />
             <p className="text-sm text-gray-300 text-justify md:w-[60%] mt-5">
               Beyond Stays offers handpicked stays and custom travel plans made

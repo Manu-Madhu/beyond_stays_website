@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
+  compress: true,
+  reactStrictMode: true,
   images: {
     remotePatterns: [
       {
@@ -9,6 +12,7 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+    formats: ['image/avif', 'image/webp'],
   },
 };
 

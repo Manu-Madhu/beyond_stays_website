@@ -60,6 +60,20 @@ export const metadata: Metadata = {
       "Beyond Stays offers handpicked stays and custom travel plans made just for you. From start to finish, we take care of the details so you can enjoy the journey.",
     images: ["https://www.travelwithbeyondstays.com/logo/logov2.png"]
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large' as const,
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: "https://www.travelwithbeyondstays.com",
+  },
   metadataBase: new URL("https://www.travelwithbeyondstays.com")
 };
 

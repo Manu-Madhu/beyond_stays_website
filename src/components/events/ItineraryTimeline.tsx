@@ -16,7 +16,7 @@ export const ItineraryTimeline = ({ content }: { content: string }) => {
                 <FormattedContent content={content} />
             </div>
 
-            <style jsx global>{`
+            <style dangerouslySetInnerHTML={{ __html: `
                 .itinerary-timeline-content strong, 
                 .itinerary-timeline-content b,
                 .itinerary-timeline-content h1,
@@ -47,53 +47,48 @@ export const ItineraryTimeline = ({ content }: { content: string }) => {
                 .itinerary-timeline-content h3::before {
                     content: '';
                     position: absolute;
-                    left: -32px;
+                    left: calc(-3rem - 1px);
                     top: 50%;
                     transform: translateY(-50%);
                     width: 14px;
                     height: 14px;
-                    background: #fff;
-                    border: 3px solid #36454F;
                     border-radius: 50%;
-                    z-index: 2;
+                    background: white;
+                    border: 3px solid var(--primary, #000);
+                    box-shadow: 0 0 0 4px white;
+                    z-index: 10;
                 }
 
-                @media (min-width: 768px) {
+                @media (max-width: 768px) {
                     .itinerary-timeline-content strong::before,
                     .itinerary-timeline-content b::before,
                     .itinerary-timeline-content h1::before,
                     .itinerary-timeline-content h2::before,
                     .itinerary-timeline-content h3::before {
-                        left: -42px;
-                        width: 16px;
-                        height: 16px;
-                        border-width: 4px;
+                        left: calc(-2.25rem - 1px);
+                        width: 12px;
+                        height: 12px;
+                        border-width: 2px;
                     }
                 }
 
                 .itinerary-timeline-content p {
-                    font-size: 0.95rem;
-                    color: #4B5563;
+                    color: #4b5563;
                     line-height: 1.7;
                     margin-bottom: 1rem;
+                    font-size: 15px;
                 }
-
+                
                 .itinerary-timeline-content ul {
-                    list-style: none !important;
-                    padding-left: 0 !important;
-                    margin-bottom: 2rem;
+                    list-style-type: disc;
+                    margin-left: 1.25rem;
+                    margin-bottom: 1.5rem;
+                    color: #4b5563;
+                    font-size: 15px;
                 }
 
                 .itinerary-timeline-content li {
-                    position: relative;
-                    padding-left: 1.5rem;
                     margin-bottom: 0.5rem;
-                    font-size: 0.9rem;
-                    color: #4B5563;
-                }
-
-                .itinerary-timeline-content li::before {
-                    content: '•';
                     position: absolute;
                     left: 0;
                     color: #36454F;
@@ -101,7 +96,7 @@ export const ItineraryTimeline = ({ content }: { content: string }) => {
                     font-size: 1.2rem;
                     line-height: 1;
                 }
-            `}</style>
+            `}} />
         </div>
     );
 };

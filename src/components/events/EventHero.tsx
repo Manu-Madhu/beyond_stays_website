@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { FiMapPin, FiCalendar, FiArrowLeft } from 'react-icons/fi';
 
@@ -9,10 +10,13 @@ export const EventHero = ({ event, allImages, activeImage }: { event: any, allIm
     return (
         <div className="relative h-[55vh] md:h-[60vh] overflow-hidden z-20">
             <div className='bg-gradient-to-tr from-black/60 via-black/20 to-transparent w-full h-full absolute top-0 left-0 right-0 bottom-0 z-10'></div>
-            <img 
+            <Image 
                 src={allImages[activeImage] || "/assets/travel_placeholder.png"} 
                 alt={event.title} 
-                className="w-full h-full object-cover"
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
             

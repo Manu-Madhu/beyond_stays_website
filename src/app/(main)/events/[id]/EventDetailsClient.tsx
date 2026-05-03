@@ -171,7 +171,7 @@ export default function EventDetailsClient({ event }: EventDetailsClientProps) {
                 </div>
             </main>
 
-            <style jsx global>{`
+            <style dangerouslySetInnerHTML={{ __html: `
                 .rich-text-content {
                     word-break: break-word;
                     overflow-wrap: break-word;
@@ -180,7 +180,7 @@ export default function EventDetailsClient({ event }: EventDetailsClientProps) {
                 .rich-text-content ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1.5rem; }
                 .rich-text-content li { margin-bottom: 0.5rem; }
                 .rich-text-content strong { font-weight: 800; color: #111827; }
-            `}</style>
+            `}} />
         </div>
     );
 }

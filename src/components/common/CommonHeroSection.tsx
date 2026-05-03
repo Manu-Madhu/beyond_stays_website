@@ -11,12 +11,12 @@ const CommonHeroSection: React.FC<BannerProps> = ({
     <div className="h-[60vh] md:h-[50vh] w-full overflow-hidden relative">
       <Image
         src={banner}
-        alt="Gallery image 1"
-        title="Gallery image 1"
-        width={1920} 
-        height={1080}
+        alt={title || "Beyond Stays"}
+        title={title || "Beyond Stays"}
+        fill
+        sizes="100vw"
         priority 
-        className="w-full h-full absolute left-0 top-0 object-cover object-center z-0"
+        className="object-cover object-center z-0"
       />
       {/* Overlay to ensure text readability */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>

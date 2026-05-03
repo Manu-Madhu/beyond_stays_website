@@ -18,15 +18,17 @@ const SmoothScrollWrapper = ({ children }: SmoothScrollWrapperProps) => {
     });
 
     lenisRef.current = lenis;
+    let rafId: number;
 
     const raf = (time: number) => {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     };
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
     };
   }, []);

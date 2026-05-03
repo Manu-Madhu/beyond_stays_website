@@ -81,14 +81,15 @@ const EventListingSection = () => {
   }, []);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
-    window.addEventListener("resize", handleResize);
+    const mql = window.matchMedia('(max-width: 767px)');
+    const onChange = (e: MediaQueryListEvent | MediaQueryList) => setIsMobile(e.matches);
+    onChange(mql);
+    mql.addEventListener('change', onChange as any);
     
     fetchUpcoming(1);
     fetchPast(1);
 
-    return () => window.removeEventListener("resize", handleResize);
+    return () => mql.removeEventListener('change', onChange as any);
   }, [fetchUpcoming, fetchPast]);
 
   const handleLoadMoreUpcoming = () => {
@@ -139,6 +140,8 @@ const EventListingSection = () => {
         <img
           src={card.images[0]}
           alt={card.title}
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
@@ -259,11 +262,11 @@ const EventListingSection = () => {
         </div>
       </div>
       
-      <style jsx global>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @keyframes shimmer {
           100% { transform: translateX(100%); }
         }
-      `}</style>
+      `}} />
     </div>
   );
 };
