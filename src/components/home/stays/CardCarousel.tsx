@@ -46,6 +46,22 @@ const CardCarousel: React.FC<CardCarouselProps> = ({ cards }) => {
               {/* Overlay Blur */}
               <div className="absolute inset-0 bg-black/20 backdrop-blur-0 transition-all duration-500 group-hover:bg-black/40 group-hover:backdrop-blur-sm"></div>
 
+              {/* Status Badge */}
+              {card.type === 'event' && card.status && (
+                <div className="absolute top-4 left-4 z-20">
+                  <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider backdrop-blur-md shadow-lg border ${
+                    card.status === 'Active'
+                      ? 'bg-emerald-500/90 text-white border-emerald-400/50'
+                      : 'bg-white/20 text-white/90 border-white/20'
+                  }`}>
+                    <span className={`w-1.5 h-1.5 rounded-full ${
+                      card.status === 'Active' ? 'bg-white animate-pulse' : 'bg-white/60'
+                    }`}></span>
+                    {card.status === 'Active' ? 'Open' : 'Completed'}
+                  </span>
+                </div>
+              )}
+
               {/* Text Content */}
               <div className="absolute bottom-0 left-0 w-full p-5 text-white z-10">
                 <h2 className="primaryFont font-bold text-2xl leading-7 line-clamp-2 tracking-wider">

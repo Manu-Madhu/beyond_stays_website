@@ -21,6 +21,7 @@ export interface NearToVisitProps {
 export interface CardData {
     id: number | string;
     type?: 'event' | 'stay';
+    status?: 'Active' | 'Passed' | string;
     slug?: string;
     about?: string;
     nearToVisit?: NearToVisitProps[]

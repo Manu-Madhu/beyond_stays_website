@@ -21,6 +21,7 @@ export default async function Home() {
           event.listingBanner?.url || event.listingBanner?.location || event.mainBanner?.url || event.mainBanner?.location || "/assets/travel_placeholder.png"
         ],
         type: 'event',
+        status: event.status,
         itinerary: event.itinerary,
         inclusions: event.inclusions,
         exclusions: event.exclusions,
