@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { FiSave, FiImage, FiUploadCloud, FiX } from "react-icons/fi";
+import { GalleryUploader } from '@/components/admin/events/GalleryUploader';
 import { useRouter } from 'next/navigation';
 import { useEvents } from '@/hooks/useEvents';
 import { AdminService } from '@/services/admin.service';
@@ -16,7 +17,7 @@ export default function EventCreationPage() {
     const [isUploadingBanner, setIsUploadingBanner] = useState(false);
     const [isUploadingCarousel, setIsUploadingCarousel] = useState(false);
     const [isUploadingListingBanner, setIsUploadingListingBanner] = useState(false);
-    const [isUploadingGallery, setIsUploadingGallery] = useState(false);
+
     const { publishEvent, isSubmitting } = useEvents();
 
     // Form State mapped to backend Mongoose Event schema
@@ -133,33 +134,7 @@ export default function EventCreationPage() {
         }
     };
 
-    // Simulate image upload preview
-    const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) {
-            if (images.length + e.target.files.length > 15) return toast.error("Maximum 15 gallery images allowed.");
 
-            setIsUploadingGallery(true);
-            const uploadData = new FormData();
-            Array.from(e.target.files).forEach(file => {
-                if (file.size <= 5 * 1024 * 1024) uploadData.append('files', file);
-            });
-
-            try {
-                const { data } = await AdminService.uploadMultipleFiles(uploadData);
-                if (data?.success && data?.data) {
-                    const mappedImgs = data.data.map((f: any) => ({ url: f.url, fileType: f.fileType }));
-                    setImages(prev => [...prev, ...mappedImgs]);
-                    toast.success("Gallery images added.");
-                } else {
-                    toast.error("Upload failed.");
-                }
-            } catch (error) {
-                toast.error("Network error during multiple upload.");
-            } finally {
-                setIsUploadingGallery(false);
-            }
-        }
-    };
 
     const handleSaveAndPublish = async () => {
         // Format types for backend
@@ -657,35 +632,8 @@ export default function EventCreationPage() {
                                 </label>
                             </div>
 
-                            {/* Additional Images Galley */}
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Event Gallery Images</label>
-                                <label className={`border-2 border-dashed border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center text-center transition-colors ${isUploadingGallery ? 'opacity-50 min-h-32' : 'hover:bg-gray-50 cursor-pointer group'}`}>
-                                    <FiUploadCloud className="w-8 h-8 text-gray-400 group-hover:text-primary transition-colors mb-2" />
-                                    <div className="text-sm font-semibold text-primary">{isUploadingGallery ? "Uploading..." : "Upload Gallery Images"}</div>
-                                    <input
-                                        type="file"
-                                        multiple
-                                        className="hidden"
-                                        accept="image/*"
-                                        disabled={isUploadingGallery}
-                                        onChange={handleGalleryUpload}
-                                    />
-                                </label>
-
-                                {images.length > 0 && (
-                                    <div className="grid grid-cols-5 gap-2 mt-4">
-                                        {images.map((img, idx) => (
-                                            <div key={idx} className="relative aspect-square rounded-lg bg-gray-100 border overflow-hidden group">
-                                                <img src={img.url} alt="Preview" className="w-full h-full object-cover" />
-                                                <button onClick={() => setImages(images.filter((_, i) => i !== idx))} type="button" className="absolute top-1 right-1 bg-black/50 hover:bg-red-500 text-white p-1 rounded-full backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <FiX size={12} />
-                                                </button>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
+                            {/* Gallery Images */}
+                            <GalleryUploader images={images} setImages={setImages} />
                         </div>
                     </div> {/* End Right Column */}
                 </div> {/* End Grid */}
