@@ -41,6 +41,17 @@ export const AdminService = {
     },
 
     /**
+     * Deletes (soft delete) an existing event by ID
+     */
+    deleteEvent: async (id: string) => {
+        return await apiFetch(`/admin/events/${id}`, {
+            method: 'DELETE',
+            requireAuth: true,
+            version: 'v2'
+        });
+    },
+
+    /**
      * Retrieves the paginated and filtered list of events from the admin router.
      */
     getEvents: async (params: { page?: number, limit?: number, status?: string, search?: string } = {}) => {

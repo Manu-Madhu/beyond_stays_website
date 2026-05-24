@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useEventList } from '@/hooks/useEvents';
 import { EventSkeleton } from '@/components/admin/events/EventSkeleton';
+import { AdminService } from '@/services/admin.service';
+import toast from 'react-hot-toast';
 
 export default function EventsPage() {
     const [statusFilter, setStatusFilter] = useState('All Status');
@@ -18,6 +20,22 @@ export default function EventsPage() {
     useEffect(() => {
         fetchEvents({ page, limit, status: statusFilter, search });
     }, [page, statusFilter, search, fetchEvents]);
+
+    const handleDelete = async (id: string, title: string) => {
+        if (!window.confirm(`Are you sure you want to delete "${title}"? This action can be undone later by an admin.`)) return;
+        
+        try {
+            const { data } = await AdminService.deleteEvent(id);
+            if (data?.success) {
+                toast.success('Event deleted successfully.');
+                fetchEvents({ page, limit, status: statusFilter, search }); // Refresh the list
+            } else {
+                toast.error(data?.message || 'Failed to delete event.');
+            }
+        } catch (err: any) {
+            toast.error(err.message || 'An error occurred while deleting the event.');
+        }
+    };
 
     return (
         <>
@@ -132,6 +150,15 @@ export default function EventsPage() {
                                                             <Link href={`/admin/events/edit/${event._id}`} className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors w-full text-left font-medium border-t border-gray-50">
                                                                 Edit
                                                             </Link>
+                                                            <button 
+                                                                onClick={() => {
+                                                                    setOpenDropdownId(null);
+                                                                    handleDelete(event._id, event.title);
+                                                                }}
+                                                                className="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors w-full text-left font-medium border-t border-gray-50"
+                                                            >
+                                                                Delete
+                                                            </button>
                                                         </div>
                                                     </>
                                                 )}
