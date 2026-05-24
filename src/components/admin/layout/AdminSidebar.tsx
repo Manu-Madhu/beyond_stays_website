@@ -26,6 +26,7 @@ export const AdminSidebar = ({ isOpen, setIsOpen }: AdminSidebarProps) => {
 
     const handleLogout = () => {
         localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminRefreshToken');
         toast.success("Successfully logged out");
         router.push('/admin/login');
     };

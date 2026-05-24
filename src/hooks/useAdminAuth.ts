@@ -19,8 +19,9 @@ export const useAdminAuth = () => {
             if (data?.success) {
                 // Determine if user has appropriate Admin access
                 if (data.data.userInfo.role === 'admin' || data.data.userInfo.role === 'employee') {
-                    // Store access token for secured endpoints
+                    // Store access + refresh tokens for secured endpoints
                     localStorage.setItem('adminToken', data.data.accessToken);
+                    localStorage.setItem('adminRefreshToken', data.data.refreshToken);
                     toast.success('Login Successful!');
                     router.push('/admin');
                     return { success: true };

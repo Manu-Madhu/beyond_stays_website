@@ -10,12 +10,65 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
 
     useEffect(() => {
-        const token = localStorage.getItem('adminToken');
-        if (!token) {
-            router.push('/admin/login'); // Redirect immediately
-        } else {
+        const validateSession = async () => {
+            const token = localStorage.getItem('adminToken');
+            if (!token) {
+                router.push('/admin/login');
+                return;
+            }
+
+            // Decode JWT payload to check expiry (no verification — just reads the exp claim)
+            try {
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                const isExpired = payload.exp * 1000 < Date.now();
+
+                if (isExpired) {
+                    // Access token expired — attempt silent refresh
+                    const refreshToken = localStorage.getItem('adminRefreshToken');
+                    if (!refreshToken) {
+                        localStorage.removeItem('adminToken');
+                        router.push('/admin/login');
+                        return;
+                    }
+
+                    try {
+                        const { forceLogout } = await import('@/services/api.service');
+                        const API_ROOT = (process.env.NEXT_PUBLIC_ADMIN_API_URL || 'http://127.0.0.1:8080/api/v1').replace('/v1', '');
+                        const res = await fetch(`${API_ROOT}/v1/auth/regenerate-token`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ refreshToken }),
+                        });
+                        const data = await res.json();
+
+                        if (data?.success && data.data?.accessToken) {
+                            localStorage.setItem('adminToken', data.data.accessToken);
+                            if (data.data.refreshToken) {
+                                localStorage.setItem('adminRefreshToken', data.data.refreshToken);
+                            }
+                            setIsAuthorized(true);
+                        } else {
+                            forceLogout('Session expired. Please log in again.');
+                        }
+                    } catch {
+                        localStorage.removeItem('adminToken');
+                        localStorage.removeItem('adminRefreshToken');
+                        router.push('/admin/login');
+                    }
+                    return;
+                }
+            } catch {
+                // Malformed token — clear and redirect
+                localStorage.removeItem('adminToken');
+                localStorage.removeItem('adminRefreshToken');
+                router.push('/admin/login');
+                return;
+            }
+
             setIsAuthorized(true);
-        }
+        };
+
+        validateSession();
     }, [router]);
 
     if (!isAuthorized) {
