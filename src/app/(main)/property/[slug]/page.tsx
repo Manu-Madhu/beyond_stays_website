@@ -70,8 +70,8 @@ export default async function PropertyPage({ params }: Props) {
         images={[...property.images, ...(property.roomImages || [])]}
       />
       <NearbyAttractions attractions={property?.nearToVisit || []} />
-      <WhyChooseUs reasons={whyChoose} />
       <BookingCTA propertyName={property.title} />
+      <WhyChooseUs reasons={whyChoose} />
       {/* <PropertyAmenities amenities={property.amenities} /> */}
     </main>
   );

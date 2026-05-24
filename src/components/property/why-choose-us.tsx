@@ -11,7 +11,7 @@ interface WhyChooseUsProps {
 
 export default function WhyChooseUs({ reasons }: WhyChooseUsProps) {
   return (
-    <section className="mt-8 md:mt-25 py-10 md:py-20 bg-black text-white">
+    <section className=" py-10 md:py-20 bg-black text-white">
       <div className="max-w-[1350px] mx-auto h-full px-5 md:px-8">
         <div className="mb-16 md:mb-20">
           <h2 className="titleHeader text-[40px] md:text-[45px] leading-11 md:leading-12 uppercase mb-3">
