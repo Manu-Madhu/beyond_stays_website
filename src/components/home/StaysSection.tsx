@@ -4,7 +4,7 @@ import Header from "../common/Header";
 import Button from "../ui/Button";
 import TabSection from "../common/TabSection";
 
-const StaysSection = () => {
+const StaysSection = ({ initialEvents = [] }: { initialEvents?: any[] }) => {
   const [activeTab, setActiveTab] = React.useState<"Stays" | "Events">("Events");
 
   return (
@@ -24,7 +24,7 @@ const StaysSection = () => {
 
         {/* Tab section */}
         <div className=" md:mt-8">
-          <TabSection onTabChange={(tab) => setActiveTab(tab)} />
+          <TabSection onTabChange={(tab) => setActiveTab(tab)} initialEvents={initialEvents} />
         </div>
 
         <Button

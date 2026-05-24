@@ -1,10 +1,9 @@
 import React from 'react';
-import { AdminLayout } from "@/components/admin/layout/AdminLayout";
 import { FiSave } from "react-icons/fi";
 
 export default function SettingsPage() {
     return (
-        <AdminLayout>
+        <>
             <div className="space-y-6">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900">Platform Settings</h1>
@@ -34,6 +33,6 @@ export default function SettingsPage() {
                     </form>
                 </div>
             </div>
-        </AdminLayout>
+        </>
     );
 }

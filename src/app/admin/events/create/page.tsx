@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from 'react';
-import { AdminLayout } from "@/components/admin/layout/AdminLayout";
 import { FiSave, FiImage, FiUploadCloud, FiX } from "react-icons/fi";
 import { useRouter } from 'next/navigation';
 import { useEvents } from '@/hooks/useEvents';
@@ -182,7 +181,7 @@ export default function EventCreationPage() {
     };
 
     return (
-        <AdminLayout>
+        <>
             <div className="space-y-6 mx-auto">
                 <div className="flex justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                     <div>
@@ -691,6 +690,6 @@ export default function EventCreationPage() {
                     </div> {/* End Right Column */}
                 </div> {/* End Grid */}
             </div>
-        </AdminLayout>
+        </>
     );
 }

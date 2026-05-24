@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect, useCallback } from 'react';
-import { AdminLayout } from "@/components/admin/layout/AdminLayout";
 import {
     FiDownload, FiSearch, FiEye, FiX, FiCalendar, FiUser, FiPhone, FiMail,
     FiUsers, FiMapPin, FiCheck, FiAlertTriangle, FiClock, FiCreditCard,
@@ -96,7 +95,7 @@ export default function EventRegistrationsPage() {
     };
 
     return (
-        <AdminLayout>
+        <>
             <div className="space-y-6">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -377,6 +376,6 @@ export default function EventRegistrationsPage() {
                     </div>
                 </div>
             )}
-        </AdminLayout>
+        </>
     );
 }

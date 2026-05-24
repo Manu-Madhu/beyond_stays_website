@@ -10,11 +10,12 @@ type TabType = (typeof tabs)[number];
 
 interface TabSectionProps {
   onTabChange?: (tab: TabType) => void;
+  initialEvents?: any[];
 }
 
-const TabSection: React.FC<TabSectionProps> = ({ onTabChange }) => {
+const TabSection: React.FC<TabSectionProps> = ({ onTabChange, initialEvents = [] }) => {
   const [activeTab, setActiveTab] = useState<TabType>("Events");
-  const [events, setEvents] = useState<any[]>([]);
+  const [events, setEvents] = useState<any[]>(initialEvents);
   const [isLoadingEvents, setIsLoadingEvents] = useState(false);
 
   const handleTabClick = (tab: TabType) => {
@@ -23,6 +24,11 @@ const TabSection: React.FC<TabSectionProps> = ({ onTabChange }) => {
   };
 
   useEffect(() => {
+    // If events are loaded from SSR, do not fetch on client-side
+    if (initialEvents && initialEvents.length > 0) {
+      return;
+    }
+
     const fetchEvents = async () => {
       setIsLoadingEvents(true);
       try {
@@ -56,7 +62,7 @@ const TabSection: React.FC<TabSectionProps> = ({ onTabChange }) => {
     };
 
     fetchEvents();
-  }, []);
+  }, [initialEvents]);
 
   const EventSkeleton = () => (
     <div className="flex gap-5 overflow-hidden">

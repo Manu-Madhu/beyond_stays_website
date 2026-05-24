@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { AdminLayout } from "@/components/admin/layout/AdminLayout";
 import { FiPlus, FiMoreVertical, FiSearch, FiChevronLeft, FiChevronRight, FiCalendar } from "react-icons/fi";
 import Link from 'next/link';
 import Image from 'next/image';
@@ -21,7 +20,7 @@ export default function EventsPage() {
     }, [page, statusFilter, search, fetchEvents]);
 
     return (
-        <AdminLayout>
+        <>
             <div className="space-y-6">
                 <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
                     <div>
@@ -200,6 +199,6 @@ export default function EventsPage() {
                     </div>
                 </div>
             </div>
-        </AdminLayout>
+        </>
     );
 }

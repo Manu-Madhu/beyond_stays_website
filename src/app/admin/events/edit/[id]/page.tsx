@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { AdminLayout } from "@/components/admin/layout/AdminLayout";
 import { FiSave, FiImage, FiUploadCloud, FiX, FiLoader, FiChevronLeft } from "react-icons/fi";
 import { useRouter, useParams } from 'next/navigation';
 import { useEventDetails } from '@/hooks/useEvents';
@@ -259,28 +258,24 @@ export default function EventEditPage() {
 
     if (isLoading) {
         return (
-            <AdminLayout>
-                <div className="flex justify-center items-center py-20">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                </div>
-            </AdminLayout>
+            <div className="flex justify-center items-center py-20">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            </div>
         );
     }
 
     if (!event) {
         return (
-            <AdminLayout>
-                <div className="flex flex-col justify-center items-center py-20 text-center">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Event Not Found</h2>
-                    <p className="text-gray-500 mb-4">The event you are looking for does not exist or has been deleted.</p>
-                    <Link href="/admin/events" className="text-primary font-semibold hover:underline">Return to Events</Link>
-                </div>
-            </AdminLayout>
+            <div className="flex flex-col justify-center items-center py-20 text-center">
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">Event Not Found</h2>
+                <p className="text-gray-500 mb-4">The event you are looking for does not exist or has been deleted.</p>
+                <Link href="/admin/events" className="text-primary font-semibold hover:underline">Return to Events</Link>
+            </div>
         );
     }
 
     return (
-        <AdminLayout>
+        <>
             <div className="space-y-6 mx-auto">
                 <div className="flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                     <div className="flex items-center gap-4">
@@ -780,6 +775,6 @@ export default function EventEditPage() {
                     </div>
                 </div>
             </div>
-        </AdminLayout>
+        </>
     );
 }

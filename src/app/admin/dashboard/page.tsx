@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { AdminLayout } from "@/components/admin/layout/AdminLayout";
 import { 
     FiUsers, FiCalendar, FiDollarSign, FiActivity, 
     FiArrowUpRight, FiCheckCircle, FiClock, FiAlertCircle 
@@ -30,11 +29,9 @@ export default function DashboardPage() {
 
     if (isLoading) {
         return (
-            <AdminLayout>
-                <div className="flex justify-center items-center py-20">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                </div>
-            </AdminLayout>
+            <div className="flex justify-center items-center py-20">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            </div>
         );
     }
 
@@ -70,7 +67,7 @@ export default function DashboardPage() {
     ];
 
     return (
-        <AdminLayout>
+        <>
             <div className="space-y-8">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900">Dashboard Overview</h1>
@@ -195,6 +192,6 @@ export default function DashboardPage() {
                     </div>
                 </div>
             </div>
-        </AdminLayout>
+        </>
     );
 }
