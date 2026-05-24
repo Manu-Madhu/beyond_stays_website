@@ -59,7 +59,9 @@ export const useEventList = () => {
                 throw new Error(data?.message || 'Failed to fetch events');
             }
         } catch (err: any) {
-            setError(err.message || 'An error occurred while fetching events');
+            const message = err.message || 'An error occurred while fetching events';
+            setError(message);
+            toast.error(message);
             console.error('Fetch events error:', err);
         } finally {
             setIsLoading(false);

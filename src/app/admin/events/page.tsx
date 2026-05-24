@@ -13,7 +13,7 @@ export default function EventsPage() {
     const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
     const limit = 10;
 
-    const { events, meta, isLoading, fetchEvents } = useEventList();
+    const { events, meta, isLoading, error, fetchEvents } = useEventList();
 
     useEffect(() => {
         fetchEvents({ page, limit, status: statusFilter, search });
@@ -138,7 +138,31 @@ export default function EventsPage() {
                                             </td>
                                         </tr>
                                     ))
-                                ) : (
+                                ) : error ? (
+                                    <tr>
+                                        <td colSpan={6} className="py-20 text-center">
+                                            <div className="flex flex-col items-center justify-center space-y-4">
+                                                <div className="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center border border-red-100">
+                                                    <svg className="w-8 h-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                                                    </svg>
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <h3 className="text-lg font-bold text-gray-900">Failed to Load Events</h3>
+                                                    <p className="text-gray-500 text-sm max-w-xs mx-auto">
+                                                        {error}
+                                                    </p>
+                                                </div>
+                                                <button 
+                                                    onClick={() => fetchEvents({ page, limit, status: statusFilter, search })}
+                                                    className="text-primary font-bold text-sm hover:underline"
+                                                >
+                                                    Try again →
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ) : events.length === 0 ? (
                                     <tr>
                                         <td colSpan={6} className="py-20 text-center">
                                             <div className="flex flex-col items-center justify-center space-y-4">
@@ -148,7 +172,7 @@ export default function EventsPage() {
                                                 <div className="space-y-1">
                                                     <h3 className="text-lg font-bold text-gray-900">No Events Found</h3>
                                                     <p className="text-gray-500 text-sm max-w-xs mx-auto">
-                                                        It looks like you haven't created any events yet. Get started by creating your first expedition.
+                                                        It looks like you haven&apos;t created any events yet. Get started by creating your first expedition.
                                                     </p>
                                                 </div>
                                                 <Link href="/admin/events/create" className="text-primary font-bold text-sm hover:underline">
@@ -157,7 +181,7 @@ export default function EventsPage() {
                                             </div>
                                         </td>
                                     </tr>
-                                )}
+                                ) : null}
                             </tbody>
                         </table>
                     </div>
