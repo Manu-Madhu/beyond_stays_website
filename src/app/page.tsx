@@ -2,7 +2,7 @@ import ContactUsSection from "@/components/contactPage/ContactUsSection";
 import AboutUsSection from "@/components/home/aboutUs/AboutUsSection";
 import GallerySection from "@/components/home/gallery/GallerySection";
 import HeroSection from "@/components/home/HeroSection";
-import PackagesSection from "@/components/home/PackagesSection";
+import StaysSection from "@/components/home/StaysSection";
 import StorySection from "@/components/home/story/StorySection";
 
 export default function Home() {
@@ -11,8 +11,8 @@ export default function Home() {
       {/* Banner Section */}
       <HeroSection />
 
-      {/* Packages */}
-      <PackagesSection />
+      {/* Stays */}
+      <StaysSection />
 
       {/* About Us */}
       <AboutUsSection />

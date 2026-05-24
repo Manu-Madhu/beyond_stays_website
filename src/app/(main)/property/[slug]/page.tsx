@@ -1,4 +1,4 @@
-import { packagesData, whyChoose } from "@/data/packagesData";
+import { staysData, whyChoose } from "@/data/staysData";
 import { Metadata } from "next";
 import BookingCTA from "@/components/property/booking-cta";
 import NearbyAttractions from "@/components/property/nearby-attractions";
@@ -15,12 +15,12 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const property = packagesData.find((pkg) => pkg.slug === slug);
+  const property = staysData.find((pkg) => pkg.slug === slug);
 
   if (!property) {
     return {
-      title: "Package Not Found | Beyond Stays",
-      description: "The package you are looking for does not exist."
+      title: "Stay Not Found | Beyond Stays",
+      description: "The stay you are looking for does not exist."
     };
   }
 
@@ -39,13 +39,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PropertyPage({ params }: Props) {
   const { slug } = await params;
-  const property = packagesData.find((pkg) => pkg.slug === slug);
+  const property = staysData.find((pkg) => pkg.slug === slug);
 
   if (!property) {
     return (
       <main className="flex h-screen items-center justify-center">
         <h1 className="text-xl font-semibold text-gray-600">
-          Package not found.
+          Stay not found.
         </h1>
       </main>
     );

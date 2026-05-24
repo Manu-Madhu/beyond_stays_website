@@ -54,7 +54,7 @@ const EventListingSection = () => {
         setHasMoreUpcoming(res.data.meta.currentPage < res.data.meta.totalPages);
       }
     } catch (error) {
-      console.error("Failed to fetch upcoming events:", error);
+      console.warn("Failed to fetch upcoming events:", error);
     } finally {
       setIsLoadingUpcoming(false);
       setIsFetchingMore(false);
@@ -73,7 +73,7 @@ const EventListingSection = () => {
         setHasMorePast(res.data.meta.currentPage < res.data.meta.totalPages);
       }
     } catch (error) {
-      console.error("Failed to fetch past events:", error);
+      console.warn("Failed to fetch past events:", error);
     } finally {
       setIsLoadingPast(false);
       setIsFetchingMore(false);

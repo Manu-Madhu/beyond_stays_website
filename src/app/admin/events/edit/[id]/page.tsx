@@ -496,7 +496,7 @@ export default function EventEditPage() {
                                     <RichTextEditor 
                                         value={formData.inclusions} 
                                         onChange={(content) => setFormData(prev => ({ ...prev, inclusions: content }))}
-                                        placeholder="What is included in the package (e.g., Food, Stay, Guide)..."
+                                        placeholder="What is included in the experience (e.g., Food, Stay, Guide)..."
                                     />
                                 </div>
                                 <div>

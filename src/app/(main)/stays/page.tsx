@@ -4,27 +4,27 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: `Properties | Beyond Stays - Luxury Travel Experience`,
+  title: `Stays | Beyond Stays - Luxury Travel Experience`,
   description:
-    "Discover Beyond Stays’ handpicked properties across breathtaking destinations. From boutique retreats to luxury villas, find your perfect stay with us.",
+    "Discover Beyond Stays’ handpicked stays across breathtaking destinations. From boutique retreats to luxury villas, find your perfect stay with us.",
   keywords: ["luxury camping", "travel", "adventure", "nature", "beyond stays"],
   openGraph: {
-    title: `Properties  | Beyond Stays - Luxury Travel Experience`,
+    title: `Stays | Beyond Stays - Luxury Travel Experience`,
     description:
-      "Discover Beyond Stays’ handpicked properties across breathtaking destinations. From boutique retreats to luxury villas, find your perfect stay with us.",
+      "Discover Beyond Stays’ handpicked stays across breathtaking destinations. From boutique retreats to luxury villas, find your perfect stay with us.",
     type: "website",
-    url: "https://travelwithbeyondstays.com/properties",
+    url: "https://travelwithbeyondstays.com/stays",
     siteName: "Beyond Stays"
   }
 };
 
-const PackagePage = () => {
+const StaysPage = () => {
   return (
     <div>
       {/* Hero section  */}
       <CommonHeroSection
         banner="/assets/images/packages/4.jpg"
-        title="Our Properties"
+        title="Our Stays"
       />
 
       {/* About Content one */}
@@ -33,4 +33,4 @@ const PackagePage = () => {
   );
 };
 
-export default PackagePage;
+export default StaysPage;

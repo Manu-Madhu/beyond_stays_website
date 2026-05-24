@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { packagesData } from "@/data/packagesData";
+import { staysData } from "@/data/staysData";
 import { PublicService } from "@/services/public.service";
 import { FiCalendar } from "react-icons/fi";
-import CardCarousel from "../home/packages/CardCarousel";
+import CardCarousel from "../home/stays/CardCarousel";
 
-const tabs = ["Packages", "Events"] as const;
+const tabs = [ "Events", "Stays"] as const;
 type TabType = (typeof tabs)[number];
 
 interface TabSectionProps {
@@ -13,7 +13,7 @@ interface TabSectionProps {
 }
 
 const TabSection: React.FC<TabSectionProps> = ({ onTabChange }) => {
-  const [activeTab, setActiveTab] = useState<TabType>("Packages");
+  const [activeTab, setActiveTab] = useState<TabType>("Events");
   const [events, setEvents] = useState<any[]>([]);
   const [isLoadingEvents, setIsLoadingEvents] = useState(false);
 
@@ -31,13 +31,13 @@ const TabSection: React.FC<TabSectionProps> = ({ onTabChange }) => {
           // Map DB events to CardData structure for the carousel
           const mappedEvents = data.data.map((event: any) => ({
             id: event._id,
-            slug: event.slug || event._id, 
+            slug: event.slug || event._id,
             title: event.title,
             category: event.ageRestriction, // Or use a category if available
             description: event.description,
             // Use listingBanner if available, else mainBanner, else fallback
             images: [
-                event.listingBanner?.url || event.listingBanner?.location || event.mainBanner?.url || event.mainBanner?.location || "/assets/travel_placeholder.png"
+              event.listingBanner?.url || event.listingBanner?.location || event.mainBanner?.url || event.mainBanner?.location || "/assets/travel_placeholder.png"
             ],
             type: 'event',
             itinerary: event.itinerary,
@@ -49,7 +49,7 @@ const TabSection: React.FC<TabSectionProps> = ({ onTabChange }) => {
           setEvents(mappedEvents);
         }
       } catch (error) {
-        console.error("Failed to fetch events:", error);
+        console.warn("Failed to fetch events:", error);
       } finally {
         setIsLoadingEvents(false);
       }
@@ -62,11 +62,11 @@ const TabSection: React.FC<TabSectionProps> = ({ onTabChange }) => {
     <div className="flex gap-5 overflow-hidden">
       {[1, 2, 3, 4].map((i) => (
         <div key={i} className="min-w-[85%] sm:min-w-[45%] md:min-w-[23%] h-[450px] bg-gray-100 rounded-lg animate-pulse relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-[shimmer_2s_infinite]"></div>
-            <div className="absolute bottom-0 left-0 w-full p-5 space-y-3">
-                <div className="h-8 bg-gray-200 rounded-md w-3/4"></div>
-                <div className="h-4 bg-gray-200 rounded-md w-1/2"></div>
-            </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-[shimmer_2s_infinite]"></div>
+          <div className="absolute bottom-0 left-0 w-full p-5 space-y-3">
+            <div className="h-8 bg-gray-200 rounded-md w-3/4"></div>
+            <div className="h-4 bg-gray-200 rounded-md w-1/2"></div>
+          </div>
         </div>
       ))}
     </div>
@@ -81,11 +81,10 @@ const TabSection: React.FC<TabSectionProps> = ({ onTabChange }) => {
             <button
               key={tab}
               onClick={() => handleTabClick(tab)}
-              className={`font-bold text-[18px] transition-all cursor-pointer ${
-                activeTab === tab
+              className={`font-bold text-[18px] transition-all cursor-pointer ${activeTab === tab
                   ? "text-black border-b-2 border-black pb-1"
                   : "text-gray-400 hover:text-black"
-              }`}
+                }`}
             >
               {tab}
             </button>
@@ -94,8 +93,8 @@ const TabSection: React.FC<TabSectionProps> = ({ onTabChange }) => {
       </div>
 
       {/* Cards Section */}
-      {activeTab === "Packages" ? (
-        <CardCarousel cards={packagesData} />
+      {activeTab === "Stays" ? (
+        <CardCarousel cards={staysData} />
       ) : (
         isLoadingEvents ? (
           <EventSkeleton />

@@ -39,11 +39,19 @@ export const apiFetch = async (endpoint: string, options: FetchOptions = {}) => 
     const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
     const url = `${API_ROOT}/${version}${cleanEndpoint}`.replace(/([^:]\/)\/+/g, "$1");
 
-    const response = await fetch(url, {
-        ...restOptions,
-        headers: reqHeaders,
-    });
+    try {
+        const response = await fetch(url, {
+            ...restOptions,
+            headers: reqHeaders,
+        });
 
-    const data = await response.json();
-    return { response, data };
+        const data = await response.json();
+        return { response, data };
+    } catch (err: any) {
+        console.warn(`apiFetch failed for ${url}:`, err);
+        return { 
+            response: { ok: false, status: 500 } as Response, 
+            data: { success: false, message: err.message || "Failed to fetch" } 
+        };
+    }
 };

@@ -60,11 +60,11 @@ const Navbar = () => {
               About Us
             </Link>
             <Link
-              href={"/packages"}
-              title="Packages"
+              href={"/stays"}
+              title="Stays"
               className="cursor-pointer hover:opacity-70 transition"
             >
-              Package
+              Stays
             </Link>
             <Link
               href={"/gallery"}
@@ -143,12 +143,12 @@ const Navbar = () => {
               About Us
             </Link>
             <Link
-              href={"/packages"}
-              title="Packages"
+              href={"/stays"}
+              title="Stays"
               onClick={toggleMenu}
               className="cursor-pointer hover:text-black transition"
             >
-              Package
+              Stays
             </Link>
             <Link
               href={"/gallery"}

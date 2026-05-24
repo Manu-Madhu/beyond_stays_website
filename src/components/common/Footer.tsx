@@ -90,7 +90,7 @@ const Footer = () => {
                 <Link href="/about-us">About Us</Link>
               </li>
               <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
-                <Link href="/packages">Packages</Link>
+                <Link href="/stays">Stays</Link>
               </li>
               <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
                 <Link href="/media">Media</Link>
@@ -103,7 +103,7 @@ const Footer = () => {
                 <Link href="/contact">Contact Us</Link>
               </li>
               <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
-                <Link href="/packages">Customize Your Plan</Link>
+                <Link href="/stays">Customize Your Plan</Link>
               </li>
               {/* <li className="cursor-pointer hover:underline underline-offset-4 hover:decoration-white-200 hover:text-white">
                 <Link href="/faq">FAQ</Link>

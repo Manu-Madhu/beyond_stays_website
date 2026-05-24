@@ -1,7 +1,6 @@
 import { CardData } from "../types/CardData";
 
-
-export const packagesData: CardData[] = [
+export const staysData: CardData[] = [
   {
     id: 1,
     title: "Rockvale",
@@ -522,7 +521,7 @@ export const whyChoose = [
       "We prioritize environmental conservation and local community support.",
   },
   {
-    title: "All-Inclusive Packages",
+    title: "All-Inclusive Stays",
     description:
       "Everything included - meals, activities, and transportation.",
   },

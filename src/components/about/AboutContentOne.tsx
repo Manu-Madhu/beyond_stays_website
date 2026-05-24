@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Button from "../ui/Button";
-import { packagesData } from "@/data/packagesData";
+import { staysData } from "@/data/staysData";
 import Link from "next/link";
 
-interface PackageCardType {
+interface StayCardType {
   id: number | string;
   images: string[];
   title: string;
@@ -23,14 +23,14 @@ const AboutContentOne = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const PackageCard = ({
+  const StayCard = ({
     card,
     isMobile = false
   }: {
-    card: PackageCardType;
+    card: StayCardType;
     isMobile?: boolean;
   }) => (
-    <Link title="package detailed page" href={`/property/${card?.slug}`}>
+    <Link title="stay detailed page" href={`/property/${card?.slug}`}>
       <div
         className={`relative rounded-md overflow-hidden shadow-sm hover:shadow-lg transition-all duration-500 group cursor-pointer ${
           isMobile ? "h-[300px]" : "h-[450px]"
@@ -95,8 +95,8 @@ const AboutContentOne = () => {
         {/* Mobile View */}
         <div className="block md:hidden">
           <div className="grid grid-cols-1 gap-4">
-            {packagesData.map((card) => (
-              <PackageCard key={card.id} card={card} isMobile={true} />
+            {staysData.map((card) => (
+              <StayCard key={card.id} card={card} isMobile={true} />
             ))}
           </div>
         </div>
@@ -104,19 +104,19 @@ const AboutContentOne = () => {
         {/* Desktop View */}
         <div className="hidden md:block overflow-hidden">
           <div className="flex gap-3 flex-1 w-full overflow-hidden">
-            {packagesData.slice(0, 3).map((card) => (
+            {staysData.slice(0, 3).map((card) => (
               <div key={card.id} className="flex-1">
-                <PackageCard card={card} />
+                <StayCard card={card} />
               </div>
             ))}
           </div>
           <div className="flex gap-3 flex-1 w-full overflow-hidden mt-3">
-            {packagesData.slice(3, 5).map((card) => (
+            {staysData.slice(3, 5).map((card) => (
               <div
                 key={card.id}
                 className={card.id === 5 ? "flex-1" : "flex-1"}
               >
-                <PackageCard card={card} />
+                <StayCard card={card} />
               </div>
             ))}
           </div>

@@ -20,7 +20,7 @@ export default function BookingCTA({ propertyName }: BookingCTAProps) {
             Ready to Book Your Adventure?
           </h2>
         <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-          Connect with our team on WhatsApp to check availability, customize your package, and start planning your
+          Connect with our team on WhatsApp to check availability, customize your stay, and start planning your
           unforgettable journey.
         </p>
 
